@@ -16,10 +16,10 @@ function LogIn() {
 
 
         <div class="mt-44 ml-2 flex flex-col p-5 rounded-lg md:w-1/3 md:pt-28">
-            <div className='hidden text-white text-2xl font-semibold md:block md:px-5 md:py-3 md:mb-4'>Login</div>
-            <input class="px-5 py-3 mb-4 bg-[#1C1132] text-white border border-white rounded-3xl" type="email" placeholder="Email" />
-            <input class="px-5 py-3 mb-7 bg-[#1C1132] text-white border border-white rounded-3xl" type="password" placeholder="Password" />
-            <button class="bg-[#901EC7] p-3 font-bold text-xl text-white rounded-3xl">LOGIN</button> 
+          <div className='hidden text-white text-2xl font-semibold md:block md:px-5 md:py-3 md:mb-4'>Login</div>
+          <input class="px-5 py-3 mb-4 bg-[#1C1132] text-white border border-white rounded-3xl" type="email" placeholder="Email" />
+          <input class="px-5 py-3 mb-7 bg-[#1C1132] text-white border border-white rounded-3xl" type="password" placeholder="Password" />
+          <button class="bg-[#901EC7] p-3 font-bold text-xl text-white rounded-3xl">LOGIN</button>
         </div>
 
       </div>
