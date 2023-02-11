@@ -1,3 +1,10 @@
 @tailwind base;
+
+* {
+    font-family: 'Montserrat', sans-serif;
+    font-family: 'Poppins', sans-serif;
+    font-family: 'Roboto', sans-serif;
+}
+
 @tailwind components;
 @tailwind utilities;

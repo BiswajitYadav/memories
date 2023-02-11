@@ -1,28 +1,31 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import logo from '../assets/image/memories_logo.png'
 
 function SignUp() {
     return (
         <>
-        <div className='h-screen bg-[#1C1132] md:flex md:flex-row md:space-x-52 md:pl-60'>
+        <div className='h-screen bg-[#D9D9D9] dark:bg-[#1C1132] lg:flex lg:items-center lg:justify-around lg:px-52'>
   
-          <div className='flex justify-between mx-5 pt-5 md:flex-col md:justify-center md:w-1/4 md:space-y-5 md:my-auto'>
-            <div className='w-8 text-center justify-center md:w-56'>
-              <img src={logo} alt="the memories" />
-            </div>
-            <div className='text-center justify-center text-white font-semibold md:text-5xl md:font-bold'>The Memories</div>
-            <div className='hidden text-white md:block md:text-xl'>keep your memoires alive and enjoy every moment</div>
+        <div className='flex justify-between mx-5 pt-5 lg:flex-col lg:justify-center lg:w-1/4 lg:gap-y-3'>
+          <div className='w-8 text-center justify-center lg:w-48'>
+            <img className='' src={logo} alt="logo" />
           </div>
+          <div className='justify-center hidden lg:block dark:text-white font-semibold lg:text-4xl lg:font-bold'>The Memories</div>
+          <div className='justify-center lg:hidden dark:text-white font-semibold lg:text-4xl lg:font-bold'>SignUp</div>
+          <div className='hidden dark:text-white lg:block lg:text-xl '>keep your memoires alive and enjoy every moment</div>
+        </div>
   
   
-          <div class="mt-24 ml-2 flex flex-col p-5 rounded-lg md:w-1/3 md:pt-20">
-            <div className='hidden text-white text-2xl font-semibold md:block md:px-5 md:py-3 md:mb-4'>SignUp</div>
-            <input class="px-5 py-3 mb-4 bg-[#1C1132] text-white border border-white rounded-3xl" type="email" placeholder="Full Name" />
-            <input class="px-5 py-3 mb-4 bg-[#1C1132] text-white border border-white rounded-3xl" type="email" placeholder="User Name" />
-            <input class="px-5 py-3 mb-4 bg-[#1C1132] text-white border border-white rounded-3xl" type="email" placeholder="Email" />
-            <input class="px-5 py-3 mb-4 bg-[#1C1132] text-white border border-white rounded-3xl" type="password" placeholder="Password" />
-            <input class="px-5 py-3 mb-7 bg-[#1C1132] text-white border border-white rounded-3xl" type="password" placeholder="Repeat Password" />
-            <button class="bg-[#901EC7] p-3 font-bold text-xl text-white rounded-3xl">SIGNUP</button>
+          <div className="flex flex-col h-screen justify-center p-5 rounded-lg lg:w-1/3 2xl:justify-center">
+            <div className='hidden text-black dark:text-white text-2xl font-semibold lg:block lg:px-5 lg:py-3 lg:mb-4 '>SignUp</div>
+            <input className="px-5 py-3 mb-4 bg-transparent border-black text-white border dark:border-white rounded-3xl" type="email" placeholder="Full Name" />
+            <input className="px-5 py-3 mb-4 bg-transparent border-black text-white border dark:border-white rounded-3xl" type="email" placeholder="User Name" />
+            <input className="px-5 py-3 mb-4 bg-transparent border-black text-white border dark:border-white rounded-3xl" type="email" placeholder="Email" />
+            <input className="px-5 py-3 mb-4 bg-transparent border-black text-white border dark:border-white rounded-3xl" type="password" placeholder="Password" />
+            <input className="px-5 py-3 mb-4 bg-transparent border-black text-white border dark:border-white rounded-3xl" type="password" placeholder="Repeat Password" />
+            <button className="bg-[#901EC7] p-3 font-bold text-xl text-white bg-gradient-to-bl from-[#573698] to-[#9013C9] rounded-3xl hover:scale-105 duration-300">SIGNUP</button>
+            <Link to="/" className='text-md dark:text-white mt-4 underline underline-offset-2 flex justify-center lg:no-underline lg:hover:underline duration-300'>Already Have an Account ?</Link>
           </div>
   
         </div>
