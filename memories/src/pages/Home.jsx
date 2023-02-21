@@ -1,13 +1,60 @@
+import { Avatar, Tooltip } from '@mui/material'
 import React from 'react'
 import Header from '../components/Header'
+import CreatePost from '../components/Home/CreatePost'
+import PeopleSuggestions from '../components/Home/PeopleSuggestions'
+import VerifiedIcon from '@mui/icons-material/Verified';
+import Post from '../components/Home/Post'
+
+const LogoutComponent = () => {
+  return (
+    <>
+      <div className='hidden xl:flex flex-col w-[25%] h-max dark:text-white p-5 gap-5 rounded-md'>
+        <div className='flex w-full justify-between'>
+          <div className='flex gap-2'>
+            <Avatar className='my-auto' alt="Travis Howard" src="https://www.w3schools.com/howto/img_avatar.png " sx={{ width: 45, height: 45 }} />
+
+            <div className='flex flex-col justify-center'>
+              <div className='flex gap-1'>
+                <div className='dark:text-white font-semibold text-sm'>Rohit Kumar Pandit</div>
+                <Tooltip title="Developer" className="text-gray-400 my-auto">
+                  <VerifiedIcon style={{ fontSize: 16 }} />
+                </Tooltip>
+                {/* <Tooltip title="Developer" className="text-blue-400 my-auto">
+              <VerifiedIcon style={{ fontSize: 16 }} />
+            </Tooltip>
+            <Tooltip title="Developer" className="text-yellow-400 my-auto">
+              <VerifiedIcon style={{ fontSize: 16 }} />
+            </Tooltip> */}
+              </div>
+              <div className=' text-slate-500 text-xs'>@rohit64Bit</div>
+            </div>
+          </div>
+          <Tooltip title="Logout">
+            <button className='h-max text-gray-400 text-sm my-auto px-3 py-1 rounded flex font-semibold'>Logout</button>
+          </Tooltip>
+        </div>
+      </div>
+    </>
+  )
+}
 
 const Home = () => {
   return (
     <>
-      <div className='bg-[#D9D9D9] dark:bg-slate-900 h-max'>
+      <div className='bg-[#D9D9D9] dark:bg-slate-900 h-screen'>
         <Header />
-        <div className='p-6 dark:text-white'>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Illum repudiandae aliquam quidem unde, est quam debitis laboriosam provident repellendus accusamus ea nisi earum nobis velit recusandae impedit reiciendis beatae autem maxime omnis magnam quo rem consectetur aliquid! Laborum necessitatibus fuga nesciunt. Vitae, aut minus nesciunt dolorem unde temporibus laudantium autem. Pariatur, fugiat similique distinctio aliquam beatae quas, reiciendis magni voluptates quidem eum ut repellendus fugit sequi molestiae consectetur, ipsa optio ipsum minima. Quos unde alias, sint maxime labore, nulla ipsa quibusdam blanditiis error laboriosam dicta. Assumenda similique ad est voluptas magni a esse libero fugit vel, tempora harum quis asperiores voluptatum minus. Unde, adipisci tenetur sed labore, ipsam nemo totam soluta consequatur, maxime porro ducimus. Illum molestias et accusamus cum ad quas reprehenderit dignissimos perferendis facere qui corrupti voluptatem eos nostrum maiores facilis, totam suscipit dolores in, architecto non itaque, aut delectus natus. Tenetur voluptates quibusdam at rerum maiores quam sit deleniti inventore? Ipsa, consectetur? Tempora quis ullam accusamus maiores soluta, aspernatur laboriosam consequuntur impedit. Enim fugiat ipsam aliquid debitis reprehenderit. Perferendis a, incidunt non velit culpa esse voluptas praesentium nisi dolore! Id, quis qui? Quas, recusandae molestiae expedita culpa ullam eveniet esse a consectetur sint possimus atque veritatis et aspernatur natus. Accusamus explicabo enim ea error hic molestiae ex dolore libero tempora natus, id eos quos odit nisi corporis labore deleniti incidunt. Recusandae voluptate fugiat dolor ullam necessitatibus natus repellat similique minus aut, doloremque quod perferendis repellendus dolorum saepe autem debitis voluptates sit aliquam quas a, totam numquam cumque earum distinctio. Fugiat quo rem facilis, perspiciatis officiis quas iure laboriosam autem nostrum blanditiis necessitatibus quibusdam molestiae consectetur dolorem eaque impedit praesentium dicta consequatur, velit nulla dolores? Ratione ut quas quia doloremque perferendis? Possimus voluptatum, amet obcaecati placeat hic porro blanditiis culpa non repellendus odit ipsum ab dicta, nemo minima, dolore earum! Voluptates, nemo perferendis. Dolore nisi ex placeat atque libero eum aut adipisci, quidem reprehenderit ipsum exercitationem minima quasi esse laboriosam alias officiis architecto tempora sunt porro eveniet mollitia! Amet ab sit iste beatae voluptas, quidem sequi molestias. Animi, velit dolorem. Facilis eos ab perspiciatis ipsam hic dolorum qui, rerum laborum quidem officiis illo dignissimos quasi quod libero incidunt reiciendis tempora doloremque earum harum natus saepe commodi? Ullam sit, aut facere blanditiis officiis, recusandae quod impedit, aliquam odio iure itaque. Earum soluta qui sapiente accusantium dolorem, voluptatem mollitia nulla nam necessitatibus corrupti veniam harum ratione! Aliquam eligendi delectus, fugiat optio, hic, iure nam similique cumque reprehenderit illo nobis accusamus. Facilis voluptatibus minus quae magnam culpa magni, earum voluptates qui quaerat ab amet, debitis odio labore optio sint! Voluptates enim ad omnis laborum, blanditiis perspiciatis provident suscipit architecto deserunt, sint, voluptatum natus dolores quae doloribus adipisci. Quos pariatur cumque dignissimos rerum odio praesentium aut error ab neque reprehenderit tenetur delectus blanditiis, velit magnam doloribus amet, autem nemo dolores facere aliquid? Fugit illo rerum adipisci veritatis dolor harum minus quo cupiditate magni sapiente consequuntur vitae dolore cum at, dignissimos ad earum aliquid esse enim qui recusandae est dolorum autem voluptas? Facere cum voluptates, dicta voluptate ab autem ducimus praesentium tenetur beatae sint impedit, eius enim reiciendis velit vel tempore nemo architecto consequuntur dolorem, pariatur dolores. Molestias sequi eaque nobis in repudiandae, voluptas provident esse minima, sapiente necessitatibus, aspernatur tempore labore! Recusandae qui ducimus ad magnam animi dignissimos sapiente ut quas beatae nobis. Commodi quam eum neque impedit assumenda. Dolores laboriosam cupiditate reiciendis neque veritatis ullam repellendus quam, dolorum nemo ad fuga porro atque. Quia rem voluptas voluptatem, tenetur asperiores totam molestias autem quo in officiis incidunt, vitae soluta reiciendis cumque? Nobis doloribus ex aliquam corrupti nesciunt omnis accusamus assumenda, blanditiis vitae similique impedit dolore repellendus excepturi aut ratione laborum autem repudiandae minima magnam distinctio ducimus. Quae corrupti dolorum quas quis iste, expedita iure inventore magni ex est voluptatem vel molestiae voluptate eos. Similique voluptas alias amet?
+        <div className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92.2vh] w-screen overflow-y-auto flex justify-between gap-x-5 py-4 px-2 sm:px-5 md:px-16'>
+          <PeopleSuggestions />
+          <div className='w-full md:w-[80%] lg:w-[50%] duration-300 flex flex-col gap-7 mx-auto'>
+            <CreatePost />
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+            <Post />
+          </div>
+          <LogoutComponent />
         </div>
       </div>
     </>
