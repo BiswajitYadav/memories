@@ -8,12 +8,12 @@ import ChatSection from '../components/Chat/ChatSection';
 const Chat = () => {
   return (
     <>
-      <div className='bg-[#D9D9D9] h-screen'>
+      <div className='bg-[#D9D9D9] h-screen w-screen'>
         <Header />
-        <div className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92.2vh] w-screen overflow-y-auto flex justify-between gap-x-5 py-4 px-2 sm:px-5 md:px-16'>
+        <div className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92vh] w-screen overflow-y-auto flex justify-between gap-x-5 py-4 px-2 sm:px-5 md:px-16'>
           <div className='bg-white dark:bg-[#231344] rounded-xl w-full flex items-center py-3 flex-row gap-5 shadow-lg justify-between lg:pr-4'>
             <div className='w-full xl:w-[22%] lg:w-[30%] h-[80vh] flex flex-col overflow-y-auto'>
-              <NavLink className={({ isActive }) => (isActive ? 'bg-[#D9D9D9] lg:rounded-r-md rounded-md dark:bg-[#1C1132]' : '')} to=":chatID">
+              <NavLink className={({ isActive }) => (isActive ? 'bg-[#D9D9D9] lg:rounded-r-md lg:rounded-l-none rounded-md dark:bg-[#1C1132]' : '')} to=":chatID">
                 <div className='flex flex-col h-max dark:text-white p-5 gap-5 rounded-md'>
                   <div className='flex w-full justify-between'>
                     <div className='flex gap-2'>

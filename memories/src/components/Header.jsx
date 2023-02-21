@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import HomeIcon from '@mui/icons-material/Home';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../assets/image/memories_logo.png'
@@ -18,6 +18,21 @@ import { IoMdLogOut } from 'react-icons/io'
 import { list } from 'postcss';
 
 function Header() {
+
+  const localTheme = localStorage.getItem("theme")
+  const [theme, setTheme] = useState(localTheme);
+
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("theme", "dark");
+    }
+    else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("theme", "light");
+    }
+  }, [theme]);
+
   const anchor = 'left'
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -40,6 +55,10 @@ function Header() {
     setState({ ...state, [anchor]: open });
   };
 
+  const ThemeSwitcher = (themeValue) => {
+    localStorage.setItem("theme", themeValue);
+  }
+
   const list = (anchor) => (
     <Box
       className='bg-white dark:bg-[#231344] h-screen'
@@ -49,7 +68,7 @@ function Header() {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        <div className='flex items-center gap-2 px-2 '>
+        <div className='flex items-center gap-2 px-2 py-2'>
           <img className='w-8' src={logo} alt="logo" />
           <div className='dark:text-white font-bold text-lg'>Memories</div>
         </div>
@@ -73,8 +92,16 @@ function Header() {
             <p className='font-semibold text-[17px]'>Settings</p>
           </MenuItem>
           <div className='flex items-center justify-center mx-4 p-2 bg-[#D9D9D9] dark:bg-[#1C1132] border border-[#901EC7] rounded-md gap-4'>
-            <button className='py-2 px-5 rounded text-white'><WbSunnyIcon className='' /></button>
-            <button className='bg-[#901EC7] py-2 px-5 rounded text-white'><DarkModeIcon /></button>
+            <button onClick={e => {
+                  ThemeSwitcher("light");
+                  setTheme("light")
+                }}
+                 className={localTheme === "light" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><WbSunnyIcon className='' /></button>
+            <button onClick={e => {
+                  ThemeSwitcher("dark");
+                  setTheme("dark")
+                }}
+                 className={localTheme === "dark" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><DarkModeIcon /></button>
           </div>
           <MenuItem onClick={handleClose}>
             <ListItemIcon>
@@ -111,12 +138,12 @@ function Header() {
               <PeopleIcon style={{ fontSize: 30 }} />
             </Tooltip>
           </NavLink>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/notification">
             <Tooltip title="Notifications" className="mx-auto">
               <NotificationsIcon style={{ fontSize: 30 }} />
             </Tooltip>
           </NavLink>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/myprofile">
             <Tooltip title="Profile" className="mx-auto">
               <PersonIcon style={{ fontSize: 30 }} />
             </Tooltip>
@@ -126,7 +153,6 @@ function Header() {
           <IconButton
             onClick={handleClick}
             size="small"
-            sx={{ ml: 2 }}
             aria-controls={open ? 'account-menu' : undefined}
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
@@ -142,7 +168,7 @@ function Header() {
           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
-          <div className='dark:bg-[#231344] bg-white dark:text-white p-2 -m-2'>
+          <div className='dark:bg-[#231344] bg-white dark:text-white p-3 -my-2'>
             <MenuItem onClick={handleClose}>
               <ListItemIcon>
                 <BiEdit className='dark:text-white' style={{ fontSize: 25 }} />
@@ -163,10 +189,19 @@ function Header() {
             </MenuItem>
             <div className='flex items-center justify-between mx-4 p-2 bg-[#D9D9D9] dark:bg-[#1C1132] border border-[#901EC7] rounded-md my-1 '>
               <Tooltip title="Light Mode">
-                <button className='px-5 py-2 rounded text-white'><WbSunnyIcon /></button>
+                <button 
+                onClick={e => {
+                  ThemeSwitcher("light");
+                  setTheme("light")
+                }}
+                className={localTheme === "light" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><WbSunnyIcon /></button>
               </Tooltip>
               <Tooltip title="Dark Mode">
-                <button className='bg-[#901EC7] py-2 px-5 rounded text-white'><DarkModeIcon /></button>
+                <button 
+                onClick={e => {
+                  ThemeSwitcher("dark")
+                  setTheme("dark")
+                  }} className={localTheme === "dark" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><DarkModeIcon /></button>
               </Tooltip>
             </div>
             <MenuItem onClick={handleClose}>
@@ -216,12 +251,12 @@ function Header() {
               <PeopleIcon style={{ fontSize: 28 }} />
             </Tooltip>
           </NavLink>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/notification">
             <Tooltip title="Notifications" className="mx-auto">
               <NotificationsIcon style={{ fontSize: 27 }} />
             </Tooltip>
           </NavLink>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/myprofile">
             <Tooltip title="Profile" className="mx-auto">
               <PersonIcon style={{ fontSize: 27 }} />
             </Tooltip>

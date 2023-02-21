@@ -5,8 +5,8 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 const PeopleSuggestions = () => {
   return (
     <>
-      <div className='hidden xl:flex flex-col bg-white shadow-lg dark:bg-[#231344] w-[25%] h-max dark:text-white p-5 gap-5 rounded-md'>
-        <div className="text-sm">
+      <div className='hidden xl:flex flex-col bg-white shadow-lg dark:bg-[#231344] w-[25%] h-max dark:text-white p-5 gap-5 rounded-md '>
+        <div className="text-sm font-semibold opacity-80">
           People you may know
         </div>
         <div className='flex w-full justify-between'>
@@ -19,12 +19,6 @@ const PeopleSuggestions = () => {
                 <Tooltip title="Developer" className="text-gray-400 my-auto">
                   <VerifiedIcon style={{ fontSize: 16 }} />
                 </Tooltip>
-                {/* <Tooltip title="Developer" className="text-blue-400 my-auto">
-              <VerifiedIcon style={{ fontSize: 16 }} />
-            </Tooltip>
-            <Tooltip title="Developer" className="text-yellow-400 my-auto">
-              <VerifiedIcon style={{ fontSize: 16 }} />
-            </Tooltip> */}
               </div>
               <div className=' text-slate-400 text-xs'>@rohit64Bit</div>
             </div>
