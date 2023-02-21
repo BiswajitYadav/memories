@@ -11,7 +11,6 @@ function App() {
 
   return (
     <>
-      <ThemeContext>
         <Routes>
           <Route path="/" element={<LogIn />}></Route>
           <Route path="/signup" element={<SignUp />}></Route>
@@ -21,7 +20,6 @@ function App() {
             <Route path=":chatId" element={<Chat />} />
           </Route>
         </Routes>
-      </ThemeContext>
     </>
   )
 }
