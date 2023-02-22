@@ -73,19 +73,19 @@ function Header() {
           <div className='dark:text-white font-bold text-lg'>Memories</div>
         </div>
         <div className='dark:bg-[#231344] bg-white dark:text-white p-2 pt-10'>
-          <MenuItem onClick={handleClose}>
+          <MenuItem>
             <ListItemIcon>
               <BiEdit className='dark:text-white' style={{ fontSize: 25 }} />
             </ListItemIcon>
             <p className='font-semibold text-[17px]'>Edit Profile</p>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem>
             <ListItemIcon>
               <MdOutlineLiveHelp className='dark:text-white' style={{ fontSize: 25 }} />
             </ListItemIcon>
             <p className='font-semibold text-[17px]'>Help & Support</p>
           </MenuItem>
-          <MenuItem onClick={handleClose}>
+          <MenuItem>
             <ListItemIcon>
               <FiSettings className='dark:text-white' style={{ fontSize: 24 }} />
             </ListItemIcon>
@@ -103,7 +103,7 @@ function Header() {
                 }}
                  className={localTheme === "dark" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><DarkModeIcon /></button>
           </div>
-          <MenuItem onClick={handleClose}>
+          <MenuItem>
             <ListItemIcon>
               <IoMdLogOut className='dark:text-white' style={{ fontSize: 24 }} />
             </ListItemIcon>
@@ -169,19 +169,19 @@ function Header() {
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
           <div className='dark:bg-[#231344] bg-white dark:text-white p-3 -my-2'>
-            <MenuItem onClick={handleClose}>
+            <MenuItem>
               <ListItemIcon>
                 <BiEdit className='dark:text-white' style={{ fontSize: 25 }} />
               </ListItemIcon>
               <p className='font-semibold text-[17px]'>Edit Profile</p>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem>
               <ListItemIcon>
                 <MdOutlineLiveHelp className='dark:text-white' style={{ fontSize: 25 }} />
               </ListItemIcon>
               <p className='font-semibold text-[17px]'>Help & Support</p>
             </MenuItem>
-            <MenuItem onClick={handleClose}>
+            <MenuItem>
               <ListItemIcon>
                 <FiSettings className='dark:text-white' style={{ fontSize: 24 }} />
               </ListItemIcon>
@@ -204,7 +204,7 @@ function Header() {
                   }} className={localTheme === "dark" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><DarkModeIcon /></button>
               </Tooltip>
             </div>
-            <MenuItem onClick={handleClose}>
+            <MenuItem>
               <ListItemIcon>
                 <IoMdLogOut className='dark:text-white' style={{ fontSize: 24 }} />
               </ListItemIcon>

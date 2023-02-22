@@ -1,8 +1,21 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logo from '../assets/image/memories_logo.png'
+import { useEffect } from 'react';
 
 function LogIn() {
+
+  const localTheme = localStorage.getItem("theme")
+
+  useEffect(() => {
+    if (localTheme === "dark") {
+      document.documentElement.classList.add("dark");
+    }
+    else {
+      document.documentElement.classList.remove("dark");
+    }
+  }, [localTheme]);
+
   return (
     <>
       <div className='h-screen bg-[#D9D9D9] dark:bg-[#1C1132] lg:flex lg:items-center lg:justify-around lg:px-52'>
