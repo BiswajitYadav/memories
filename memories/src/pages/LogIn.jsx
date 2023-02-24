@@ -24,7 +24,7 @@ function LogIn() {
           <div className='w-8 text-center justify-center lg:w-48'>
             <img className='' src={logo} alt="logo" />
           </div>
-          <div className='hidden lg:block justify-center dark:text-white font-semibold lg:text-4xl lg:font-bold'>The Memories</div>
+          <div className='hidden lg:block justify-center dark:text-white font-semibold lg:text-4xl lg:font-bold'>Mooments</div>
           <div className='justify-center lg:hidden dark:text-white font-semibold lg:text-4xl lg:font-bold'>Login</div>
           <div className='hidden dark:text-white lg:block lg:text-xl '>keep your memoires alive and enjoy every moment</div>
         </div>
