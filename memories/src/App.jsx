@@ -7,6 +7,7 @@ import LogIn from "./pages/LogIn"
 import SignUp from "./pages/SignUp"
 import Notification from './pages/Notification';
 import MyProfile from './pages/MyProfile';
+import TwoFA from "./pages/TwoFA"
 
 
 function App() {
@@ -24,8 +25,8 @@ function App() {
         <Route path="/chat" element={<Chat />}>
           <Route path=":chatId" element={<Chat />} />
         </Route>
+        <Route path="/authenticate" element={<TwoFA />}></Route>
       </Routes>
-
     </>
   )
 }
