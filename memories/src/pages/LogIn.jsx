@@ -31,8 +31,8 @@ function LogIn() {
 
         <div className="flex flex-col h-screen justify-center p-5 rounded-lg lg:w-1/3 2xl:justify-center">
           <div className='hidden te xt-black dark:text-white text-2xl font-semibold lg:block lg:px-5 lg:py-3 lg:mb-4 '>Login</div>
-          <input className="px-5 py-3 mb-4 bg-transparent border-black text-white border dark:border-white rounded-3xl" type="email" placeholder="Email" />
-          <input className="px-5 py-3 mb-7 bg-transparent border-black text-white border dark:border-white rounded-3xl" type="password" placeholder="Password" />
+          <input className="px-5 py-3 mb-4 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="email" placeholder="Email" />
+          <input className="px-5 py-3 mb-7 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="password" placeholder="Password" />
           <button className="bg-[#901EC7] p-3 font-bold text-xl text-white bg-gradient-to-bl from-[#573698] to-[#9013C9] rounded-3xl hover:scale-105 duration-300">LOGIN</button>
           <Link to="/signup" className='text-md dark:text-white mt-4 underline underline-offset-2 flex justify-center lg:no-underline lg:hover:underline duration-300'>Create New Account !</Link>
         </div>

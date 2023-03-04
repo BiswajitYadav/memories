@@ -8,6 +8,8 @@ import SignUp from "./pages/SignUp"
 import Notification from './pages/Notification';
 import MyProfile from './pages/MyProfile';
 import TwoFA from "./pages/TwoFA"
+import ForgetPassword from "./pages/ForgetPassword"
+import ResetPassword from "./pages/ResetPassword"
 
 
 function App() {
@@ -26,6 +28,8 @@ function App() {
           <Route path=":chatId" element={<Chat />} />
         </Route>
         <Route path="/authenticate" element={<TwoFA />}></Route>
+        <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
+        <Route path="/resetpassword" element={<ResetPassword />}></Route>
       </Routes>
     </>
   )
