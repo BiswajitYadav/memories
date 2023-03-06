@@ -10,6 +10,10 @@ import MyProfile from './pages/MyProfile';
 import TwoFA from "./pages/TwoFA"
 import ForgetPassword from "./pages/ForgetPassword"
 import ResetPassword from "./pages/ResetPassword"
+import EditProfile from "./pages/EditProfile"
+import UpdatePassword from "./pages/UpdatePassword"
+import HelpAndSupport from "./pages/HelpAndSupport"
+import TermsAndCondition from "./pages/TermsAndCondition"
 
 
 function App() {
@@ -30,6 +34,10 @@ function App() {
         <Route path="/authenticate" element={<TwoFA />}></Route>
         <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
         <Route path="/resetpassword" element={<ResetPassword />}></Route>
+        <Route path="/editprofile" element={<EditProfile />}></Route>
+        <Route path="/updatepassword" element={<UpdatePassword />}></Route>
+        <Route path="/help" element={<HelpAndSupport />}></Route>
+        <Route path="/t&c" element={<TermsAndCondition />}></Route>
       </Routes>
     </>
   )

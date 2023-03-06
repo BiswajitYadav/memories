@@ -122,7 +122,7 @@ function Header() {
             <img className='w-12 h-12' src={logo} alt="logo" />
           </Tooltip>
         </Link>
-        <div className='flex gap-3 h-full item-center  '>
+        <div className='flex gap-3 h-full item-center'>
           <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/home">
             <Tooltip title="Home" className="mx-auto">
               <HomeIcon style={{ fontSize: 35 }} />
@@ -236,27 +236,27 @@ function Header() {
 
 
         <div className='flex gap-3 shadow-md bg-white dark:bg-[#231344] h-max w-screen item-center justify-center sm:pt-2'>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/home">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/home">
             <Tooltip title="Home" className="mx-auto">
               <HomeIcon style={{ fontSize: 30 }} />
             </Tooltip>
           </NavLink>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/chat">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/chat">
             <Tooltip title="Messages" className="mx-auto">
               <MessageIcon style={{ fontSize: 25 }} />
             </Tooltip>
           </NavLink>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/community">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/community">
             <Tooltip title="Community" className="mx-auto">
               <PeopleIcon style={{ fontSize: 28 }} />
             </Tooltip>
           </NavLink>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/notification">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/notification">
             <Tooltip title="Notifications" className="mx-auto">
               <NotificationsIcon style={{ fontSize: 27 }} />
             </Tooltip>
           </NavLink>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/myprofile">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/myprofile">
             <Tooltip title="Profile" className="mx-auto">
               <PersonIcon style={{ fontSize: 27 }} />
             </Tooltip>
