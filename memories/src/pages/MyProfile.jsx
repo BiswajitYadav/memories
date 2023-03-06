@@ -6,6 +6,7 @@ import { AiFillYoutube, AiFillInstagram, AiFillGithub } from 'react-icons/ai'
 import { FaDiscord } from 'react-icons/fa'
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import MyPost from '../components/MyPost';
+import { Link } from 'react-router-dom';
 
 const MyProfile = () => {
     return (
@@ -22,8 +23,10 @@ const MyProfile = () => {
                                     <Tooltip title="Developer" className="text-gray-400 my-auto">
                                         <VerifiedIcon style={{ fontSize: 16 }} />
                                     </Tooltip>
+                                    <Link to="/editprofile">
                                     <button className='hidden lg:block text-sm ml-4 py-1 px-3 rounded-md shadow-md hover:scale-105 duration-300 bg-white text-black
                                     dark:bg-white/90 dark:hover:bg-white'>Edit Profile</button>
+                                    </Link>
                                 </div>
                                 <div className=' dark:text-slate-200 text-slate-600 text-sm sm:text-sm font-semibold'>@Rohit64Bit</div>
                                 <div className='font-semibold text-sm py-2 lg:py-3 text-gray-400'>Developer</div>

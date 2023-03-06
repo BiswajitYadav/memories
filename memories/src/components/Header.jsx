@@ -9,15 +9,24 @@ import PersonIcon from '@mui/icons-material/Person';
 import DevicesIcon from '@mui/icons-material/Devices';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import { Avatar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Tooltip } from '@mui/material';
+import { Avatar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Modal, Tooltip } from '@mui/material';
 import { Logout, PersonAdd, Settings } from '@mui/icons-material';
 import { BiEdit } from 'react-icons/bi'
 import { MdOutlineLiveHelp } from 'react-icons/md'
 import { FiSettings } from 'react-icons/fi'
 import { IoMdLogOut } from 'react-icons/io'
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import LockPersonIcon from '@mui/icons-material/LockPerson';
+import LiveHelpIcon from '@mui/icons-material/LiveHelp';
+import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+
 import { list } from 'postcss';
 
 function Header() {
+
+  const [openModal, setOpenModal] = useState(false);
+  const handleModalOpen = () => setOpenModal(true);
+  const handleModalClose = () => setOpenModal(false);
 
   const localTheme = localStorage.getItem("theme")
   const [theme, setTheme] = useState(localTheme);
@@ -73,19 +82,23 @@ function Header() {
           <div className='dark:text-white font-bold text-lg'>Memories</div>
         </div>
         <div className='dark:bg-[#231344] bg-white dark:text-white p-2 pt-10'>
-          <MenuItem>
-            <ListItemIcon>
-              <BiEdit className='dark:text-white' style={{ fontSize: 25 }} />
-            </ListItemIcon>
-            <p className='font-semibold text-[17px]'>Edit Profile</p>
-          </MenuItem>
-          <MenuItem>
-            <ListItemIcon>
-              <MdOutlineLiveHelp className='dark:text-white' style={{ fontSize: 25 }} />
-            </ListItemIcon>
-            <p className='font-semibold text-[17px]'>Help & Support</p>
-          </MenuItem>
-          <MenuItem>
+          <Link to="/editprofile">
+            <MenuItem>
+              <ListItemIcon>
+                <BiEdit className='dark:text-white' style={{ fontSize: 25 }} />
+              </ListItemIcon>
+              <p className='font-semibold text-[17px]'>Edit Profile</p>
+            </MenuItem>
+          </Link>
+          <Link to="/help">
+            <MenuItem>
+              <ListItemIcon>
+                <MdOutlineLiveHelp className='dark:text-white' style={{ fontSize: 25 }} />
+              </ListItemIcon>
+              <p className='font-semibold text-[17px]'>Help & Support</p>
+            </MenuItem>
+          </Link>
+          <MenuItem onClick={handleModalOpen}>
             <ListItemIcon>
               <FiSettings className='dark:text-white' style={{ fontSize: 24 }} />
             </ListItemIcon>
@@ -93,15 +106,15 @@ function Header() {
           </MenuItem>
           <div className='flex items-center justify-center mx-4 p-2 bg-[#D9D9D9] dark:bg-[#1C1132] border border-[#901EC7] rounded-md gap-4'>
             <button onClick={e => {
-                  ThemeSwitcher("light");
-                  setTheme("light")
-                }}
-                 className={localTheme === "light" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><WbSunnyIcon className='' /></button>
+              ThemeSwitcher("light");
+              setTheme("light")
+            }}
+              className={localTheme === "light" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><WbSunnyIcon className='' /></button>
             <button onClick={e => {
-                  ThemeSwitcher("dark");
-                  setTheme("dark")
-                }}
-                 className={localTheme === "dark" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><DarkModeIcon /></button>
+              ThemeSwitcher("dark");
+              setTheme("dark")
+            }}
+              className={localTheme === "dark" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><DarkModeIcon /></button>
           </div>
           <MenuItem>
             <ListItemIcon>
@@ -111,7 +124,7 @@ function Header() {
           </MenuItem>
         </div>
       </List>
-    </Box>
+    </Box >
   );
 
   return (
@@ -169,19 +182,23 @@ function Header() {
           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
         >
           <div className='dark:bg-[#231344] bg-white dark:text-white p-3 -my-2'>
-            <MenuItem>
-              <ListItemIcon>
-                <BiEdit className='dark:text-white' style={{ fontSize: 25 }} />
-              </ListItemIcon>
-              <p className='font-semibold text-[17px]'>Edit Profile</p>
-            </MenuItem>
-            <MenuItem>
-              <ListItemIcon>
-                <MdOutlineLiveHelp className='dark:text-white' style={{ fontSize: 25 }} />
-              </ListItemIcon>
-              <p className='font-semibold text-[17px]'>Help & Support</p>
-            </MenuItem>
-            <MenuItem>
+            <Link to="/editprofile">
+              <MenuItem>
+                <ListItemIcon>
+                  <BiEdit className='dark:text-white' style={{ fontSize: 25 }} />
+                </ListItemIcon>
+                <p className='font-semibold text-[17px]'>Edit Profile</p>
+              </MenuItem>
+            </Link>
+            <Link to="/help">
+              <MenuItem>
+                <ListItemIcon>
+                  <MdOutlineLiveHelp className='dark:text-white' style={{ fontSize: 25 }} />
+                </ListItemIcon>
+                <p className='font-semibold text-[17px]'>Help & Support</p>
+              </MenuItem>
+            </Link>
+            <MenuItem onClick={handleModalOpen}>
               <ListItemIcon>
                 <FiSettings className='dark:text-white' style={{ fontSize: 24 }} />
               </ListItemIcon>
@@ -189,18 +206,18 @@ function Header() {
             </MenuItem>
             <div className='flex items-center justify-between mx-4 p-2 bg-[#D9D9D9] dark:bg-[#1C1132] border border-[#901EC7] rounded-md my-1 '>
               <Tooltip title="Light Mode">
-                <button 
-                onClick={e => {
-                  ThemeSwitcher("light");
-                  setTheme("light")
-                }}
-                className={localTheme === "light" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><WbSunnyIcon /></button>
+                <button
+                  onClick={e => {
+                    ThemeSwitcher("light");
+                    setTheme("light")
+                  }}
+                  className={localTheme === "light" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><WbSunnyIcon /></button>
               </Tooltip>
               <Tooltip title="Dark Mode">
-                <button 
-                onClick={e => {
-                  ThemeSwitcher("dark")
-                  setTheme("dark")
+                <button
+                  onClick={e => {
+                    ThemeSwitcher("dark")
+                    setTheme("dark")
                   }} className={localTheme === "dark" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><DarkModeIcon /></button>
               </Tooltip>
             </div>
@@ -214,6 +231,49 @@ function Header() {
         </Menu>
       </header>
 
+      {/* Modal for settings */}
+      <Modal
+        open={openModal}
+        onClose={handleModalClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        className="flex justify-center items-center"
+      >
+        <div className='dark:bg-[#231344] bg-white dark:text-white p-3 md:p-10 flex flex-col gap-5 rounded-lg shadow-lg dark:shadow-black'>
+          <Link to="/editprofile">
+            <MenuItem>
+              <ListItemIcon>
+                <ManageAccountsIcon className='dark:text-white' style={{ fontSize: 25 }} />
+              </ListItemIcon>
+              <p className='font-semibold text-[17px]'>Edit Profile</p>
+            </MenuItem>
+          </Link>
+          <Link to="/updatepassword">
+            <MenuItem>
+              <ListItemIcon>
+                <LockPersonIcon className='dark:text-white' style={{ fontSize: 25 }} />
+              </ListItemIcon>
+              <p className='font-semibold text-[17px]'>Update Password</p>
+            </MenuItem>
+          </Link>
+          <Link to="/help">
+            <MenuItem>
+              <ListItemIcon>
+                <LiveHelpIcon className='dark:text-white' style={{ fontSize: 25 }} />
+              </ListItemIcon>
+              <p className='font-semibold text-[17px]'>Help & Support</p>
+            </MenuItem>
+          </Link>
+          <Link to="/t&c">
+            <MenuItem>
+              <ListItemIcon>
+                <PrivacyTipIcon className='dark:text-white' style={{ fontSize: 25 }} />
+              </ListItemIcon>
+              <p className='font-semibold text-[17px]'>Terms & Conditions</p>
+            </MenuItem>
+          </Link>
+        </div>
+      </Modal>
 
       {/* Navbar for small devices */}
       <header className='md:hidden bg-white shadow-md dark:bg-[#231344]'>
