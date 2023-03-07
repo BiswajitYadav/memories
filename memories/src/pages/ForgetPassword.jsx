@@ -33,7 +33,7 @@ const ForgetPassword = () => {
                                 Enter email associated with your account
                             </div>
                             <input className="px-5 py-3 bg-transparent border-[0.5px] border-slate-400 dark:text-white dark:border-white rounded-full" type="email" placeholder="Enter Your Email Id.." />
-                            <button className='bg-gradient-to-b from-[#9013C9] to-[#573698] text-white dark:text-white py-3 rounded-full font-semibold text-md select-none'>VERIFY OTP</button>
+                            <button className='bg-gradient-to-b from-[#9013C9] to-[#573698] text-white dark:text-white py-3 rounded-full font-semibold text-md select-none'>CONFIRM EMAIL</button>
                         </form>
                     </div>
                     <div className='dark:text-white p-3 text-sm lg:hidden'>We take care of your data with security as we have mentioned in our <Link className='underline font-semibold'> privacy policy.</Link></div>

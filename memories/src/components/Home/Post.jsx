@@ -4,12 +4,13 @@ import VerifiedIcon from '@mui/icons-material/Verified';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import CommentIcon from '@mui/icons-material/Comment';
 import SendIcon from '@mui/icons-material/Send';
+import { Link } from 'react-router-dom';
 
 const Post = () => {
   return (
     <>
       <div className='flex flex-col bg-white dark:bg-[#231344] h-max w-full justify-center items-center rounded-md shadow-lg px-3 sm:px-5 py-5 gap-3'>
-        <div className='flex w-full content-start gap-2'>
+        <Link to="/profile" className='flex w-full content-start gap-2'>
           <Avatar className='my-auto' alt="Travis Howard" src="https://www.w3schools.com/howto/img_avatar.png " sx={{ width: 45, height: 45 }} />
           <div className='flex flex-col justify-center'>
             <div className='flex gap-1'>
@@ -26,7 +27,7 @@ const Post = () => {
             </div>
             <div className=' text-slate-400 text-xs'>@rohit64Bit</div>
           </div>
-        </div>
+        </Link>
 
         <img className='w-full object-cover rounded-md' src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8YnVnYXR0aSUyMGNoaXJvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="" />
 

@@ -5,13 +5,14 @@ import CreatePost from '../components/Home/CreatePost'
 import PeopleSuggestions from '../components/Home/PeopleSuggestions'
 import VerifiedIcon from '@mui/icons-material/Verified';
 import Post from '../components/Home/Post'
+import { Link } from 'react-router-dom'
 
 const LogoutComponent = () => {
   return (
     <>
       <div className='hidden xl:flex flex-col w-[25%] h-max dark:text-white p-5 gap-5 rounded-md'>
         <div className='flex w-full justify-between'>
-          <div className='flex gap-2'>
+          <Link to="/myprofile" className='flex gap-2'>
             <Avatar className='my-auto' alt="Travis Howard" src="https://www.w3schools.com/howto/img_avatar.png " sx={{ width: 45, height: 45 }} />
 
             <div className='flex flex-col justify-center'>
@@ -29,7 +30,7 @@ const LogoutComponent = () => {
               </div>
               <div className=' text-slate-500 text-xs'>@rohit64Bit</div>
             </div>
-          </div>
+          </Link>
           <Tooltip title="Logout">
             <button className='h-max text-gray-400 text-sm my-auto px-3 py-1 rounded flex font-semibold'>Logout</button>
           </Tooltip>

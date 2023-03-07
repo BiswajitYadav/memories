@@ -35,6 +35,7 @@ function LogIn() {
           <input className="px-5 py-3 mb-7 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="password" placeholder="Password" />
           <button className="bg-[#901EC7] p-3 font-bold text-xl text-white bg-gradient-to-bl from-[#573698] to-[#9013C9] rounded-3xl hover:scale-105 duration-300">LOGIN</button>
           <Link to="/signup" className='text-md dark:text-white mt-4 underline underline-offset-2 flex justify-center lg:no-underline lg:hover:underline duration-300'>Create New Account !</Link>
+          <Link to="/forgetpassword" className='text-md dark:text-white mt-4 underline underline-offset-2 flex justify-center lg:no-underline lg:hover:underline duration-300'>Forget Password</Link>
         </div>
       </div>
     </>

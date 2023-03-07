@@ -14,6 +14,7 @@ import EditProfile from "./pages/EditProfile"
 import UpdatePassword from "./pages/UpdatePassword"
 import HelpAndSupport from "./pages/HelpAndSupport"
 import TermsAndCondition from "./pages/TermsAndCondition"
+import UserProfile from "./pages/UserProfile"
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LogIn />}></Route>
         <Route path="/signup" element={<SignUp />}></Route>
+
         <Route path="/home" element={<Home />}></Route>
         <Route path="/community" element={<Community />}></Route>
         <Route path="/notification" element={<Notification />}></Route>
@@ -31,13 +33,17 @@ function App() {
         <Route path="/chat" element={<Chat />}>
           <Route path=":chatId" element={<Chat />} />
         </Route>
+
         <Route path="/authenticate" element={<TwoFA />}></Route>
         <Route path="/forgetpassword" element={<ForgetPassword />}></Route>
         <Route path="/resetpassword" element={<ResetPassword />}></Route>
-        <Route path="/editprofile" element={<EditProfile />}></Route>
         <Route path="/updatepassword" element={<UpdatePassword />}></Route>
+
+        <Route path="/editprofile" element={<EditProfile />}></Route>
         <Route path="/help" element={<HelpAndSupport />}></Route>
         <Route path="/t&c" element={<TermsAndCondition />}></Route>
+        
+        <Route path="/profile" element={<UserProfile />}></Route>
       </Routes>
     </>
   )
