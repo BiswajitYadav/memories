@@ -35,7 +35,7 @@ const UserProfile = () => {
                                     Bio of the person
                                 </div>
                                 <div className='hidden md:flex gap-5'>
-                                    <a className='cursor-pointer text-slate-500 hover:text-red-500 duration-200' target="_blank" href="/"><AiFillYoutube style={{ fontSize: 30 }} /></a>
+                                    <a className='cursor-pointer text-slate-500 hover:text-red-600 duration-200' target="_blank" href="/"><AiFillYoutube style={{ fontSize: 30 }} /></a>
                                     <a className='cursor-pointer text-slate-500 hover:text-pink-600 duration-200' target="_blank" href="/"><AiFillInstagram style={{ fontSize: 30 }} /></a>
                                     <a className='cursor-pointer text-slate-500 hover:text-violet-600 duration-200' target="_blank" href="/"><AiFillGithub style={{ fontSize: 30 }} /></a>
                                     <a className='cursor-pointer text-slate-500 hover:text-sky-600 duration-200' target="_blank" href="/"><FaDiscord style={{ fontSize: 30 }} /></a>
@@ -56,7 +56,12 @@ const UserProfile = () => {
                             <a className='cursor-pointer text-slate-500' href="/"><AiFillGithub style={{ fontSize: 25 }} /></a>
                             <a className='cursor-pointer text-slate-500' href="/"><FaDiscord style={{ fontSize: 25 }} /></a>
                         </div>
-                        <div className='flex text-slate-400 border-y-2 border-slate-400 py-1 my-5 w-full md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center'>
+
+                        <button className='flex w-full md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center bg-[#8948B8] text-white py-2 hover:bg-[#8E2BC2] duration-200 font-semibold rounded-md text-lg'>
+                            Follow
+                        </button>
+
+                        <div className='flex text-slate-400 border-y-2 border-slate-400 py-1 my-7 w-full md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center cursor-default'>
                             <WidgetsIcon /><div>POST</div>
                         </div>
                         <div className='w-full md:w-[80%] lg:w-[50%] xl:w-[45%] duration-300 flex flex-col gap-7 mx-auto'>

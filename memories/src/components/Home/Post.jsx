@@ -48,9 +48,9 @@ const Post = () => {
 
 
         <form className='bg-[#D9D9D9] dark:bg-[#1C1132] rounded-full flex items-center px-2 py-1 w-full'>
-          <input className='p-2 px-2 md:px-8 bg-transparent w-full focus:outline-none dark:text-white' type="text" placeholder='Write a comment...' />
-          <button className='text-white bg-[#573698] p-1 md:p-1 rounded-full hover:scale-105 duration-200'>
-            <SendIcon style={{ fontSize: 30 }} />
+          <input className='px-2 md:px-8 bg-transparent w-full focus:outline-none dark:text-white' type="text" placeholder='Write a comment...' />
+          <button className='text-white bg-[#573698] p-1 md:p-1.5 rounded-full hover:scale-105 duration-200'>
+            <SendIcon style={{ fontSize: 26 }} />
           </button>
         </form>
       </div>
