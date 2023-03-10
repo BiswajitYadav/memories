@@ -50,8 +50,8 @@ const Community = () => {
                             </button>
                         </form>
 
-                        <div className='bg-[#F1F1F1] dark:bg-[#1C1132] rounded border-[2px] border-[#D9D9D9] dark:border-[#33215A] w-[95%] sm:w-[85%] md:w-[60%] p-3 h-max'>
-                            <div className=' overflow-y-auto flex flex-col gap-4 sm:gap-5 h-[66vh] p-2 sm:p-5 lg:p-7'>
+                        <div className='bg-[#F1F1F1] dark:bg-[#1C1132] rounded border-[2px] border-[#D9D9D9] dark:border-[#33215A] w-[95%] sm:w-[85%] md:w-[60%] p-0.5 md:p-3 h-max'>
+                            <div className=' overflow-y-auto flex flex-col gap-4 sm:gap-5 h-[66vh] p-1.5 sm:p-5 lg:p-7'>
                                 <Suggestion />
                                 <Suggestion />
                                 <Suggestion />

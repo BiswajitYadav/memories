@@ -15,8 +15,8 @@ const MyProfile = () => {
                 <Header />
                 <div className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92vh] w-screen overflow-y-auto flex flex-col gap-x-5'>
                     <div className='w-full h-max overflow-y-auto flex items-center flex-col px-2 py-5'>
-                        <div className='flex gap-6 lg:gap-8 xl:gap-6 py-3 xl:py-5'>
-                            <img className='w-24 h-24 md:h-32 md:w-32 xl:h-40 xl:w-40 select-none rounded-full overflow-hidden object-cover' src="https://assets.website-files.com/5d7e8885cad5174a2fcb98d7/5fa84a166beb8d4d5e212e31_john-pork-selfie.jpg" alt="Profile Picture" />
+                        <div className='bg-white dark:bg-[#231344] w-full md:w-[75%] lg:w-[60%] xl:w-[40%] flex gap-6 lg:gap-8 xl:gap-6 rounded-t-md lg:rounded-md shadow-md p-3 xl:p-5'>
+                            <img className='w-24 h-24 md:h-32 md:w-32 xl:h-40 xl:w-40 select-none rounded-full overflow-hidden object-cover' src="https://i.ytimg.com/vi/oxCAPWBNJag/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGBUgcigRMA8=&rs=AOn4CLBq6UUnvf2-ImYSgPwsIz8BJOcN6A" alt="Profile Picture" />
                             <div className='gap-4 md:gap-5 select-none'>
                                 <div className='flex gap-1 dark:text-white'>
                                     <div className='font-bold text-lg sm:text-xl xl:text-2xl'>Rohit Kumar Pandit</div>
@@ -24,7 +24,7 @@ const MyProfile = () => {
                                         <VerifiedIcon style={{ fontSize: 16 }} />
                                     </Tooltip>
                                     <Link to="/editprofile">
-                                    <button className='hidden lg:block text-sm ml-4 py-1 px-3 rounded-md shadow-md hover:scale-105 duration-300 bg-white text-black
+                                        <button className='hidden lg:block text-sm ml-4 py-1 px-3 rounded-md shadow-md hover:scale-105 duration-300 bg-white text-black
                                     dark:bg-white/90 dark:hover:bg-white'>Edit Profile</button>
                                     </Link>
                                 </div>
@@ -46,27 +46,33 @@ const MyProfile = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className='flex md:hidden px-2 w-full justify-around py-3 text-xs dark:text-white'>
-                            <div><span className='font-extrabold flex justify-center text-lg'>10</span> posts</div>
-                            <div><span className='font-extrabold flex justify-center text-lg'>10</span> followers</div>
-                            <div><span className='font-extrabold flex justify-center text-lg'>10</span> followings</div>
+                        
+                        {/* profile page for small devices */}
+                        <div className='w-full bg-white dark:bg-[#231344] gap-6 rounded-b-md shadow-md'>
+                            <div className='flex md:hidden px-2 w-full justify-around py-3 text-xs dark:text-white'>
+                                <div><span className='font-extrabold flex justify-center text-lg'>10</span> posts</div>
+                                <div><span className='font-extrabold flex justify-center text-lg'>10</span> followers</div>
+                                <div><span className='font-extrabold flex justify-center text-lg'>10</span> followings</div>
+                            </div>
+                            <div className='py-1 md:hidden dark:text-white flex justify-center flex-wrap'>
+                                This is the bio of the person
+                            </div>
+                            <div className='flex md:hidden gap-7 py-3 justify-center'>
+                                <a className='cursor-pointer text-red-600' href="/"><AiFillYoutube style={{ fontSize: 25 }} /></a>
+                                <a className='cursor-pointer text-pink-700' href="/"><AiFillInstagram style={{ fontSize: 25 }} /></a>
+                                <a className='cursor-pointer text-purple-600' href="/"><AiFillGithub style={{ fontSize: 25 }} /></a>
+                                <a className='cursor-pointer text-sky-500' href="/"><FaDiscord style={{ fontSize: 25 }} /></a>
+                            </div>
                         </div>
-                        <div className='py-1 md:hidden dark:text-white'>
-                            This is the bio of the person
-                        </div>
-                        <div className='flex md:hidden gap-7 py-3'>
-                            <a className='cursor-pointer text-slate-500' href="/"><AiFillYoutube style={{ fontSize: 25 }} /></a>
-                            <a className='cursor-pointer text-slate-500' href="/"><AiFillInstagram style={{ fontSize: 25 }} /></a>
-                            <a className='cursor-pointer text-slate-500' href="/"><AiFillGithub style={{ fontSize: 25 }} /></a>
-                            <a className='cursor-pointer text-slate-500' href="/"><FaDiscord style={{ fontSize: 25 }} /></a>
-                        </div>
-                        <div className='flex text-slate-400 border-y-2 border-slate-400 py-1 my-5 w-full md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center cursor-default'>
+                        <div className='flex text-slate-400 border-y-2 border-slate-400 py-1 my-5 w-full md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center cursor-default '>
                             <WidgetsIcon /><div>POST</div>
                         </div>
-                        <MyPost />
-                        <MyPost />
-                        <MyPost />
-                        <MyPost />
+                        <div className='flex flex-col gap-4 w-full items-center'>
+                            <MyPost />
+                            <MyPost />
+                            <MyPost />
+                            <MyPost />
+                        </div>
                     </div>
                 </div>
             </div>

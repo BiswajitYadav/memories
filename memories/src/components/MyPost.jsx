@@ -21,10 +21,10 @@ const MyPost = () => {
     };
     return (
         <>
-            <div className='flex flex-col bg-white dark:bg-[#231344] h-max md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center items-center rounded-md shadow-lg px-3 sm:px-5 py-5 gap-3 my-3'>
+            <div className='flex flex-col bg-white dark:bg-[#231344] h-max md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center items-center rounded-md shadow-lg px-2 sm:px-5 py-4 sm:py-5 gap-3 scroll-smooth'>
                 <div className='flex w-full justify-between'>
                     <div className='flex w-full content-start gap-2'>
-                        <Avatar className='my-auto' alt="Travis Howard" src="https://www.w3schools.com/howto/img_avatar.png " sx={{ width: 45, height: 45 }} />
+                        <Avatar className='my-auto' alt="Travis Howard" src="https://i.ytimg.com/vi/oxCAPWBNJag/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGBUgcigRMA8=&rs=AOn4CLBq6UUnvf2-ImYSgPwsIz8BJOcN6A" sx={{ width: 45, height: 45 }} />
                         <div className='flex flex-col justify-center'>
                             <div className='flex gap-1'>
                                 <div className='dark:text-white font-semibold text-sm'>Rohit Kumar Pandit</div>
@@ -86,7 +86,7 @@ const MyPost = () => {
                 <img className=' w-full object-cover rounded-md' src="https://images.unsplash.com/photo-1676234722308-ee7e21b9d3a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="" />
 
 
-                <div className='dark:text-white w-full flex font-medium'>
+                <div className='dark:text-white w-full flex font-medium px-1'>
                     Born To Shine ❤
                 </div>
 
@@ -102,8 +102,8 @@ const MyPost = () => {
 
 
                 <form className='bg-[#D9D9D9] dark:bg-[#1C1132] rounded-full flex items-center px-2 py-1 w-full'>
-                    <input className='p-2 px-2 md:px-8 bg-transparent w-full focus:outline-none dark:text-white' type="text" placeholder='Write a comment...' />
-                    <button className='text-white bg-[#573698] p-1 md:p-1 rounded-full hover:scale-105 duration-200'>
+                    <input className='p-1 px-2 md:px-8 bg-transparent w-full focus:outline-none dark:text-white' type="text" placeholder='Write a comment...' />
+                    <button className='text-[#573698] dark:text-white/70 rounded-full hover:scale-105 duration-200'>
                         <SendIcon style={{ fontSize: 30 }} />
                     </button>
                 </form>
