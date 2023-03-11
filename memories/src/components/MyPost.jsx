@@ -63,21 +63,21 @@ const MyPost = () => {
                         <div className='dark:bg-[#231344] rounded-md bg-white dark:text-white -m-2 p-2 duration-300'>
                             <MenuItem onClick={handleClose}>
                                 <ListItemIcon>
-                                    <EditIcon className='dark:text-white' style={{ fontSize: 25 }} />
+                                    <EditIcon className='text-violet-700' style={{ fontSize: 25 }} />
                                 </ListItemIcon>
-                                <p className='font-semibold text-[16px]'>Edit Post</p>
+                                <p className='font-semibold text-[16px]'>Edit</p>
                             </MenuItem>
                             <MenuItem onClick={handleClose}>
                                 <ListItemIcon>
-                                    <DeleteIcon className='dark:text-white' style={{ fontSize: 25 }} />
+                                    <ShareIcon className='text-blue-500' style={{ fontSize: 25 }} />
                                 </ListItemIcon>
-                                <p className='font-semibold text-[16px]'>Delete Post</p>
+                                <p className='font-semibold text-[16px]'>Share</p>
                             </MenuItem>
                             <MenuItem onClick={handleClose}>
                                 <ListItemIcon>
-                                    <ShareIcon className='dark:text-white' style={{ fontSize: 25 }} />
+                                    <DeleteIcon className='text-red-500' style={{ fontSize: 25 }} />
                                 </ListItemIcon>
-                                <p className='font-semibold text-[16px]'>Share Post</p>
+                                <p className='font-semibold text-[16px]'>Delete</p>
                             </MenuItem>
                         </div>
                     </Menu>

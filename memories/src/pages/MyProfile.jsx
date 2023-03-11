@@ -24,7 +24,7 @@ const MyProfile = () => {
                                         <VerifiedIcon style={{ fontSize: 16 }} />
                                     </Tooltip>
                                     <Link to="/editprofile">
-                                        <button className='hidden lg:block text-sm ml-4 py-1 px-3 rounded-md shadow-md hover:scale-105 duration-300 bg-white text-black
+                                        <button className='hidden lg:block text-sm ml-4 py-1 px-3 rounded-md shadow-md hover:scale-105 duration-300 bg-slate-100 text-black
                                     dark:bg-white/90 dark:hover:bg-white'>Edit Profile</button>
                                     </Link>
                                 </div>
