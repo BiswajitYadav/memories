@@ -15,6 +15,7 @@ import UpdatePassword from "./pages/UpdatePassword"
 import HelpAndSupport from "./pages/HelpAndSupport"
 import TermsAndCondition from "./pages/TermsAndCondition"
 import UserProfile from "./pages/UserProfile"
+import ChatPage from "./pages/ChatPage"
 
 
 function App() {
@@ -30,8 +31,9 @@ function App() {
         <Route path="/community" element={<Community />}></Route>
         <Route path="/notification" element={<Notification />}></Route>
         <Route path="/myprofile" element={<MyProfile />}></Route>
-        <Route path="/chat" element={<Chat />}>
-          <Route path=":chatId" element={<Chat />} />
+        <Route path="/chat">
+          <Route path="/chat" element={<Chat />} />
+          <Route path=":chatId" element={<ChatPage />} />
         </Route>
 
         <Route path="/authenticate" element={<TwoFA />}></Route>
@@ -42,7 +44,7 @@ function App() {
         <Route path="/editprofile" element={<EditProfile />}></Route>
         <Route path="/help" element={<HelpAndSupport />}></Route>
         <Route path="/t&c" element={<TermsAndCondition />}></Route>
-        
+
         <Route path="/profile" element={<UserProfile />}></Route>
       </Routes>
     </>

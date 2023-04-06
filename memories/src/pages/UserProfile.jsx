@@ -57,11 +57,11 @@ const UserProfile = () => {
                             <a className='cursor-pointer text-slate-500' href="/"><FaDiscord style={{ fontSize: 25 }} /></a>
                         </div>
 
-                        <button className='flex w-full md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center bg-[#8948B8] text-white py-2 hover:bg-[#8E2BC2] duration-200 font-semibold rounded-md text-lg'>
+                        <button className='flex w-full md:w-[75%] lg:w-[50%] xl:w-[45%] justify-center bg-[#8948B8] text-white py-2 hover:bg-[#8E2BC2] duration-200 font-semibold rounded-md text-lg'>
                             Follow
                         </button>
 
-                        <div className='flex text-slate-400 border-y-2 border-slate-400 py-1 my-7 w-full md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center cursor-default'>
+                        <div className='flex text-slate-400 border-y-2 border-slate-400 py-1 my-7 w-full md:w-[75%] lg:w-[50%] xl:w-[45%] justify-center cursor-default'>
                             <WidgetsIcon /><div>POST</div>
                         </div>
                         <div className='w-full md:w-[80%] lg:w-[50%] xl:w-[45%] duration-300 flex flex-col gap-7 mx-auto'>
