@@ -47,7 +47,7 @@ const Home = () => {
         <Header />
         <div className='bg-[#D9D9D9] dark:bg-[#1C1132] overflow-y-auto h-[92vh] w-screen flex justify-between gap-x-5 py-4 px-2 sm:px-5 md:px-16 '>
           <PeopleSuggestions />
-          <div className='w-full md:w-[80%] lg:w-[50%] duration-300 flex flex-col gap-4 md:gap-7 mx-auto'>
+          <div className='w-full md:w-[80%] lg:w-[70%] xl:w-[50%] duration-300 flex flex-col gap-4 md:gap-7 mx-auto'>
             <CreatePost />
             <Post />
             <Post />

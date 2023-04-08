@@ -25,12 +25,12 @@ const CreatePost = () => {
                         aria-describedby="modal-modal-description"
                         className="flex justify-center items-center"
                     >
-                        <div className='py-5 px-3 md:p-5 md:w-[70%] lg:p-10 bg-white w-full  lg:w-[40%] rounded-lg'>
+                        <div className='py-5 px-3 md:p-5 md:w-[70%] lg:p-10 bg-white w-full dark:bg-[#231344] lg:w-[40%] rounded-lg'>
                             <form className='flex flex-col'>
-                                <label for="dropzone-file" className="bg-white w-full" >
+                                <label for="dropzone-file" className="bg-white dark:bg-[#231344] w-full" >
                                     <div className="relative rounded-full select-none flex flex-col gap-5">
-                                        <textarea className='px-5 rounded-full py-1.5 bg-[#D9D9D9]' placeholder='Write something to post' name="" id="" cols="30" rows="1"></textarea>
-                                        <div className="flex flex-col py-10 rounded-2xl bg-[#D9D9D9]">
+                                        <textarea className='px-5 rounded-full py-1.5 bg-[#D9D9D9] dark:bg-[#1C1132] dark:text-white' placeholder='Write something to post' name="" id="" cols="30" rows="1"></textarea>
+                                        <div className="flex flex-col py-10 rounded-2xl bg-[#D9D9D9] dark:bg-[#1C1132]">
                                             <CloudUploadIcon className='m-auto text-[#B5B5B5]' fontSize='large' />
                                             <p className="m-auto text-sm font-semibold text-[#B5B5B5]">Click to select an image</p>
                                         </div>
