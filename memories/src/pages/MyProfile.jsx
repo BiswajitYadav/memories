@@ -1,4 +1,4 @@
-import { Avatar, Tooltip } from '@mui/material';
+import { Avatar, Modal, Tooltip } from '@mui/material';
 import React from 'react'
 import Header from './../components/Header';
 import VerifiedIcon from '@mui/icons-material/Verified';
@@ -7,8 +7,23 @@ import { FaDiscord } from 'react-icons/fa'
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import MyPost from '../components/MyPost';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import CloseIcon from '@mui/icons-material/Close';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import Followers from '../components/Followers';
+import Followings from '../components/Followings';
+
 
 const MyProfile = () => {
+
+    const [followersModalOpen, setFollowersModalOpen] = useState(false);
+    const handlefollowersModalOpen = () => setFollowersModalOpen(true);
+    const handlefollowersModalClosed = () => setFollowersModalOpen(false);
+
+    const [followingsModalOpen, setFollowingsModalOpen] = useState(false);
+    const handlefollowingsModalOpen = () => setFollowingsModalOpen(true);
+    const handlefollowingsModalClosed = () => setFollowingsModalOpen(false);
+
     return (
         <>
             <div className='bg-[#D9D9D9] dark:bg-slate-900 h-screen'>
@@ -32,8 +47,74 @@ const MyProfile = () => {
                                 <div className='font-semibold text-sm py-2 lg:py-3 text-gray-400'>Developer</div>
                                 <div className='hidden md:flex gap-x-4 lg:gap-x-8 dark:text-white'>
                                     <div className='flex items-baseline gap-1'><span className='font-bold flex justify-center text-lg'>10</span><span className='text-xs'>posts</span></div>
-                                    <div className='flex items-baseline gap-1'><span className='font-bold flex justify-center text-lg'>10</span><span className='text-xs'>followers</span></div>
-                                    <div className='flex items-baseline gap-1'><span className='font-extrabold flex justify-center text-lg'>10</span><span className='text-xs'>followings</span></div>
+                                    <button onClick={handlefollowersModalOpen} className='flex items-baseline gap-1'><span className='font-bold flex justify-center text-lg'>10</span><span className='text-xs'>followers</span></button>
+                                    <Modal
+                                        open={followersModalOpen}
+                                        onClose={handlefollowersModalClosed}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                        className="flex justify-center items-center"
+                                    >
+                                        <div className='py-3 px-2 md:px-3 md:p-4 h-[60%] md:w-[70%] lg:px-5 lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[40%] rounded-lg'>
+                                            <div className='bg-white dark:bg-[#231344]'>
+                                                <div className='flex justify-between dark:text-white px-3'>
+                                                    <div className='flex items-center gap-1 py-3 lg:py-5'>
+                                                        <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>Followers</div>
+                                                        <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>10K</div>
+                                                    </div>
+                                                    <button>
+                                                        <CloseIcon onClick={handlefollowersModalClosed} />
+                                                    </button>
+                                                </div>
+                                                <div className='flex flex-col overflow-y-auto h-[46vh] md:h-[45vh] lg:h-[46vh] scroll-smooth '>
+                                                    <Followers />
+                                                    <Followers />
+                                                    <Followers />
+                                                    <Followers />
+                                                    <Followers />
+                                                    <Followers />
+                                                    <Followers />
+                                                    <Followers />
+                                                    <Followers />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Modal>
+
+
+                                    <button onClick={handlefollowingsModalOpen} className='flex items-baseline gap-1'><span className='font-extrabold flex justify-center text-lg'>10</span><span className='text-xs'>followings</span></button>
+                                    <Modal
+                                        open={followingsModalOpen}
+                                        onClose={handlefollowingsModalClosed}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                        className="flex justify-center items-center"
+                                    >
+                                        <div className='py-3 px-2 md:px-3 md:p-4 h-[60%] md:w-[70%] lg:px-5 lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[50%] xl:w-[40%] rounded-lg'>
+                                            <div className='bg-white dark:bg-[#231344]'>
+                                                <div className='flex justify-between dark:text-white px-3'>
+                                                    <div className='flex items-center gap-1 py-3 lg:py-5'>
+                                                        <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>Followings</div>
+                                                        <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>10K</div>
+                                                    </div>
+                                                    <button>
+                                                        <CloseIcon onClick={handlefollowingsModalClosed} />
+                                                    </button>
+                                                </div>
+                                                <div className='flex flex-col overflow-y-auto h-[46vh] md:h-[45vh] lg:h-[46vh] scroll-smooth '>
+                                                    <Followings />
+                                                    <Followings />
+                                                    <Followings />
+                                                    <Followings />
+                                                    <Followings />
+                                                    <Followings />
+                                                    <Followings />
+                                                    <Followings />
+                                                    <Followings />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </Modal>
                                 </div>
                                 <div className='py-3 hidden md:block dark:text-white whitespace-pre-wrap'>
                                     Bio of the person
@@ -46,13 +127,13 @@ const MyProfile = () => {
                                 </div>
                             </div>
                         </div>
-                        
+
                         {/* profile page for small devices */}
                         <div className='w-full bg-white dark:bg-[#231344] gap-6 rounded-b-md shadow-md'>
                             <div className='flex md:hidden px-2 w-full justify-around py-3 text-xs dark:text-white'>
                                 <div><span className='font-extrabold flex justify-center text-lg'>10</span> posts</div>
-                                <div><span className='font-extrabold flex justify-center text-lg'>10</span> followers</div>
-                                <div><span className='font-extrabold flex justify-center text-lg'>10</span> followings</div>
+                                <button onClick={handlefollowersModalOpen}><span className='font-extrabold flex justify-center text-lg'>10</span> followers</button>
+                                <button onClick={handlefollowingsModalOpen}><span className='font-extrabold flex justify-center text-lg'>10</span> followings</button>
                             </div>
                             <div className='py-1 md:hidden dark:text-white flex justify-center flex-wrap'>
                                 This is the bio of the person

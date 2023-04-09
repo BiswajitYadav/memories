@@ -19,6 +19,9 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+import CloseIcon from '@mui/icons-material/Close';
+import LogoutComponent from '../components/LogoutComponent';
+
 
 import { list } from 'postcss';
 
@@ -27,6 +30,10 @@ function Header() {
   const [openModal, setOpenModal] = useState(false);
   const handleModalOpen = () => setOpenModal(true);
   const handleModalClose = () => setOpenModal(false);
+
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const handleLogoutModalOpen = () => setLogoutModalOpen(true);
+  const handleLogoutModalClosed = () => setLogoutModalOpen(false);
 
   const localTheme = localStorage.getItem("theme")
   const [theme, setTheme] = useState(localTheme);
@@ -116,11 +123,11 @@ function Header() {
             }}
               className={localTheme === "dark" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><DarkModeIcon /></button>
           </div>
-          <MenuItem>
+          <MenuItem onClick={handleLogoutModalOpen}>
             <ListItemIcon>
               <IoMdLogOut className='dark:text-white' style={{ fontSize: 24 }} />
             </ListItemIcon>
-            <p className='font-semibold text-[17px]'>Logout</p>
+            <button className='font-semibold text-[17px]'>Logout</button>
           </MenuItem>
         </div>
       </List>
@@ -221,7 +228,7 @@ function Header() {
                   }} className={localTheme === "dark" ? "bg-[#901EC7] py-2 px-5 rounded text-white duration-300 transition-all ease-in-out" : "px-5 py-2 rounded dark:text-white duration-300 transition-all ease-in-out"}><DarkModeIcon /></button>
               </Tooltip>
             </div>
-            <MenuItem>
+            <MenuItem onClick={handleLogoutModalOpen}>
               <ListItemIcon>
                 <IoMdLogOut className='dark:text-white' style={{ fontSize: 24 }} />
               </ListItemIcon>
@@ -272,6 +279,31 @@ function Header() {
               <p className='font-semibold text-[17px]'>Terms & Conditions</p>
             </MenuItem>
           </Link>
+        </div>
+      </Modal>
+
+
+      <Modal
+        open={logoutModalOpen}
+        onClose={handleLogoutModalClosed}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+        className="flex justify-center items-center"
+      >
+        <div className='py-3 px-2 md:px-3 md:p-4 h-[60%] md:w-[60%] lg:px-5 lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[50%] xl:w-[30%] rounded-lg'>
+          <div className='bg-white dark:bg-[#231344]'>
+            <div className='flex justify-between dark:text-white px-3'>
+              <div className='flex items-center gap-1 py-3 lg:py-5'>
+                <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>Confirm Logout !</div>
+              </div>
+              <button>
+                <CloseIcon onClick={handleLogoutModalClosed} />
+              </button>
+            </div>
+            <div className='flex flex-col'>
+              <LogoutComponent />
+            </div>
+          </div>
         </div>
       </Modal>
 
