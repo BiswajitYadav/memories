@@ -18,10 +18,10 @@ const LogoutComponent = () => {
                             <VerifiedIcon fontSize='large' className='text-gray-400' />
                         </Tooltip>
                         // <Tooltip  title="Developer">
-                        //     <VerifiedIcon className='text-gray-400' />
+                        //     <VerifiedIcon className='text-yellow-400' />
                         // </Tooltip>
                         // <Tooltip  title="Developer">
-                        //     <VerifiedIcon className='text-gray-400' />
+                        //     <VerifiedIcon className='text-blue-400' />
                         // </Tooltip>
                     }>
                     <Avatar sx={{ height: '150px', width: '150px' }} alt="Travis Howard" src="https://i.ytimg.com/vi/oxCAPWBNJag/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGBUgcigRMA8=&rs=AOn4CLBq6UUnvf2-ImYSgPwsIz8BJOcN6A" className='' />
