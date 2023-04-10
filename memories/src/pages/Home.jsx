@@ -1,13 +1,20 @@
-import { Avatar, Tooltip } from '@mui/material'
-import React from 'react'
+import { Avatar, Modal, Tooltip } from '@mui/material'
+import React, { useState } from 'react'
 import Header from '../components/Header'
 import CreatePost from '../components/Home/CreatePost'
 import PeopleSuggestions from '../components/Home/PeopleSuggestions'
 import VerifiedIcon from '@mui/icons-material/Verified';
 import Post from '../components/Home/Post'
 import { Link } from 'react-router-dom'
+import CloseIcon from '@mui/icons-material/Close';
+import LogoutComponent from '../components/LogoutComponent';
 
-const LogoutComponent = () => {
+
+const LogoutComponentHome = () => {
+
+  const [logoutModalOpen, setLogoutModalOpen] = useState(false);
+  const handleLogoutModalOpen = () => setLogoutModalOpen(true);
+  const handleLogoutModalClosed = () => setLogoutModalOpen(false);
   return (
     <>
       <div className='hidden xl:flex flex-col w-[25%] h-max dark:text-white p-5 gap-5 rounded-md'>
@@ -32,8 +39,31 @@ const LogoutComponent = () => {
             </div>
           </Link>
           <Tooltip title="Logout">
-            <button className='h-max text-gray-400 text-sm my-auto px-3 py-1 rounded flex font-semibold'>Logout</button>
+            <button onClick={handleLogoutModalOpen} className='h-max text-gray-400 text-sm my-auto px-3 py-1 rounded flex font-semibold'>Logout</button>
           </Tooltip>
+          <Modal
+            open={logoutModalOpen}
+            onClose={handleLogoutModalClosed}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            className="flex justify-center items-center"
+          >
+            <div className='py-3 px-2 md:px-3 md:p-4 h-[60%] md:w-[60%] lg:px-5 lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[50%] xl:w-[30%] rounded-lg'>
+              <div className='bg-white dark:bg-[#231344]'>
+                <div className='flex justify-between dark:text-white px-3'>
+                  <div className='flex items-center gap-1 py-3 lg:py-5'>
+                    <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>Confirm Logout !</div>
+                  </div>
+                  <button>
+                    <CloseIcon onClick={handleLogoutModalClosed} />
+                  </button>
+                </div>
+                <div className='flex flex-col'>
+                  <LogoutComponent />
+                </div>
+              </div>
+            </div>
+          </Modal>
         </div>
       </div>
     </>
@@ -55,9 +85,10 @@ const Home = () => {
             <Post />
             <Post />
           </div>
-          <LogoutComponent />
+          <LogoutComponentHome />
         </div>
       </div>
+
     </>
   )
 }

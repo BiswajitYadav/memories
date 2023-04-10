@@ -16,6 +16,7 @@ import HelpAndSupport from "./pages/HelpAndSupport"
 import TermsAndCondition from "./pages/TermsAndCondition"
 import UserProfile from "./pages/UserProfile"
 import ChatPage from "./pages/ChatPage"
+import CreateProfileInfo from "./pages/CreateProfileInfo"
 
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/t&c" element={<TermsAndCondition />}></Route>
 
         <Route path="/profile" element={<UserProfile />}></Route>
+        <Route path="/createprofile" element={<CreateProfileInfo />}></Route>
       </Routes>
     </>
   )
