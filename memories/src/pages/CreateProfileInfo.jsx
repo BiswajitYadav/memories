@@ -51,7 +51,7 @@ const CreateProfileInfo = () => {
                                 <option value="others">Others</option>
                             </select>
                         </div>
-                        <button className="bg-[#901EC7] py-2 font-bold text-xl text-white bg-gradient-to-bl from-[#573698] to-[#9013C9] rounded-3xl hover:scale-105 duration-300">Confirm</button>
+                        <button className="bg-[#901EC7] py-2 font-bold text-xl text-white bg-gradient-to-bl from-[#573698] to-[#9013C9] rounded-3xl hover:scale-105 duration-300">CONFIRM</button>
                     </div>
                 </div>
             </div>
