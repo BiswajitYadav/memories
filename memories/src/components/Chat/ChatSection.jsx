@@ -48,7 +48,7 @@ const ChatSection = () => {
     return (
         <>
             <div className="h-full w-full bg-white dark:bg-[#1C1132] rounded-md">
-                <div className='h-max flex px-3 lg:px-10 py-3 lg:py-3 xl:py-5 justify-between bg-[#FFFFFF] dark:bg-[#2c1a57] rounded-md md:-mx-2 shadow-lg dark:shadow-black'>
+                <div className='h-max flex px-3 lg:px-10 py-2.5 lg:py-3 xl:py-4 justify-between bg-[#FFFFFF] dark:bg-[#2c1a57] rounded-md md:-mx-2 shadow-lg dark:shadow-black'>
                     <div className='flex gap-1 sm:gap-3 lg:gap-5 h-full'>
                         <Link to="/Chat" className='flex my-auto gap-1 sm:gap-3 lg:gap-5 h-full'>
                             <ArrowBackIcon className='md:scale-125 xl:scale-150 text-[#8948B8]' />
@@ -88,12 +88,6 @@ const ChatSection = () => {
                     >
                         <div className='dark:bg-[#231344] rounded-md bg-white dark:text-white -m-2
                          p-1 lg:p-2 duration-300'>
-                            <MenuItem onClick={handleClose}>
-                                <ListItemIcon>
-                                    <PersonIcon className='dark:text-white' style={{ fontSize: 25 }} />
-                                </ListItemIcon>
-                                <p className='font-semibold text-[16px]'>View Profile</p>
-                            </MenuItem>
                             <MenuItem onClick={handleClose}>
                                 <ListItemIcon>
                                     <ReportProblemIcon className='dark:text-white' style={{ fontSize: 25 }} />

@@ -10,7 +10,7 @@ const UploadProfileImage = () => {
             <div className="w-full h-max flex gap-3 lg:gap-5">
                 <label for="dropzone-file" className="rounded-full" >
                     <div className="relative rounded-full select-none">
-                        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fHByb2ZpbGV8ZW58MHx8MHx8&w=1000&q=80" alt="" className='w-32 rounded-full' />
+                        <img src="https://wallpaperaccess.com/full/1270950.jpg" alt="" className='w-32 rounded-full object-cover h-28 md:h-32 lg:h-24 xl:h-32' />
                         <div className='inset-0 z-10 absolute h-full w-full bg-black bg-opacity-0 hover:bg-opacity-30 opacity-0 hover:opacity-100 duration-300 text-white flex items-center rounded-full cursor-pointer'><PhotoCameraIcon className='m-auto' /></div>
                     </div>
                     <input id="dropzone-file" type="file" accept='image/*' className="hidden" />

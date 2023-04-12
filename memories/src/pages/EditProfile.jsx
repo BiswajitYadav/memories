@@ -28,9 +28,9 @@ const EditProfile = () => {
         <div className='bg-[#D9D9D9] dark:bg-[#1C1132] overflow-y-auto h-max lg:h-[92vh] w-screen flex justify-between gap-x-5 py-3 px-2 sm:px-5 md:px-9 md:py-5 lg:px-5 xl:px-16'>
           <div className='bg-white dark:bg-[#231344] dark:shadow-black rounded-xl w-full flex shadow-lg'>
             <SideBarNav />
-            <div className='p-4 md:p-5 xl:p-10 w-full h-full'>
+            <div className='p-4 md:p-5 lg:py-2 xl:p-10 w-full h-full'>
               <UploadProfileImage />
-              <form action="" className='py-5 w-full lg:h-[60%] xl:h-[75%] flex flex-col lg:flex-row-reverse gap-4'>
+              <form action="" className='py-5 lg:py-3 w-full lg:h-[60%] xl:h-[75%] flex flex-col lg:flex-row-reverse gap-4'>
                 <div className='lg:w-[50%] flex flex-col gap-1 xl:gap-2'>
                   <div>
                     <p className='pl-2 md:pl-5 text-xs dark:text-white'>Email</p>
@@ -42,6 +42,15 @@ const EditProfile = () => {
                     <p className='pl-2 md:pl-5 text-xs dark:text-white'>User ID</p>
                     <div className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]'>
                       test@farzi.com
+                    </div>
+                  </div>
+                  <div className='px-1 py-3 flex-col gap-2 hidden'>
+                    <div className='font-semibold dark:text-white'>Social Links</div>
+                    <div className=' flex flex-col gap-3 py-1'>
+                    <input type="text" placeholder='Instagram' className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' />
+                    <input type="text" placeholder='Facebook' className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' />
+                    <input type="text" placeholder='Github' className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' />
+                    <input type="text" placeholder='Discord' className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' />
                     </div>
                   </div>
                 </div>

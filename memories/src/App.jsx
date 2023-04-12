@@ -17,6 +17,7 @@ import TermsAndCondition from "./pages/TermsAndCondition"
 import UserProfile from "./pages/UserProfile"
 import ChatPage from "./pages/ChatPage"
 import CreateProfileInfo from "./pages/CreateProfileInfo"
+import PartnerProgram from "./pages/PartnerProgram"
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
         <Route path="/editprofile" element={<EditProfile />}></Route>
         <Route path="/help" element={<HelpAndSupport />}></Route>
         <Route path="/t&c" element={<TermsAndCondition />}></Route>
+        <Route path="/partnerprogram" element={<PartnerProgram />}></Route>
 
         <Route path="/profile" element={<UserProfile />}></Route>
         <Route path="/createprofile" element={<CreateProfileInfo />}></Route>

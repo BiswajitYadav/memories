@@ -4,6 +4,7 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import LockPersonIcon from '@mui/icons-material/LockPerson';
 import LiveHelpIcon from '@mui/icons-material/LiveHelp';
 import PrivacyTipIcon from '@mui/icons-material/PrivacyTip';
+import HandshakeIcon from '@mui/icons-material/Handshake';
 
 const SideBarNav = () => {
   return (
@@ -13,6 +14,7 @@ const SideBarNav = () => {
             <NavLink className={({ isActive }) => (isActive ? 'dark:text-white bg-[#D9D9D9] rounded-r-lg w-full px-4 py-5 flex items-center gap-2 duration-300 font-semibold dark:bg-[#1C1132] dark:shadow-md dark:shadow-black' : 'dark:text-white w-full px-4 py-5 flex items-center gap-2 font-semibold')} to="/updatepassword"><LockPersonIcon />Update Password</NavLink>
             <NavLink className={({ isActive }) => (isActive ? 'dark:text-white bg-[#D9D9D9] rounded-r-lg w-full px-4 py-5 flex items-center gap-2 duration-300 font-semibold dark:bg-[#1C1132] dark:shadow-md dark:shadow-black' : 'dark:text-white w-full px-4 py-5 flex items-center gap-2 font-semibold')} to="/help"><LiveHelpIcon />Help & Support</NavLink>
             <NavLink className={({ isActive }) => (isActive ? 'dark:text-white bg-[#D9D9D9] rounded-r-lg w-full px-4 py-5 flex items-center gap-2 duration-300 font-semibold dark:bg-[#1C1132] dark:shadow-md dark:shadow-black' : 'dark:text-white w-full px-4 py-5 flex items-center gap-2 font-semibold')} to="/t&c"><PrivacyTipIcon />Terms & Conditions</NavLink>
+            <NavLink className={({ isActive }) => (isActive ? 'dark:text-white bg-[#D9D9D9] rounded-r-lg w-full px-4 py-5  items-center gap-2 duration-300 font-semibold dark:bg-[#1C1132] dark:shadow-md dark:shadow-black flex' : 'dark:text-white w-full px-4 py-5 items-center gap-2 font-semibold flex')} to="/partnerprogram"><HandshakeIcon />Partnership Program</NavLink>
         </div>
     </>
   )
