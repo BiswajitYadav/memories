@@ -94,8 +94,9 @@ const MyPost = () => {
                     </Menu>
                 </div>
 
-
-                <img className=' w-full object-cover rounded-md' src="https://images.unsplash.com/photo-1676234722308-ee7e21b9d3a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="" />
+                <Link className='w-full' to="/mypost/:postID">
+                    <img className=' w-full object-cover rounded-md' src="https://images.unsplash.com/photo-1676234722308-ee7e21b9d3a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="image" />
+                </Link>
 
 
                 <div className='dark:text-white w-full flex font-medium px-1'>

@@ -59,7 +59,7 @@ const ViewMyPost = () => {
                 <button className='p-2 text-[#D9D9D9] rounded-full duration-200 hover:bg-white hover:shadow-lg hover:outline-2'><ArrowBackIcon /></button>
               </div>
               <div className='p-4'>
-                <img className='h-[70vh] lg:h-[80vh] xl:h-[83vh] w-full object-contain rounded-md' src="https://images.unsplash.com/photo-1620121692029-d088224ddc74?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MXx8d2FsbHBhcGVyJTIwZm9yJTIwNGslMjB1bHRyYXdpZGUlMjBkZXZpY2V8ZW58MHx8MHx8&auto=format&fit=crop&w=500&q=60" alt="Image" />
+                <img className='h-[70vh] lg:h-[80vh] xl:h-[83vh] w-full object-contain rounded-md' src="https://c1.wallpaperflare.com/preview/776/410/395/wallpaper-android-wallpapers-android-backgrounds-lock-screen-background.jpg" alt="Image" />
               </div>
             </div>
 

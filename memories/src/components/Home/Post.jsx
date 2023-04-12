@@ -90,8 +90,9 @@ const Post = () => {
           </Menu>
         </div>
 
-
-        <img className='w-full object-cover rounded-md' src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8YnVnYXR0aSUyMGNoaXJvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Image" />
+        <Link className='w-full' to="/post/:postID">
+          <img className='w-full object-cover rounded-md' src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8YnVnYXR0aSUyMGNoaXJvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Image" />
+        </Link>
 
 
         <div className='dark:text-white w-full flex font-medium px-1'>
