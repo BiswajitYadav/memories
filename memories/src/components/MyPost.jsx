@@ -33,6 +33,7 @@ const MyPost = () => {
     const handleCommentModalOpen = () => setCommentModalOpen(true);
     const handleCommentModalClosed = () => setCommentModalOpen(false);
 
+
     return (
         <>
             <div className='flex flex-col bg-white dark:bg-[#231344] h-max md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center items-center rounded-md shadow-lg px-2 sm:px-5 py-4 sm:py-5 gap-3 scroll-smooth'>
@@ -75,27 +76,24 @@ const MyPost = () => {
                         anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                     >
                         <div className='dark:bg-[#231344] rounded-md bg-white dark:text-white -m-2 p-2 duration-300'>
-                            <MenuItem onClick={handleClose}>
-                                <ListItemIcon>
-                                    <EditIcon className='text-violet-700' style={{ fontSize: 25 }} />
-                                </ListItemIcon>
-                                <p className='font-semibold text-[16px]'>Edit</p>
-                            </MenuItem>
+                            <Link to="/mypost/:postID">
+                                <MenuItem onClick={handleClose}>
+                                    <ListItemIcon>
+                                        <EditIcon className='text-violet-700' style={{ fontSize: 25 }} />
+                                    </ListItemIcon>
+                                    <p className='font-semibold text-[16px]'>Edit</p>
+                                </MenuItem>
+                            </Link>
                             <MenuItem onClick={handleClose}>
                                 <ListItemIcon>
                                     <ShareIcon className='text-blue-500' style={{ fontSize: 25 }} />
                                 </ListItemIcon>
                                 <p className='font-semibold text-[16px]'>Share</p>
                             </MenuItem>
-                            <MenuItem onClick={handleClose}>
-                                <ListItemIcon>
-                                    <DeleteIcon className='text-red-500' style={{ fontSize: 25 }} />
-                                </ListItemIcon>
-                                <p className='font-semibold text-[16px]'>Delete</p>
-                            </MenuItem>
                         </div>
                     </Menu>
                 </div>
+
 
                 <img className=' w-full object-cover rounded-md' src="https://images.unsplash.com/photo-1676234722308-ee7e21b9d3a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="" />
 

@@ -18,6 +18,8 @@ import UserProfile from "./pages/UserProfile"
 import ChatPage from "./pages/ChatPage"
 import CreateProfileInfo from "./pages/CreateProfileInfo"
 import PartnerProgram from "./pages/PartnerProgram"
+import ViewMyPost from "./pages/ViewMyPost"
+import ViewPost from "./pages/ViewPost"
 
 
 function App() {
@@ -50,6 +52,9 @@ function App() {
 
         <Route path="/profile" element={<UserProfile />}></Route>
         <Route path="/createprofile" element={<CreateProfileInfo />}></Route>
+
+        <Route path="/mypost/:postID" element={<ViewMyPost />}></Route>
+        <Route path="/post/:postID" element={<ViewPost />}></Route>
       </Routes>
     </>
   )
