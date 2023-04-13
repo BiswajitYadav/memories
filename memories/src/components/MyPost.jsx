@@ -36,7 +36,7 @@ const MyPost = () => {
 
     return (
         <>
-            <div className='flex flex-col bg-white dark:bg-[#231344] h-max md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center items-center rounded-md shadow-lg px-2 sm:px-5 py-4 sm:py-5 gap-3 scroll-smooth'>
+            <div className='flex flex-col bg-white dark:bg-[#231344] h-max w-full md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center items-center rounded-md shadow-lg px-2 sm:px-5 py-4 sm:py-5 gap-3 scroll-smooth'>
                 <div className='flex w-full justify-between'>
                     <div className='flex w-full content-start gap-2'>
                         <Avatar className='my-auto' alt="Travis Howard" src="https://i.ytimg.com/vi/oxCAPWBNJag/maxresdefault.jpg?sqp=-oaymwEmCIAKENAF8quKqQMa8AEB-AH-CYAC0AWKAgwIABABGBUgcigRMA8=&rs=AOn4CLBq6UUnvf2-ImYSgPwsIz8BJOcN6A" sx={{ width: 45, height: 45 }} />
@@ -94,8 +94,8 @@ const MyPost = () => {
                     </Menu>
                 </div>
 
-                <Link className='w-full' to="/mypost/:postID">
-                    <img className=' w-full object-cover rounded-md' src="https://images.unsplash.com/photo-1676234722308-ee7e21b9d3a3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" alt="image" />
+                <Link className='w-full h-[60vh] bg-black rounded-md' to="/mypost/:postID">
+                    <img className='w-full object-contain h-full rounded-md' src="https://wallpaperaccess.com/full/521099.jpg" alt="image" />
                 </Link>
 
 

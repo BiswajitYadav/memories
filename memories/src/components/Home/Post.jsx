@@ -11,6 +11,7 @@ import ShareIcon from '@mui/icons-material/Share';
 import CloseIcon from '@mui/icons-material/Close';
 import Like from '../Like';
 import Comment from '../Comment';
+import LogoutComponent from '../LogoutComponent';
 
 const Post = () => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -29,6 +30,10 @@ const Post = () => {
   const [commentModalOpen, setCommentModalOpen] = useState(false);
   const handleCommentModalOpen = () => setCommentModalOpen(true);
   const handleCommentModalClosed = () => setCommentModalOpen(false);
+
+  const [reportModal, setReportModal] = useState(false);
+  const handleReportModalOpen = () => setReportModal(true);
+  const handleReportModalClose = () => setReportModal(false);
 
   return (
     <>
@@ -81,17 +86,40 @@ const Post = () => {
                 <p className='font-semibold text-[16px]'>Share</p>
               </MenuItem>
               <MenuItem onClick={handleClose}>
-                <ListItemIcon>
+                <ListItemIcon onClick={handleReportModalOpen}>
                   <ReportProblemIcon className='text-red-500' style={{ fontSize: 25 }} />
                 </ListItemIcon>
                 <p className='font-semibold text-[16px]'>Report</p>
+                <Modal
+                  open={handleReportModalOpen}
+                  onClose={handleReportModalClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                  className="flex justify-center items-center"
+                >
+                  <div className='py-3 px-2 md:px-3 md:p-4 h-[60%] md:w-[60%] lg:px-5 lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[50%] xl:w-[30%] rounded-lg'>
+                    <div className='bg-white dark:bg-[#231344]'>
+                      <div className='flex justify-between dark:text-white px-3'>
+                        <div className='flex items-center gap-1 py-3 lg:py-5'>
+                          <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>Confirm Logout !</div>
+                        </div>
+                        <button>
+                          <CloseIcon onClick={handleReportModalClose} />
+                        </button>
+                      </div>
+                      <div className='flex flex-col'>
+                        <LogoutComponent />
+                      </div>
+                    </div>
+                  </div>
+                </Modal>
               </MenuItem>
             </div>
           </Menu>
         </div>
 
-        <Link className='w-full' to="/post/:postID">
-          <img className='w-full object-cover rounded-md' src="https://images.unsplash.com/photo-1544636331-e26879cd4d9b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8YnVnYXR0aSUyMGNoaXJvbnxlbnwwfHwwfHw%3D&auto=format&fit=crop&w=500&q=60" alt="Image" />
+        <Link className='w-full h-[60vh] bg-black rounded-md' to="/post/:postID">
+          <img className='w-full object-contain h-full rounded-md' src="https://i.pinimg.com/736x/23/ea/0b/23ea0bd6f98d7ca20b9d9aa479f472d9.jpg" alt="Image" />
         </Link>
 
 

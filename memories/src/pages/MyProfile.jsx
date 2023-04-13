@@ -145,7 +145,7 @@ const MyProfile = () => {
                                 <a className='cursor-pointer text-sky-500' href="/"><FaDiscord style={{ fontSize: 25 }} /></a>
                             </div>
                         </div>
-                        <div className='flex text-slate-400 border-y-2 border-slate-400 py-1 my-5 w-full md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center cursor-default '>
+                        <div className='flex text-slate-400 border-y-2 border-slate-400 py-1 my-5 w-full md:w-[75%] lg:w-[60%] xl:w-[40%] justify-center cursor-default'>
                             <WidgetsIcon /><div>POST</div>
                         </div>
                         <div className='flex flex-col gap-4 w-full items-center'>
