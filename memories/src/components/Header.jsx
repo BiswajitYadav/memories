@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import HomeIcon from '@mui/icons-material/Home';
 import { Link, NavLink } from 'react-router-dom';
 import logo from '../assets/image/memories_logo.png'
@@ -24,8 +24,14 @@ import LogoutComponent from '../components/LogoutComponent';
 
 
 import { list } from 'postcss';
+import MainContext from '../context/MainContext';
 
 function Header() {
+
+  const context = useContext(MainContext)
+  const { userProfileData, fetchSessionUserProfile } = context;
+
+  const { _id, name, email, profileURL, gender, userName } = userProfileData;
 
   const [openModal, setOpenModal] = useState(false);
   const handleModalOpen = () => setOpenModal(true);
@@ -37,6 +43,14 @@ function Header() {
 
   const localTheme = localStorage.getItem("theme")
   const [theme, setTheme] = useState(localTheme);
+
+  useEffect(() => {
+    fetchSessionUserProfile()
+    if (userProfileData) {
+      sessionStorage.setItem('sessionUserID', _id)
+    }
+  }, [])
+
 
   useEffect(() => {
     if (theme === "dark") {
@@ -137,38 +151,57 @@ function Header() {
   return (
     <>
       <header className='hidden md:flex justify-around lg:gap-x-40 h-14 bg-white shadow-md dark:bg-[#231344]'>
-        <Link to="/home" className='my-auto'>
+
+        <Link to="/" className='my-auto'>
           <Tooltip title="The Memories">
             <img className='w-12 h-12' src={logo} alt="logo" />
           </Tooltip>
         </Link>
+
         <div className='flex gap-3 h-full item-center'>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/home">
+
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/">
+
             <Tooltip title="Home" className="mx-auto">
               <HomeIcon style={{ fontSize: 35 }} />
             </Tooltip>
+
           </NavLink>
+
           <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/chat">
+
             <Tooltip title="Messages" className="mx-auto">
               <MessageIcon style={{ fontSize: 30 }} />
             </Tooltip>
+
           </NavLink>
+
           <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/community">
+
             <Tooltip title="Community" className="mx-auto">
               <PeopleIcon style={{ fontSize: 30 }} />
             </Tooltip>
+
           </NavLink>
+
           <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/notification">
+
             <Tooltip title="Notifications" className="mx-auto">
               <NotificationsIcon style={{ fontSize: 30 }} />
             </Tooltip>
+
           </NavLink>
+
           <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/myprofile">
+
             <Tooltip title="Profile" className="mx-auto">
               <PersonIcon style={{ fontSize: 30 }} />
             </Tooltip>
+            
           </NavLink>
+
         </div>
+
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -177,7 +210,8 @@ function Header() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 39, height: 39 }}>B</Avatar>
+            <Avatar src={profileURL} alt={name?.slice(0, 1)} sx={{ width: 39, height: 39 }} />
+
           </IconButton>
         </Tooltip>
         <Menu
@@ -301,7 +335,7 @@ function Header() {
               </button>
             </div>
             <div className='flex flex-col'>
-              <LogoutComponent />
+              <LogoutComponent profileURL={profileURL} name={name} />
             </div>
           </div>
         </div>
@@ -318,17 +352,17 @@ function Header() {
         </Drawer>
 
         <div className='flex justify-between p-2 border-b-[0.9px] dark:border-b-[0.9px] border-[#D9D9D9] dark:border-[#1C1132]'>
-          <Link to="/home" className='my-auto'>
+          <Link to="/" className='my-auto'>
             <img className='w-8 h-8' src={logo} alt="" />
           </Link>
           <IconButton onClick={toggleDrawer(anchor, true)}>
-            <Avatar className='my-auto' alt="Travis Howard" src="https://www.w3schools.com/howto/img_avatar.png " sx={{ width: 35, height: 35 }} />
+            <Avatar className='my-auto' src={profileURL} alt={name?.slice(0, 1)} sx={{ width: 35, height: 35 }} />
           </IconButton>
         </div>
 
 
         <div className='flex gap-3 shadow-md bg-white dark:bg-[#231344] h-max w-screen item-center justify-center sm:pt-2'>
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/home">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/">
             <Tooltip title="Home" className="mx-auto">
               <HomeIcon style={{ fontSize: 30 }} />
             </Tooltip>
