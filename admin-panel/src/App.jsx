@@ -8,6 +8,7 @@ import Post from "./pages/Post"
 import Partnership from "./pages/Partnership"
 import HelpReport from "./pages/HelpReport"
 import SupportReport from "./pages/SupportReport"
+import Login from "./pages/Login"
 
 function App() {
 
@@ -20,6 +21,7 @@ function App() {
             <div className="w-full h-max"><Header/></div>
             <div className="w-full h-full">
               <Routes>
+                <Route path="/login" element={<Login />}></Route>
                 <Route path="/" element={<Home />}></Route>
                 <Route path="/user" element={<User />}></Route>
                 <Route path="/post" element={<Post />}></Route>
