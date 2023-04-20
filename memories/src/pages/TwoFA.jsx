@@ -1,22 +1,58 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import OTPInput, { ResendOTP } from "otp-input-react";
 import logo from '../assets/image/memories_logo.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import MainContext from '../context/MainContext';
+import { SERVER_URL } from '../services/helper';
 
 const TwoFA = () => {
-    const [OTP, setOTP] = useState("");
+
+    const navigate = useNavigate()
+
+    const context = useContext(MainContext)
+    const { temporaryAuthToken, setNotification } = context;
+
+    const authToken = sessionStorage.getItem("auth-token");
+
+    const [otp, setOtp] = useState(0)
 
     const localTheme = localStorage.getItem("theme")
 
-  useEffect(() => {
-    if (localTheme === "dark") {
-      document.documentElement.classList.add("dark");
+    const verifyOTP = async (e) => {
+
+        e.preventDefault()
+
+        const response = await fetch(`${SERVER_URL}otp/verify`, {
+            method: 'POST',
+            headers: {
+                'auth-token': authToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "otp": otp })
+        });
+
+        const json = await response.json()
+
+        if (json.success) {
+            setNotification({ status: "true", message: `${json.message}`, type: "success" });
+            navigate('/createprofile')
+        } else {
+            setNotification({ status: "true", message: `${json.error}`, type: "error" });
+        }
+
     }
-    else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [localTheme]);
+
+    useEffect(() => {
+
+        if (localTheme === "dark") {
+            document.documentElement.classList.add("dark");
+        }
+        else {
+            document.documentElement.classList.remove("dark");
+        }
+    }, [localTheme]);
+
     return (
         <>
             <div className='h-screen bg-[#D9D9D9] dark:bg-[#1C1132] lg:flex lg:px-20 xl:px-40'>
@@ -29,14 +65,14 @@ const TwoFA = () => {
                 <div className='lg:w-[50%] duration-300 my-[25%] sm:my-[16%] md:my-[10%] lg:h-auto flex flex-col dark:text-white lg:flex-row lg:my-auto justify-center p-1 sm:p-3 lg:p-5'>
                     <div className='lg:hidden text-xl py-4 dark:text-white font-semibold px-3'>Verify it's you!</div>
                     <div className='w-full bg-white dark:bg-[#231344] flex items-center justify-center p-6 shadow-lg dark:shadow-black rounded-lg py-10'>
-                        <form className='flex flex-col gap-y-9 h-full w-full' action="">
+                        <form onSubmit={verifyOTP} className='flex flex-col gap-y-9 h-full w-full' method='POST'>
                             <div className="font-semibold text-sm md:text-lg dark:text-white cursor-default select-none">
                                 Enter OTP sent on ro****9051@gmail.com
                             </div>
                             <div className='flex items-center justify-center w-full'>
-                                <OTPInput className="" inputClassName="border-[0.5px] border-slate-400  font-semibold bg-slate-100 dark:bg-slate-800 dark:border-slate-400 dark:text-white scale-125 lg:scale-150 rounded-md lg:mx-3 xl:mx-8" value={OTP} onChange={setOTP} autoFocus OTPLength={6} otpType="number" disabled={false} />
+                                <OTPInput className="" inputClassName="border-[0.5px] border-slate-400  font-semibold bg-slate-100 dark:bg-slate-800 dark:border-slate-400 dark:text-white scale-125 lg:scale-150 rounded-md lg:mx-3 xl:mx-8" value={otp} onChange={setOtp} autoFocus OTPLength={6} otpType="number" disabled={false} />
                             </div>
-                            <button className='bg-gradient-to-b from-[#9013C9] to-[#573698] text-white dark:text-white py-3 rounded-full text-lg font-semibold select-none'>VERIFY OTP</button>
+                            <button type='submit' className='bg-gradient-to-b from-[#9013C9] to-[#573698] text-white dark:text-white py-3 rounded-full text-lg font-semibold select-none'>VERIFY OTP</button>
                         </form>
                     </div>
                     <div className='dark:text-white p-3 text-sm lg:hidden'>We take care of your data with security as we have mentioned in our <Link className='underline font-semibold'> privacy policy.</Link></div>

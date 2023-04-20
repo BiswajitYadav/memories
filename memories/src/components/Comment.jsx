@@ -33,12 +33,9 @@ const Comment = () => {
                 </button>
             </form>
             <div className='py-2 flex flex-col w-full'>
+                
                 <CommentItem />
-                <CommentItem />
-                <CommentItem />
-                <CommentItem />
-                <CommentItem />
-                <CommentItem />
+
             </div>
         </>
     )
