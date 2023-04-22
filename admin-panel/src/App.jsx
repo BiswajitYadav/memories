@@ -7,8 +7,8 @@ import User from "./pages/User"
 import Post from "./pages/Post"
 import Partnership from "./pages/Partnership"
 import HelpReport from "./pages/HelpReport"
-import SupportReport from "./pages/SupportReport"
 import Login from "./pages/Login"
+import PostReport from "./pages/PostReport"
 
 function App() {
 
@@ -27,7 +27,7 @@ function App() {
                 <Route path="/post" element={<Post />}></Route>
                 <Route path="/partnership" element={<Partnership />}></Route>
                 <Route path="/helpreport" element={<HelpReport />}></Route>
-                <Route path="/supportreport" element={<SupportReport />}></Route>
+                <Route path="/postreport" element={<PostReport />}></Route>
               </Routes>
             </div>
           </div>

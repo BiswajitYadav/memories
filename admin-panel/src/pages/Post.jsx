@@ -22,7 +22,7 @@ const Post = () => {
                 <div className='h-[80%] w-full px-5 pr-10'>
                     <div className='h-[65vh] shadow-xl border rounded-lg px-3'>
                         <div className='flex justify-between px-7 py-4 rounded-t-lg'>
-                            <div className='font-semibold text-lg'>Users</div>
+                            <div className='font-semibold text-lg'>User's Posts</div>
                             <button className='font-semibold text-lg bg-[#1C1132] text-white px-7'>View All</button>
                         </div>
                         <div className='flex flex-col gap-3 px-5 overflow-y-auto h-[55vh]'>

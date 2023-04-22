@@ -61,10 +61,10 @@ const Sidebar = () => {
                             navOpen ? <div className='pr-5 font-semibold'>Help Report</div> : ""
                         }
                     </NavLink>
-                    <NavLink to='/supportreport' className={({ isActive }) => (isActive ? 'w-full bg-white text-[#1C1132] rounded-l-full flex gap-2 duration-300 py-2 px-4' : 'w-full bg-[#1C1132] text-white rounded-l-none flex gap-2 duration-300 py-2 px-4 ')}>
+                    <NavLink to='/postreport' className={({ isActive }) => (isActive ? 'w-full bg-white text-[#1C1132] rounded-l-full flex gap-2 duration-300 py-2 px-4' : 'w-full bg-[#1C1132] text-white rounded-l-none flex gap-2 duration-300 py-2 px-4 ')}>
                         <ReportProblemIcon />
                         {
-                            navOpen ? <div className='pr-5 font-semibold'>Support Report</div> : ""
+                            navOpen ? <div className='pr-5 font-semibold'>Post Report</div> : ""
                         }
                     </NavLink>
                 </div>
