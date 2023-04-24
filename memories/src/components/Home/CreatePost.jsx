@@ -1,4 +1,4 @@
-import { Avatar, CircularProgress, IconButton, Modal } from '@mui/material'
+import { Avatar, CircularProgress, IconButton, Modal, Tooltip } from '@mui/material'
 import React, { useContext } from 'react'
 import { useState } from 'react';
 import { Link } from 'react-router-dom'
@@ -131,13 +131,16 @@ const CreatePost = (props) => {
 
         <>
             <div className='flex bg-white dark:bg-[#231344] h-[15%] justify-center items-center rounded-md shadow-lg p-2 lg:p-3 gap-2'>
+
                 <Link to="/myprofile">
                     <Avatar className='my-auto' alt="Travis Howard" src={profileURL} sx={{ width: 45, height: 45 }} />
                 </Link>
                 <div className='bg-transparent rounded-full flex items-center w-full'>
+
                     <button className='bg-[#D9D9D9] dark:bg-[#1C1132] rounded-full dark:text-white/60 w-full px-3 py-1.5 lg:px-5 lg:py-2.5 text-[#B5B5B5] lg:text-lg ' onClick={handleOpen} >
                         Write Something to get Butterflies
                     </button>
+
                     <Modal
                         open={open}
                         onClose={handleClose}
@@ -149,9 +152,16 @@ const CreatePost = (props) => {
 
                             <div className='flex items-center py-2 px-5 border-b border-black/20 dark:border-white/40 '>
                                 <div className='w-full font-bold text-lg dark:text-white'>Create Post</div>
-                                <IconButton onClick={handleClose}>
-                                    <Close className='dark:text-white' />
-                                </IconButton>
+                                <Tooltip title="Cancel">
+                                    <IconButton onClick={() => {
+                                        handleClose()
+                                        setCaption("")
+                                        setImage(null)
+                                        setImgUrl("")
+                                    }}>
+                                        <Close className='dark:text-white' />
+                                    </IconButton>
+                                </Tooltip>
                             </div>
 
                             <form method='POST' onSubmit={handleUploadPost} className='flex flex-col gap-2 px-5 pb-5 pt-2'>
@@ -167,8 +177,10 @@ const CreatePost = (props) => {
                                     </div>
                                 </div>
 
-                                <textarea onChange={e => setCaption(e.target.value)} value={caption} className=' w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] bg-[#F1F1F1] dark:text-white dark:border-[#33215A]' placeholder='Write something to post' cols="30" rows="1">
+                                <textarea onChange={e => setCaption(e.target.value)} value={caption} className=' w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] bg-[#F1F1F1] dark:text-white dark:border-[#33215A]' placeholder='Write something to post' cols="30" rows="2" maxLength={1000}>
                                 </textarea>
+
+                                <div className='text-sm opacity-50 dark:text-white'>{caption.length} / 1000</div>
 
                                 <label htmlFor="dropzone-file" className="bg-[#F1F1F1] w-full rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]" >
                                     <input id="dropzone-file" onChange={onImageInputChange} type="file" accept='image/*' className="hidden" />

@@ -31,11 +31,19 @@ import CircularProgress from '@mui/material/CircularProgress';
 
 const Post = (props) => {
 
+  const commentTextLength = 150
+
   const authToken = localStorage.getItem('auth-token')
 
   const sessionUserID = sessionStorage.getItem('sessionUserID')
 
   const { userID, postCaption, _id, postImageURL, date, postType } = props.data;
+
+  const postID = props.data._id
+
+  const context = useContext(MainContext)
+
+  const { createNewComment, commentingStatus, commentUploaded } = context;
 
   const [anchorEl, setAnchorEl] = useState(false);
   const open = Boolean(anchorEl);
@@ -166,10 +174,17 @@ const Post = (props) => {
 
   // 
 
+  // --------------------
 
-  // handling comment apis
 
+  const [commentText, setCommentText] = useState("")
 
+  const uploadComment = (e) => {
+    e.preventDefault()
+    setCommentText("")
+    createNewComment(postID, commentText)
+
+  }
 
   // ---------------------
 
@@ -316,7 +331,7 @@ const Post = (props) => {
 
         <div className='dark:text-white w-full flex whitespace-pre-wrap font-medium px-1 my-1'>
 
-          <ReadMoreReact
+          {/* <ReadMoreReact
             text={postCaption}
             min={0}
             ideal={260}
@@ -324,7 +339,10 @@ const Post = (props) => {
             readMoreText={<div className='hover:underline cursor-pointer mt-2'>Read More...</div>}
             className="whitespace-pre-line"
 
-          />
+          /> */}
+
+          {postCaption}
+
         </div>
 
         <div className='dark:text-white/50 font-semibold gap-2 text-black/50 w-full flex text-xs items-center px-1'>
@@ -364,7 +382,9 @@ const Post = (props) => {
           </Tooltip>
 
           <Tooltip title="Comment" className="text-gray-400 cursor-pointer transition-all ease-in-out hover:scale-110 duration-300">
-            <button onClick={handleCommentModalOpen}>
+            <button onClick={() => {
+              handleCommentModalOpen()
+            }}>
               <CommentIcon style={{ fontSize: 30 }} />
             </button>
           </Tooltip>
@@ -375,25 +395,26 @@ const Post = (props) => {
             aria-describedby="modal-modal-description"
             className="flex justify-center items-center"
           >
-            <div className='py-3 px-2 md:px-3 md:p-4 h-[70%] md:w-[80%] lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[65%] xl:w-[50%] rounded-lg'>
+            <div className='py-3 px-2 md:px-3 md:p-4 h-max md:w-[80%] lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[65%] xl:w-[50%] rounded-lg'>
               <div className='bg-white dark:bg-[#231344] w-full'>
                 <div className='flex dark:text-white items-center py-1 justify-between px-4'>
                   <div className='flex px-3 gap-2 cursor-default'>
                     <div className='font-semibold text-lg text-gray-500 dark:text-white'>Comments</div>
-                    <div className='font-semibold text-lg text-gray-500 dark:text-white'>13K</div>
                   </div>
                   <button className='flex justify-end py-1 '>
                     <CloseIcon onClick={handleCommentModalClosed} />
                   </button>
                 </div>
-                <div className='flex flex-col overflow-y-auto w-full h-[60vh] scroll-smooth px-1 py-2 md:p-2'>
-                  <Comment />
-                </div>
+
+
+                <Comment postID={postID} />
+
+
               </div>
             </div>
           </Modal>
 
-          <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>{ totalLikeData } Likes</button>
+          <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>{totalLikeData} Likes</button>
 
           <Modal
             open={likeModalOpen}
@@ -402,7 +423,7 @@ const Post = (props) => {
             aria-describedby="modal-modal-description"
             className="flex justify-center items-center"
           >
-            <div className='py-3 px-3 md:p-4 h-[60%] w-[90%] md:w-[60%] lg:px-5 lg:py-3 bg-white dark:bg-[#231344] lg:w-[40%] rounded-lg'>
+            <div className='py-3 px-3 md:p-4 h-max w-[90%] md:w-[60%] lg:px-5 lg:py-3 bg-white dark:bg-[#231344] lg:w-[40%] rounded-lg'>
               <div className='bg-white dark:bg-[#231344]'>
                 <div className='flex justify-between dark:text-white'>
 
@@ -462,18 +483,21 @@ const Post = (props) => {
 
 
                 </div>
-                
+
               </div>
             </div>
           </Modal>
 
         </div>
 
-        <form className='bg-[#D9D9D9] dark:bg-[#1C1132] rounded-full flex items-center px-2 py-1 w-full'>
-          <input className='px-2 md:px-8 bg-transparent w-full focus:outline-none dark:text-white' type="text" placeholder='Write a comment...' />
-          <button className=' text-[#573698] dark:text-white/70 rounded-full hover:scale-105 duration-200'>
+        <form method='POST' onSubmit={uploadComment} className='bg-[#D9D9D9] dark:bg-[#1C1132] rounded-full flex items-center px-2 py-1 w-full'>
+
+          <input value={commentText} onChange={e => setCommentText(e.target.value)} required maxLength={commentTextLength} className='px-2 md:px-8 bg-transparent w-full focus:outline-none dark:text-white' type="text" placeholder='Write a comment...' />
+
+          <button type='submit' className=' text-[#573698] dark:text-white/70 rounded-full hover:scale-105 duration-200'>
             <SendIcon style={{ fontSize: 30 }} />
           </button>
+
         </form>
 
       </div>

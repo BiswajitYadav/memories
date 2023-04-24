@@ -18,6 +18,7 @@ import ReactTimeago from 'react-timeago';
 import FavoriteBorder from '@mui/icons-material/FavoriteBorder';
 import Favorite from '@mui/icons-material/Favorite';
 import InfiniteScroll from 'react-infinite-scroll-component'
+import Comment from '../components/Comment';
 
 const PostComment = () => {
 
@@ -49,6 +50,10 @@ const ViewPost = () => {
   const [likeModalOpen, setLikeModalOpen] = useState(false);
   const handleLikeModalOpen = () => setLikeModalOpen(true);
   const handleLikeModalClosed = () => setLikeModalOpen(false);
+
+  const [commentModalOpen, setCommentModalOpen] = useState(false);
+  const handleCommentModalOpen = () => setCommentModalOpen(true);
+  const handleCommentModalClosed = () => setCommentModalOpen(false);
 
   const params = useParams()
   const { postID } = params;
@@ -201,7 +206,19 @@ const ViewPost = () => {
   }
 
 
+  // --------------------
 
+
+  const [commentText, setCommentText] = useState("")
+
+  const uploadComment = (e) => {
+    e.preventDefault()
+    setCommentText("")
+    createNewComment(postID, commentText)
+
+  }
+
+  // ---------------------
 
 
   useEffect(() => {
@@ -302,10 +319,38 @@ const ViewPost = () => {
                 </Tooltip>
 
                 <Tooltip title="Comment" className="text-gray-400 cursor-pointer transition-all ease-in-out hover:scale-110 duration-300">
-                  <button>
+                  <button onClick={() => {
+                    handleCommentModalOpen()
+                  }}>
                     <CommentIcon style={{ fontSize: 30 }} />
                   </button>
                 </Tooltip>
+
+                <Modal
+                  open={commentModalOpen}
+                  onClose={handleCommentModalClosed}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                  className="flex justify-center items-center"
+                >
+                  <div className='py-3 px-2 md:px-3 md:p-4 h-max md:w-[80%] lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[65%] xl:w-[50%] rounded-lg'>
+                    <div className='bg-white dark:bg-[#231344] w-full'>
+                      <div className='flex dark:text-white items-center py-1 justify-between px-4'>
+                        <div className='flex px-3 gap-2 cursor-default'>
+                          <div className='font-semibold text-lg text-gray-500 dark:text-white'>Comments</div>
+                        </div>
+                        <button className='flex justify-end py-1 '>
+                          <CloseIcon onClick={handleCommentModalClosed} />
+                        </button>
+                      </div>
+
+
+                      <Comment postID={postID} />
+
+
+                    </div>
+                  </div>
+                </Modal>
 
                 <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>Liked by HelloWorld and 34 others</button>
                 <Modal
@@ -315,16 +360,23 @@ const ViewPost = () => {
                   aria-describedby="modal-modal-description"
                   className="flex justify-center items-center"
                 >
-                  <div className='py-3 px-3 md:p-4 h-[60%] md:w-[70%] lg:px-5 lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[40%] rounded-lg'>
+                  <div className='py-3 px-3 md:p-4 h-max md:w-[70%] lg:px-5 lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[40%] rounded-lg'>
                     <div className='bg-white dark:bg-[#231344]'>
                       <div className='flex justify-between dark:text-white'>
+
                         <div className='flex items-center gap-1 py-3 lg:py-5'>
+
                           <div className='font-semibold text-lg'>Liked By</div>
                           <div className='text-red-600'><FavoriteIcon /></div>
+
                         </div>
-                        <button>
-                          <CloseIcon onClick={handleLikeModalClosed} />
+
+                        <button onClick={handleLikeModalClosed} >
+
+                          <CloseIcon />
+
                         </button>
+
                       </div>
                       <div id='scrollableDiv' className='flex flex-col overflow-y-auto h-[45vh] scroll-smooth '>
 
@@ -380,16 +432,6 @@ const ViewPost = () => {
                   <SendIcon style={{ fontSize: 30 }} />
                 </button>
               </form>
-
-              <div className='overflow-y-auto px-1 h-[60vh] lg:h-max'>
-                <PostComment />
-                <PostComment />
-                <PostComment />
-                <PostComment />
-                <PostComment />
-                <PostComment />
-                <PostComment />
-              </div>
 
             </div>
           </div>

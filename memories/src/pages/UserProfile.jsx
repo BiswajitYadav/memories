@@ -22,7 +22,7 @@ import staticAvatar from '../assets/image/sample-profile.webp'
 
 const UserProfile = () => {
 
-    const { otherUserProfile, fetchAnotherUserProfile } = useContext(MainContext)
+    const { otherUserProfile, fetchAnotherUserProfile, setNotification } = useContext(MainContext)
 
     const { name, bio, userName, profileURL } = otherUserProfile;
 
@@ -38,6 +38,66 @@ const UserProfile = () => {
     const [followingsModalOpen, setFollowingsModalOpen] = useState(false);
     const handlefollowingsModalOpen = () => setFollowingsModalOpen(true);
     const handlefollowingsModalClosed = () => setFollowingsModalOpen(false);
+
+
+    // handle follow
+
+    const [followStatus, setFollowStatus] = useState(Boolean)
+
+    const fetchFollowStatus = async () => {
+
+        const response = await fetch(`${SERVER_URL}follow/fetch-follow-status`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': authToken
+            },
+            body: JSON.stringify({ "followingUserID": userID })
+        })
+
+        const json = await response.json()
+
+        if (json.success) {
+
+            if (json.followingStatus) {
+                setFollowStatus(true)
+            } else {
+                setFollowStatus(false)
+            }
+
+        } else {
+            setNotification({ status: "true", message: `${json.error}`, type: "error" })
+        }
+
+    }
+
+    const handleFollowUnfollow = async () => {
+        const response = await fetch(`${SERVER_URL}follow/follow-unfollow`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': authToken
+            },
+            body: JSON.stringify({ "following": userID })
+        });
+
+        const json = await response.json()
+
+        if (json.success) {
+            fetchFollowStatus()
+        } else {
+            setNotification({ status: "true", message: `${json.error}`, type: "error" })
+        }
+
+    }
+
+    useEffect(() => {
+        if (userID) {
+            fetchFollowStatus()
+        }
+    }, [])
+
+    // -------------
 
 
     useEffect(() => {
@@ -138,21 +198,24 @@ const UserProfile = () => {
 
                         <div className="flex flex-col items-center gap-2 w-full">
 
-                            <button className='flex w-full md:w-[75%] lg:w-[50%] xl:w-[40%] justify-center bg-[#8948B8] text-white py-1.5 lg:py-2 hover:bg-[#8E2BC2] duration-200 font-semibold rounded-md text-lg'>
-                                Follow
-                            </button>
+                            {
+                                followStatus ?
+                                    <div className='flex gap-2 w-full md:w-[75%] lg:w-[50%] xl:w-[40%]'>
 
-                            <div className='flex gap-2 w-full md:w-[75%] lg:w-[50%] xl:w-[40%]'>
+                                        <button onClick={handleFollowUnfollow} className='flex w-full justify-center bg-white py-1.5 lg:py-2 hover:bg-slate-100 duration-200 font-semibold rounded-md text-lg'>
+                                            Unfollow
+                                        </button>
 
-                                <button className='flex w-full justify-center bg-white py-1.5 lg:py-2 hover:bg-slate-100 duration-200 font-semibold rounded-md text-lg'>
-                                    Unfollow
-                                </button>
+                                        <button className='flex gap-1 w-max px-4 items-center bg-white py-1.5 lg:py-2 hover:bg-slate-100 duration-200 font-semibold rounded-md text-lg'>
+                                            <MessageIcon />
+                                        </button>
 
-                                <button className='flex gap-1 w-max px-4 items-center bg-white py-1.5 lg:py-2 hover:bg-slate-100 duration-200 font-semibold rounded-md text-lg'>
-                                    <MessageIcon />
-                                </button>
-
-                            </div>
+                                    </div>
+                                    :
+                                    <button onClick={handleFollowUnfollow} className='flex w-full md:w-[75%] lg:w-[50%] xl:w-[40%] justify-center bg-[#8948B8] text-white py-1.5 lg:py-2 hover:bg-[#8E2BC2] duration-200 font-semibold rounded-md text-lg'>
+                                        Follow
+                                    </button>
+                            }
 
                         </div>
 

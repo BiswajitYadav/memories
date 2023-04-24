@@ -19,8 +19,6 @@ const CreateProfileInfo = () => {
 
     const [imgUrl, setImgUrl] = useState(SampleProfileImage)
 
-    const [uploadedImageUrl, setUploadedImageUrl] = useState("")
-
     const [DOB, setDOB] = useState("")
 
     const [gender, setGender] = useState("")
@@ -32,47 +30,80 @@ const CreateProfileInfo = () => {
 
 
     const handleProfileSubmit = async (e) => {
+
         e.preventDefault()
 
-        if (imgUrl != SampleProfileImage) {
+        if (image) {
+
             const data = new FormData()
             data.append("file", image)
             data.append("upload_preset", `${UPLOAD_PRESET}`)
             data.append("cloud_name", `${CLOUD_NAME}`)
 
-            await fetch(`${CLOUDINARY_URL}`, {
+            const imgURL = await fetch(`${CLOUDINARY_URL}`, {
                 method: 'POST',
                 body: data
             })
-                .then((res) => res.json())
-                .then((data) => {
-                    setUploadedImageUrl(data.url)
-                }).catch((err) => console.log(err))
-        }
 
-        const mainData = {
-            "DOB": DOB,
-            "gender": gender,
-            "profileURL": uploadedImageUrl
-        }
+            const json = await imgURL.json()
 
-        const response = await fetch(`${SERVER_URL}user/edit-user-profile`, {
-            method: 'PUT',
-            headers: {
-                'auth-token': sessionStorage.getItem("auth-token"),
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(mainData)
-        })
+            if (json.url) {
 
-        const json = await response.json()
+                const mainData = {
+                    "DOB": DOB,
+                    "gender": gender,
+                    "profileURL": json.url
+                }
 
-        if (json.success) {
-            setNotification({ status: "true", message: `${json.message}`, type: "success" })
-            localStorage.setItem("auth-token", sessionStorage.getItem("auth-token"))
-            navigate('/')
+                const response = await fetch(`${SERVER_URL}user/edit-user-profile`, {
+                    method: 'PUT',
+                    headers: {
+                        'auth-token': sessionStorage.getItem("auth-token"),
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(mainData)
+                })
+
+                const data = await response.json()
+
+                if (data.success) {
+                    setNotification({ status: "true", message: `${data.message}`, type: "success" })
+                    localStorage.setItem("auth-token", sessionStorage.getItem("auth-token"))
+                    navigate('/')
+                } else {
+                    setNotification({ status: "true", message: `${data.error}`, type: "error" });
+                }
+
+            } else {
+                setNotification({ status: "true", message: "Something went wrong", type: "error" });
+            }
+
         } else {
-            setNotification({ status: "true", message: `${json.error}`, type: "error" });
+
+            const mainData = {
+                "DOB": DOB,
+                "gender": gender
+            }
+
+            const response = await fetch(`${SERVER_URL}user/edit-user-profile`, {
+                method: 'PUT',
+                headers: {
+                    'auth-token': sessionStorage.getItem("auth-token"),
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(mainData)
+            })
+
+            const json = await response.json()
+
+            if (json.success) {
+                setNotification({ status: "true", message: `${json.message}`, type: "success" })
+                localStorage.setItem("auth-token", sessionStorage.getItem("auth-token"))
+                navigate('/')
+            } else {
+                setNotification({ status: "true", message: `${json.error}`, type: "error" });
+            }
+
         }
 
     }
@@ -101,7 +132,7 @@ const CreateProfileInfo = () => {
                         <div className="w-full h-max flex gap-3 lg:gap-5">
                             <label htmlFor="dropzone-file" className="rounded-full" >
                                 <div className="relative rounded-full select-none">
-                                    <img src={imgUrl} alt="" className='rounded-full object-cover w-28 md:w-32 lg:w-24 xl:w-32' />
+                                    <img src={imgUrl} alt="" className='rounded-full object-cover w-28 h-28 md:w-32 md:h-32 lg:w-24 lg:h-24 xl:w-32 xl:h-32' />
                                     <div className='inset-0 z-10 absolute h-full w-full bg-black bg-opacity-0 hover:bg-opacity-30 opacity-0 hover:opacity-100 duration-300 text-white flex items-center rounded-full cursor-pointer'><PhotoCameraIcon className='m-auto' /></div>
                                 </div>
                                 <input onChange={onImageInputChange} id="dropzone-file" type="file" accept='image/*' className="hidden" />

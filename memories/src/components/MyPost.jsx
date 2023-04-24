@@ -390,16 +390,16 @@ const MyPost = (props) => {
 
                 <div className='dark:text-white w-full whitespace-pre-line flex font-medium px-1'>
 
-                    <ReadMoreReact text={editedPostCaption}
+                    {/* <ReadMoreReact text={editedPostCaption}
                         min={0}
                         ideal={260}
                         max={300}
                         readMoreText={<div className='hover:underline cursor-pointer pt-2'>Read More...</div>}
                         className="whitespace-pre-line"
 
-                    />
+                    /> */}
 
-                    {/* {editedPostCaption} */}
+                    {editedPostCaption}
 
                 </div>
 
@@ -453,7 +453,8 @@ const MyPost = (props) => {
                         aria-describedby="modal-modal-description"
                         className="flex justify-center items-center"
                     >
-                        <div className='py-3 px-2 md:px-3 md:p-4 h-[70%] md:w-[80%] lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[65%] xl:w-[50%] rounded-lg'>
+
+                        <div className='py-3 px-2 md:px-3 md:p-4 h-max md:w-[80%] lg:py-3 bg-white w-full dark:bg-[#231344] lg:w-[65%] xl:w-[50%] rounded-lg'>
 
                             <div className='bg-white dark:bg-[#231344] w-full'>
 
@@ -470,12 +471,11 @@ const MyPost = (props) => {
 
                                 </div>
 
-                                <div className='flex flex-col overflow-y-auto w-full h-[60vh] scroll-smooth px-1 py-2 md:p-2'>
-                                    <Comment />
-                                </div>
+                                <Comment postID={_id} />
 
                             </div>
                         </div>
+
                     </Modal>
 
                     <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>{totalLikeData} likes</button>

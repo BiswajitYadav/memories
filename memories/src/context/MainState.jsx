@@ -116,7 +116,8 @@ const MainState = (props) => {
 
     // 
 
-    const [commentingStatus, setCommentingStatus] = useState(Boolean)
+    const [commentingStatus, setCommentingStatus] = useState(false)
+    const [commentUploaded, setCommentUploaded] = useState(false)
 
     const createNewComment = async (postID, comment) => {
 
@@ -131,12 +132,20 @@ const MainState = (props) => {
             body: JSON.stringify({ "commentText": comment, "postID": postID })
         })
 
+        const json = await response.json()
 
+        if (json.success) {
+            setCommentUploaded(true)
+            setCommentingStatus(false)
+        } else {
+            setNotification({ status: "true", message: `${json.error}`, type: "error" })
+            setCommentingStatus(false)
+        }
 
     }
 
     return (
-        <MainContext.Provider value={{ temporaryAuthToken, setTemporaryAuthToken, notification, setNotification, generateOTP, userProfileData, fetchSessionUserProfile, fetchedPost, fetchAllPostHomePage, otherUserProfile, fetchAnotherUserProfile, myPost, fetchMyAllPost, post, setPost, handleStaticPostRemove }}>
+        <MainContext.Provider value={{ temporaryAuthToken, setTemporaryAuthToken, notification, setNotification, generateOTP, userProfileData, fetchSessionUserProfile, fetchedPost, fetchAllPostHomePage, otherUserProfile, fetchAnotherUserProfile, myPost, fetchMyAllPost, post, setPost, handleStaticPostRemove, createNewComment, commentingStatus, commentUploaded }}>
             {props.children}
         </MainContext.Provider>
     )
