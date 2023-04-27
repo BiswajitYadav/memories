@@ -415,7 +415,7 @@ const Post = (props) => {
             </div>
           </Modal>
 
-          <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>{totalLikeData} Likes</button>
+          <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>Liked By {totalLikeData}</button>
 
           <Modal
             open={likeModalOpen}
@@ -460,7 +460,7 @@ const Post = (props) => {
 
                               return (
 
-                                <PeopleProfile key={data._id} data={data} />
+                                <Like key={data._id} data={data} />
 
                               )
 

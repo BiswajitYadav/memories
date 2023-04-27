@@ -141,7 +141,6 @@ const MyProfile = () => {
         })
             .then(res => res.json())
             .then((newData) => {
-                console.log(newData)
                 const mergeData = [...followingData, ...newData.userFollowing]
                 setFollowingData(mergeData)
                 setTotalFollowingData(newData.userFollowingTotal)

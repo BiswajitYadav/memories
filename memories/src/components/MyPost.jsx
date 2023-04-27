@@ -463,7 +463,6 @@ const MyPost = (props) => {
 
                                     <div className='flex px-3 gap-2 cursor-default'>
                                         <div className='font-semibold text-lg text-gray-500 dark:text-white'>Comments</div>
-                                        <div className='font-semibold text-lg text-gray-500 dark:text-white'>13K</div>
                                     </div>
 
                                     <button className='flex justify-end py-1 '>
@@ -479,7 +478,7 @@ const MyPost = (props) => {
 
                     </Modal>
 
-                    <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>{totalLikeData} likes</button>
+                    <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>Liked By {totalLikeData} people</button>
 
                     <Modal
                         open={likeModalOpen}
@@ -519,7 +518,7 @@ const MyPost = (props) => {
 
                                                             return (
 
-                                                                <PeopleProfile key={data._id} data={data} />
+                                                                <Like key={data._id} data={data} />
 
                                                             )
 

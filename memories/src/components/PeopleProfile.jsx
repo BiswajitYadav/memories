@@ -36,6 +36,12 @@ const PeopleProfile = (props) => {
 
     }
 
+    useEffect(() => {
+        if (userID) {
+            fetchUserProfileData()
+        }
+    }, [userID])
+
     // handle follow
 
     const [followStatus, setFollowStatus] = useState(Boolean)
@@ -94,10 +100,6 @@ const PeopleProfile = (props) => {
     }, [])
 
     // -------------
-
-    useEffect(() => {
-        fetchUserProfileData()
-    }, [userID])
 
     return (
         <>

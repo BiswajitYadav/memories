@@ -184,7 +184,7 @@ const Community = () => {
 
                         <div className='bg-[#FFFFFF] dark:bg-[#231344] rounded w-[95%] sm:w-[85%] md:w-[80%] lg:w-[55%] flex flex-col gap-4'>
 
-                            <form method='POST' className='bg-[#F1F1F1] dark:bg-[#1C1132] rounded flex items-center p-2 w-full h-max border-[2px] border-[#D9D9D9] dark:border-[#33215A]'>
+                            <div className='bg-[#F1F1F1] dark:bg-[#1C1132] rounded flex items-center p-2 w-full h-max border-[2px] border-[#D9D9D9] dark:border-[#33215A]'>
 
                                 <input
                                     onChange={onQueryChange}
@@ -198,7 +198,7 @@ const Community = () => {
                                     <SearchIcon style={{ fontSize: 35 }} />
                                 </button> */}
 
-                            </form>
+                            </div>
 
                             <div className='bg-[#F1F1F1] dark:bg-[#1C1132] rounded border-[2px] border-[#D9D9D9] dark:border-[#33215A] w-full p-0.5 md:p-3 h-max'>
 

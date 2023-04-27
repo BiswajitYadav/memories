@@ -33,7 +33,11 @@ const Like = (props) => {
     }
 
     useEffect(() => {
-        fetchUserProfileData()
+
+        if (userID) {
+            fetchUserProfileData()
+        }
+
     }, [userID])
 
     return (

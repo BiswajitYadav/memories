@@ -22,14 +22,11 @@ const EditProfile = () => {
 
   const [imgUrl, setImgUrl] = useState(profileURL || SampleProfileImage)
 
-  const date = new Date(DOB);
-  const dateString = date?.toISOString()?.slice(0, 10);
-
   const [credentials, setCredentials] = useState({
     name: name,
     userName: userName,
     bio: bio,
-    DOB: dateString,
+    DOB: DOB?.slice(0, 10),
     gender: gender
   })
 
@@ -95,7 +92,7 @@ const EditProfile = () => {
       "name": credentials.name,
       "userName": credentials.userName,
       "bio": credentials.bio,
-      "DOB": credentials.dateString,
+      "DOB": credentials.DOB,
       "gender": credentials.gender
     }
 
@@ -246,11 +243,12 @@ const EditProfile = () => {
                     <input
                       type="date"
                       name='DOB'
+                      value={credentials.DOB}
                       onChange={onFormInputChange}
                       className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]'
                     />
                   </div>
-                  
+
                   <div>
                     <p className='pl-2 lg:pl-5 text-xs dark:text-white'>Gender</p>
                     <select
