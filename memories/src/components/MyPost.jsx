@@ -22,6 +22,7 @@ import { SERVER_URL } from '../services/helper';
 import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import ReadMoreReact from 'read-more-react';
 import InfiniteScroll from 'react-infinite-scroll-component'
+import PeopleProfile from './PeopleProfile';
 
 const MyPost = (props) => {
 
@@ -518,7 +519,7 @@ const MyPost = (props) => {
 
                                                             return (
 
-                                                                <Like key={data._id} data={data} />
+                                                                <PeopleProfile key={data._id} data={data} />
 
                                                             )
 

@@ -258,7 +258,7 @@ const ViewPost = () => {
               </div>
             </div>
 
-            <div className='h-full lg:w-[35%] xl:w-[25%] px-3 py-3 xl:py-6 flex flex-col gap-5 lg:gap-2 xl:gap-4'>
+            <div className='h-full w-full lg:w-[35%] xl:w-[25%] px-3 py-3 xl:py-6 flex flex-col gap-5 lg:gap-2 xl:gap-4'>
 
               <Link to={redirectURL} className='flex w-max self-start gap-2'>
                 <Avatar className='my-auto' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 45, height: 45 }} />
@@ -352,7 +352,7 @@ const ViewPost = () => {
                   </div>
                 </Modal>
 
-                <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>Liked by HelloWorld and 34 others</button>
+                <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>Liked by {totalLikeData}</button>
                 <Modal
                   open={likeModalOpen}
                   onClose={handleLikeModalClosed}

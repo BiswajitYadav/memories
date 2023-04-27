@@ -131,9 +131,31 @@ const Home = () => {
 
           <PeopleSuggestions />
 
-          <div className='w-full md:w-[80%] lg:w-[70%] xl:w-[50%] duration-300 flex flex-col gap-4 md:gap-7 mx-auto'>
+          <div className='w-full md:w-[80%] lg:w-[70%] xl:w-[50%] duration-300 flex flex-col gap-2 md:gap-5 mx-auto'>
 
             <CreatePost userID={_id} profileURL={profileURL} name={name} />
+
+            <div className='flex gap-5 items-center justify-end w-full'>
+
+              <div className='flex items-center gap-1 w-max'>
+
+                <div className='text-xs dark:text-white cursor-default'>Sort By :</div>
+
+                <select name="" id="" className='dark:bg-[#231344] py-1.5 bg-[#F1F1F1] dark:text-white rounded cursor-pointer text-sm px-1.5 w-max shadow-md'>
+
+                  <option value="">
+                    Top
+                  </option>
+
+                  <option value="">
+                    Recent
+                  </option>
+
+                </select>
+
+              </div>
+
+            </div>
 
             <InfiniteScroll
               dataLength={post.length}

@@ -62,7 +62,9 @@ const CommentItem = (props) => {
     return (
         <>
             <div className='flex gap-2 py-3 md:px-2 w-full'>
-                <Avatar className='' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 45, height: 45 }} />
+                <Link to={redirectURL}>
+                    <Avatar className='' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 45, height: 45 }} />
+                </Link>
                 <div className='flex flex-col w-full'>
                     <div className='flex items-center gap-2 dark:text-white'>
                         <Link to={redirectURL}>

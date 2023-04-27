@@ -26,6 +26,7 @@ import { CLOUD_NAME } from './../../services/cloudinary';
 import ReadMoreReact from 'read-more-react';
 import InfiniteScroll from 'react-infinite-scroll-component'
 import CircularProgress from '@mui/material/CircularProgress';
+import PeopleProfile from '../PeopleProfile';
 
 
 
@@ -459,7 +460,7 @@ const Post = (props) => {
 
                               return (
 
-                                <Like key={data._id} data={data} />
+                                <PeopleProfile key={data._id} data={data} />
 
                               )
 

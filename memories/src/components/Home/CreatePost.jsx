@@ -170,7 +170,7 @@ const CreatePost = (props) => {
                                     <Avatar src={profileURL} alt={name?.slice(0, 1)} />
                                     <div className='flex flex-col'>
                                         <div className='font-semibold dark:text-white'>{name}</div>
-                                        <select onChange={e => setPostType(e.target.value)} value={postType} name="postType" className='dark:bg-[#1C1132] bg-[#F1F1F1] dark:text-white rounded cursor-pointer text-sm px-1.5 w-max shadow-md'>
+                                        <select onChange={e => setPostType(e.target.value)} value={postType} name="postType" className='dark:bg-[#1C1132] bg-[#F1F1F1] dark:text-white rounded cursor-pointer text-sm px-1.5 w-max shadow-md py-1 border dark:border-[#33215A]'>
                                             <option value="public">Public</option>
                                             <option value="private">Private</option>
                                         </select>

@@ -240,27 +240,28 @@ const EditProfile = () => {
                       className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]'
                     />
                   </div>
+
                   <div>
                     <p className='pl-2 lg:pl-5 text-xs dark:text-white'>Date Of Birth</p>
                     <input
                       type="date"
                       name='DOB'
-                      value={credentials.DOB}
                       onChange={onFormInputChange}
                       className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]'
                     />
                   </div>
+                  
                   <div>
                     <p className='pl-2 lg:pl-5 text-xs dark:text-white'>Gender</p>
                     <select
                       name='gender'
-                      value={credentials.gender}
+                      value={credentials?.gender}
                       onChange={onFormInputChange}
                       className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]'
                     >
                       <option value="null">Select gender</option>
                       <option value="male">Male</option>
-                      <option value="fale">Female</option>
+                      <option value="female">Female</option>
                       <option value="others">Others</option>
                     </select>
                   </div>

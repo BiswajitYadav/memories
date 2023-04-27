@@ -8,8 +8,8 @@ import { AiFillYoutube, AiFillInstagram, AiFillGithub } from 'react-icons/ai'
 import { FaDiscord } from 'react-icons/fa'
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import { useState } from 'react'
-import { CloseIcon } from '@mui/icons-material/Close';
-import Followers from '../components/Followers'
+import CloseIcon from '@mui/icons-material/Close';
+import Followers from '../components/PeopleProfile'
 import Followings from '../components/Followings'
 import MessageIcon from '@mui/icons-material/Message';
 import { SERVER_URL } from '../services/helper'
@@ -18,6 +18,8 @@ import MainContext from '../context/MainContext'
 import { useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import staticAvatar from '../assets/image/sample-profile.webp'
+import PeopleProfile from '../components/PeopleProfile'
+
 
 
 const UserProfile = () => {
@@ -124,7 +126,6 @@ const UserProfile = () => {
         })
             .then(res => res.json())
             .then((newData) => {
-                console.log(newData);
                 const mergeData = [...post, ...newData.usersPost]
                 setPost(mergeData)
                 setTotalData(newData.usersPostLength)
@@ -139,6 +140,94 @@ const UserProfile = () => {
     const fetchMoreData = () => {
         fetchData()
     }
+
+
+    // followers API calls
+
+    const pageLimitFollowers = 5
+
+    const [followersData, setFollowersData] = useState([])
+
+    const [totalFollowersData, setTotalFollowersData] = useState(0)
+
+    const fetchAllFollowers = async () => {
+
+        let pageNo = Math.ceil(followersData.length / pageLimitFollowers) + 1;
+
+        fetch(`${SERVER_URL}follow/fetch-followers/${pageNo}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': authToken
+            },
+            body: JSON.stringify({ "userID": userID })
+        })
+            .then(res => res.json())
+            .then((newData) => {
+                const mergeData = [...followersData, ...newData.userFollowers]
+                setFollowersData(mergeData)
+                setTotalFollowersData(newData.userFollowersTotal)
+            })
+            .catch((err) => console.error(err));
+    }
+
+    useEffect(() => {
+
+        if (userID) {
+            fetchAllFollowers()
+        }
+
+    }, [userID])
+
+    const fetchMoreFollowerData = () => {
+        fetchAllFollowers()
+    }
+
+    // ------------------
+
+
+    // Following API Calls
+
+    const pageLimitFollowing = 5
+
+    const [followingData, setFollowingData] = useState([])
+
+    const [totalFollowingData, setTotalFollowingData] = useState(0)
+
+    const fetchAllFollowing = async () => {
+
+        let pageNo = Math.ceil(followingData.length / pageLimitFollowing) + 1;
+
+        fetch(`${SERVER_URL}follow/fetch-following/${pageNo}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': authToken
+            },
+            body: JSON.stringify({ "userID": userID })
+        })
+            .then(res => res.json())
+            .then((newData) => {
+                const mergeData = [...followingData, ...newData.userFollowing]
+                setFollowingData(mergeData)
+                setTotalFollowingData(newData.userFollowingTotal)
+            })
+            .catch((err) => console.error(err));
+    }
+
+    useEffect(() => {
+        if (userID) {
+            fetchAllFollowing()
+        }
+    }, [userID])
+
+    const fetchMoreFollowingData = () => {
+
+        fetchAllFollowing()
+
+    }
+
+    // -------------------
 
 
     return (
@@ -160,16 +249,31 @@ const UserProfile = () => {
                                         <VerifiedIcon style={{ fontSize: 16 }} />
                                     </Tooltip>
                                 </div>
+                                
                                 <div className=' dark:text-slate-200 text-slate-600 text-sm sm:text-sm font-semibold'>@{userName}</div>
+
                                 <div className='font-semibold text-sm py-2 lg:py-3 text-gray-400'>Developer</div>
+
                                 <div className='hidden md:flex gap-x-4 lg:gap-x-8 dark:text-white'>
+
                                     <div className='flex items-baseline gap-1'><span className='font-bold flex justify-center text-lg'>{totalData ? totalData : "N/A"}</span><span className='text-xs'>posts</span></div>
-                                    <div className='flex items-baseline gap-1'><span className='font-bold flex justify-center text-lg'>10</span><span className='text-xs'>followers</span></div>
-                                    <div className='flex items-baseline gap-1'><span className='font-extrabold flex justify-center text-lg'>10</span><span className='text-xs'>followings</span></div>
+
+                                    <button onClick={handlefollowersModalOpen} className='flex items-baseline gap-1'>
+                                        <span className='font-bold flex justify-center text-lg'>{totalFollowersData}</span>
+                                        <span className='text-xs'>followers</span>
+                                    </button>
+
+                                    <button onClick={handlefollowingsModalOpen} className='flex items-baseline gap-1'>
+                                        <span className='font-extrabold flex justify-center text-lg'>{totalFollowingData}</span>
+                                        <span className='text-xs'>followings</span>
+                                    </button>
+
                                 </div>
+
                                 <div className='py-3 hidden md:block dark:text-white whitespace-pre-wrap'>
                                     {bio}
                                 </div>
+
                                 <div className='hidden md:flex gap-5'>
                                     <a className='cursor-pointer text-slate-500 hover:text-red-600 duration-200' target="_blank" href="/"><AiFillYoutube style={{ fontSize: 30 }} /></a>
                                     <a className='cursor-pointer text-slate-500 hover:text-pink-600 duration-200' target="_blank" href="/"><AiFillInstagram style={{ fontSize: 30 }} /></a>
@@ -181,8 +285,102 @@ const UserProfile = () => {
 
                         <div className='flex md:hidden px-2 w-full justify-around py-3 text-xs dark:text-white'>
                             <div><span className='font-extrabold flex justify-center text-lg'>{totalData ? totalData : "N/A"}</span> posts</div>
-                            <div><span className='font-extrabold flex justify-center text-lg'>10</span> followers</div>
-                            <div><span className='font-extrabold flex justify-center text-lg'>10</span> followings</div>
+                            <button onClick={handlefollowersModalOpen} className='flex flex-col items-center'>
+                                <span className='font-bold flex justify-center text-lg'>10</span>
+                                <span className='text-xs'>followers</span>
+                            </button>
+                            <Modal
+                                open={followersModalOpen}
+                                onClose={handlefollowersModalClosed}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                                className="flex justify-center items-center"
+                            >
+                                <div className='py-3 px-2 md:px-3 md:p-4 h-max md:w-[70%] lg:px-5 lg:py-2 bg-white w-[90%] dark:bg-[#231344] lg:w-[40%] rounded-lg'>
+                                    <div className='bg-white dark:bg-[#231344]'>
+
+                                        <div className='flex justify-between dark:text-white px-3'>
+                                            <div className='flex items-center gap-1 py-3 lg:py-5'>
+                                                <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>Followers</div>
+                                                <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>{totalFollowersData}</div>
+                                            </div>
+                                            <button>
+                                                <CloseIcon onClick={handlefollowersModalClosed} />
+                                            </button>
+                                        </div>
+
+                                        <div id='scrollableDivFollower' className='flex flex-col overflow-y-auto h-[35vh] scroll-smooth '>
+
+                                            <InfiniteScroll
+                                                dataLength={followersData.length}
+                                                next={fetchMoreFollowerData}
+                                                hasMore={followersData.length < Number(totalFollowersData)}
+                                                className='flex flex-col w-full duration-300 transition-all'
+                                                scrollableTarget="scrollableDivFollower"
+                                            >
+
+                                                {
+                                                    followersData?.map((data) => {
+                                                        return (
+                                                            <PeopleProfile key={data._id} userID={data.userID} />
+                                                        )
+                                                    })
+                                                }
+
+                                            </InfiniteScroll>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </Modal>
+                            <button onClick={handlefollowingsModalOpen} className='flex items-center flex-col'>
+                                <span className='font-extrabold flex justify-center text-lg'>{totalFollowingData}</span>
+                                <span className='text-xs'>followings</span>
+                            </button>
+                            <Modal
+                                open={followingsModalOpen}
+                                onClose={handlefollowingsModalClosed}
+                                aria-labelledby="modal-modal-title"
+                                aria-describedby="modal-modal-description"
+                                className="flex justify-center items-center"
+                            >
+                                <div className='py-3 px-2 md:px-3 md:p-4 h-max md:w-[70%] lg:px-5 lg:py-2 bg-white w-[90%] dark:bg-[#231344] lg:w-[40%] rounded-lg'>
+                                    <div className='bg-white dark:bg-[#231344]'>
+                                        <div className='flex justify-between dark:text-white px-3'>
+                                            <div className='flex items-center gap-1 py-3 lg:py-5'>
+                                                <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>Followings</div>
+                                                <div className='text-lg font-semibold dark:text-gray-300 text-gray-600'>{totalFollowingData}</div>
+                                            </div>
+                                            <button>
+                                                <CloseIcon onClick={handlefollowingsModalClosed} />
+                                            </button>
+                                        </div>
+
+                                        <div id='scrollableDivFollowing' className='flex flex-col overflow-y-auto h-[35vh] scroll-smooth'>
+
+                                            <InfiniteScroll
+                                                dataLength={followingData.length}
+                                                next={fetchMoreFollowingData}
+                                                hasMore={followingData.length < Number(totalFollowingData)}
+                                                className='flex flex-col w-full duration-300 transition-all'
+                                                scrollableTarget="scrollableDivFollowing"
+                                            >
+
+                                                {
+                                                    followingData?.map((data) => {
+                                                        return (
+                                                            <PeopleProfile key={data._id} userID={data.following} />
+                                                        )
+                                                    })
+                                                }
+
+                                            </InfiniteScroll>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </Modal>
                         </div>
 
                         <div className='py-1 md:hidden dark:text-white whitespace-pre-wrap'>
