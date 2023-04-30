@@ -1,12 +1,51 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '../assets/image/memories_logo.png'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import { SERVER_URL } from '../services/helper';
+import MainContext from '../context/MainContext';
 
 const ForgetPassword = () => {
+
     const [OTP, setOTP] = useState("");
 
     const localTheme = localStorage.getItem("theme")
+
+    const context = useContext(MainContext)
+
+    const navigate = useNavigate()
+
+    const { setNotification } = context;
+
+    const [email, setEmail] = useState("")
+
+    const handleForgetPassword = async (e) => {
+        e.preventDefault()
+
+        const response = await fetch(`${SERVER_URL}forgot-password/send-otp`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ "email": email })
+        })
+
+        const json = await response.json()
+
+        if (json.success) {
+
+            sessionStorage.setItem("email", email)
+            sessionStorage.setItem("type", json.type)
+
+            setNotification({ status: "true", message: `${json.message}`, type: "info" });
+
+            navigate('/authenticate')
+
+        } else {
+            setNotification({ status: "true", message: `${json.error}`, type: "error" });
+        }
+
+    }
 
     useEffect(() => {
         if (localTheme === "dark") {
@@ -28,13 +67,19 @@ const ForgetPassword = () => {
                 <div className='lg:w-[80%] xl:w-[70%] duration-300 my-[25%] sm:my-[16%] md:my-[10%] lg:h-auto flex flex-col dark:text-white lg:flex-row lg:my-auto justify-center p-1 sm:p-3 lg:p-5'>
                     <div className='lg:hidden text-xl py-4 dark:text-white font-semibold px-3'>Reset Your Password!</div>
                     <div className='w-auto lg:w-[70%] bg-white dark:bg-[#231344] flex items-center justify-center py-6 px-2 lg:px-6 shadow-lg dark:shadow-black rounded-lg'>
-                        <form className='flex flex-col gap-4 h-max w-full' action="">
+
+                        <form onSubmit={handleForgetPassword} method='POST' className='flex flex-col gap-4 h-max w-full'>
+
                             <div className="px-2 font-semibold text-md md:text-lg dark:text-white cursor-default select-none">
                                 Enter email associated with your account
                             </div>
-                            <input className="px-5 py-3 bg-transparent border-[0.5px] border-slate-400 dark:text-white dark:border-white rounded-full" type="email" placeholder="Enter Your Email Id.." />
-                            <button className='bg-gradient-to-b from-[#9013C9] to-[#573698] text-white dark:text-white py-3 rounded-full font-semibold text-md select-none'>CONFIRM EMAIL</button>
+
+                            <input onChange={e => setEmail(e.target.value)} value={email} name='email' className="px-5 py-3 bg-transparent border-[0.5px] border-slate-400 dark:text-white dark:border-white rounded-full" type="email" placeholder="Enter Your Email Id.." required />
+
+                            <button type='submit' className='bg-gradient-to-b from-[#9013C9] to-[#573698] text-white dark:text-white py-3 rounded-full font-semibold text-md select-none'>CONFIRM EMAIL</button>
+
                         </form>
+
                     </div>
                     <div className='dark:text-white p-3 text-sm lg:hidden'>We take care of your data with security as we have mentioned in our <Link className='underline font-semibold'> privacy policy.</Link></div>
                 </div>

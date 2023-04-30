@@ -27,7 +27,8 @@ import ReadMoreReact from 'read-more-react';
 import InfiniteScroll from 'react-infinite-scroll-component'
 import CircularProgress from '@mui/material/CircularProgress';
 import PeopleProfile from '../PeopleProfile';
-
+import WhatsAppIcon from '@mui/icons-material/WhatsApp';
+import LinkIcon from '@mui/icons-material/Link';
 
 
 const Post = (props) => {
@@ -44,7 +45,7 @@ const Post = (props) => {
 
   const context = useContext(MainContext)
 
-  const { createNewComment, commentingStatus, commentUploaded } = context;
+  const { createNewComment, commentingStatus, commentUploaded, setNotification } = context;
 
   const [anchorEl, setAnchorEl] = useState(false);
   const open = Boolean(anchorEl);
@@ -62,6 +63,10 @@ const Post = (props) => {
   const [commentModalOpen, setCommentModalOpen] = useState(false);
   const handleCommentModalOpen = () => setCommentModalOpen(true);
   const handleCommentModalClosed = () => setCommentModalOpen(false);
+
+  const [shareModalOpen, setShareModalOpen] = useState(false)
+  const handleShareOpen = () => setShareModalOpen(true)
+  const handleShareClose = () => setShareModalOpen(false)
 
   const [reportModal, setReportModal] = useState(false);
   const handleReportModalOpen = () => setReportModal(true);
@@ -189,6 +194,35 @@ const Post = (props) => {
 
   // ---------------------
 
+
+  // handle post report apis
+  const [reportText, setReportText] = useState("")
+
+  const handlePostReport = async (e) => {
+
+    e.preventDefault()
+
+    const response = await fetch(`${SERVER_URL}report/send-report`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': authToken
+      },
+      body: JSON.stringify({ "postID": postID, "reportText": reportText })
+    })
+
+    const json = await response.json()
+
+    if (json.success) {
+      handleReportModalClose()
+      setNotification({ status: "true", message: `${json.message}`, type: "info" })
+    } else {
+      setNotification({ status: "true", message: `${json.error}`, type: "error" })
+    }
+
+  }
+  // ----------------------
+
   useEffect(() => {
     if (userID === sessionUserID) {
       setRedirectURL(`/myprofile`)
@@ -242,6 +276,7 @@ const Post = (props) => {
               <MoreVertIcon />
             </Tooltip>
           </IconButton>
+
           <Menu
             anchorEl={anchorEl}
             open={open}
@@ -251,7 +286,10 @@ const Post = (props) => {
             anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
           >
             <div className='dark:bg-[#231344] rounded-md bg-white dark:text-white -m-2 p-2 duration-300'>
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={() => {
+                handleClose()
+                handleShareOpen()
+              }}>
                 <ListItemIcon>
                   <ShareIcon className='text-blue-600' style={{ fontSize: 25 }} />
                 </ListItemIcon>
@@ -269,6 +307,56 @@ const Post = (props) => {
             </div>
           </Menu>
 
+          <Modal
+            open={shareModalOpen}
+            onClose={handleShareOpen}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+            className="flex justify-center items-center"
+          >
+
+            <div className=' h-max max-h-max bg-white dark:bg-[#231344] rounded-md dark:text-white'>
+
+              <div className='flex py-2 px-5 items-center justify-between font-bold border-b'>
+
+                <div>Share</div>
+
+                <IconButton onClick={handleShareClose}>
+                  <CloseIcon className='dark:text-white' />
+                </IconButton>
+
+              </div>
+
+              <div className='py-5 px-10 flex gap-5'>
+
+                <Tooltip title="Send Link">
+
+                  <div className='flex flex-col gap-1.5 text-center justify-center'>
+
+                    <a href={`whatsapp://send?text=Hey! %0Acheck this amazing post by ${name} %0A${window.location.href}post/${postID}`} className='m-auto rounded-full p-4 bg-[#D9D9D9] dark:bg-[#1C1132] text-black cursor-pointer dark:text-white w-max'>
+                      <WhatsAppIcon fontSize='medium' className='' />
+                    </a>
+
+                    <div className='text-xs'>Send Link</div>
+
+                  </div>
+
+                </Tooltip>
+
+                <Tooltip title="Copy Link">
+                  <div className='flex flex-col gap-1.5 text-center justify-center'>
+                    <div className='m-auto rounded-full p-4 bg-[#D9D9D9] dark:bg-[#1C1132] text-black cursor-pointer dark:text-white w-max'>
+                      <LinkIcon fontSize='medium' />
+                    </div>
+                    <div className='text-xs'>Copy Link</div>
+                  </div>
+                </Tooltip>
+
+              </div>
+
+            </div>
+
+          </Modal>
 
           <Modal
             open={reportModal}
@@ -278,7 +366,7 @@ const Post = (props) => {
             className="flex justify-center items-center"
           >
 
-            <form className=' h-max max-h-max w-[90%] md:w-[60%] bg-white dark:bg-[#231344] lg:w-[40%] rounded-md dark:text-white'>
+            <form method='POST' onSubmit={handlePostReport} className=' h-max max-h-max w-[90%] md:w-[60%] bg-white dark:bg-[#231344] lg:w-[40%] rounded-md dark:text-white'>
 
               <div className='flex py-4 px-5 items-center justify-between font-bold border-b'>
 
@@ -297,6 +385,7 @@ const Post = (props) => {
               <div className="py-2 px-5">
 
                 <textarea
+                  onChange={e => setReportText(e.target.value)}
                   className=' w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] bg-[#F1F1F1] dark:text-white dark:border-[#33215A]' placeholder='Explain the problem with this post...' cols="30" rows="3"
                   required
                 >

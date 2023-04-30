@@ -28,6 +28,8 @@ const UserProfile = () => {
 
     const { name, bio, userName, profileURL } = otherUserProfile;
 
+    const sessionUserID = sessionStorage.getItem("sessionUserID")
+
     const authToken = localStorage.getItem('auth-token')
 
     const params = useParams()
@@ -97,14 +99,14 @@ const UserProfile = () => {
         if (userID) {
             fetchFollowStatus()
         }
-    }, [])
+    }, [userID])
 
     // -------------
 
 
     useEffect(() => {
         fetchAnotherUserProfile(userID)
-    }, [])
+    }, [userID])
 
 
     const pageLimit = 5
@@ -134,8 +136,10 @@ const UserProfile = () => {
     };
 
     useEffect(() => {
+
         fetchData()
-    }, [])
+
+    }, [userID])
 
     const fetchMoreData = () => {
         fetchData()
@@ -249,7 +253,7 @@ const UserProfile = () => {
                                         <VerifiedIcon style={{ fontSize: 16 }} />
                                     </Tooltip>
                                 </div>
-                                
+
                                 <div className=' dark:text-slate-200 text-slate-600 text-sm sm:text-sm font-semibold'>@{userName}</div>
 
                                 <div className='font-semibold text-sm py-2 lg:py-3 text-gray-400'>Developer</div>
@@ -286,7 +290,7 @@ const UserProfile = () => {
                         <div className='flex md:hidden px-2 w-full justify-around py-3 text-xs dark:text-white'>
                             <div><span className='font-extrabold flex justify-center text-lg'>{totalData ? totalData : "N/A"}</span> posts</div>
                             <button onClick={handlefollowersModalOpen} className='flex flex-col items-center'>
-                                <span className='font-bold flex justify-center text-lg'>10</span>
+                                <span className='font-bold flex justify-center text-lg'>{totalFollowersData}</span>
                                 <span className='text-xs'>followers</span>
                             </button>
                             <Modal
@@ -396,7 +400,7 @@ const UserProfile = () => {
 
                         <div className="flex flex-col items-center gap-2 w-full">
 
-                            {
+                            {sessionUserID !== userID ?
                                 followStatus ?
                                     <div className='flex gap-2 w-full md:w-[75%] lg:w-[50%] xl:w-[40%]'>
 
@@ -413,6 +417,7 @@ const UserProfile = () => {
                                     <button onClick={handleFollowUnfollow} className='flex w-full md:w-[75%] lg:w-[50%] xl:w-[40%] justify-center bg-[#8948B8] text-white py-1.5 lg:py-2 hover:bg-[#8E2BC2] duration-200 font-semibold rounded-md text-lg'>
                                         Follow
                                     </button>
+                                : ""
                             }
 
                         </div>

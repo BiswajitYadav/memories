@@ -11,7 +11,12 @@ const TwoFA = () => {
     const navigate = useNavigate()
 
     const context = useContext(MainContext)
-    const { temporaryAuthToken, setNotification } = context;
+
+    const { setNotification } = context;
+
+    const requestType = sessionStorage.getItem("type")
+
+    const sessionEmail = sessionStorage.getItem("email")
 
     const authToken = sessionStorage.getItem("auth-token");
 
@@ -23,20 +28,31 @@ const TwoFA = () => {
 
         e.preventDefault()
 
-        const response = await fetch(`${SERVER_URL}otp/verify`, {
+        const response = await fetch(requestType == "reset" ? `${SERVER_URL}forgot-password/verify-otp` : `${SERVER_URL}otp/verify`, {
             method: 'POST',
             headers: {
                 'auth-token': authToken,
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ "otp": otp })
+            body: JSON.stringify({ "otp": otp, "email": sessionEmail })
         });
 
         const json = await response.json()
 
         if (json.success) {
-            setNotification({ status: "true", message: `${json.message}`, type: "success" });
-            navigate('/createprofile')
+
+            if (json.type === "auth") {
+
+                setNotification({ status: "true", message: `${json.message}`, type: "success" });
+                navigate('/createprofile')
+
+            } else if (json.type === "reset") {
+
+                setNotification({ status: "true", message: `${json.message}`, type: "success" });
+                navigate('/resetpassword')
+
+            }
+
         } else {
             setNotification({ status: "true", message: `${json.error}`, type: "error" });
         }
@@ -67,7 +83,7 @@ const TwoFA = () => {
                     <div className='w-full bg-white dark:bg-[#231344] flex items-center justify-center p-6 shadow-lg dark:shadow-black rounded-lg py-10'>
                         <form onSubmit={verifyOTP} className='flex flex-col gap-y-9 h-full w-full' method='POST'>
                             <div className="font-semibold text-sm md:text-lg dark:text-white cursor-default select-none">
-                                Enter OTP sent on ro****9051@gmail.com
+                                Enter OTP sent on {sessionEmail}
                             </div>
                             <div className='flex items-center justify-center w-full'>
                                 <OTPInput className="" inputClassName="border-[0.5px] border-slate-400  font-semibold bg-slate-100 dark:bg-slate-800 dark:border-slate-400 dark:text-white scale-125 lg:scale-150 rounded-md lg:mx-3 xl:mx-8" value={otp} onChange={setOtp} autoFocus OTPLength={6} otpType="number" disabled={false} />

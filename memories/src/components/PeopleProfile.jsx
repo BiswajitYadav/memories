@@ -8,6 +8,8 @@ import MainContext from '../context/MainContext';
 
 const PeopleProfile = (props) => {
 
+    const sessionUserID = sessionStorage.getItem("sessionUserID")
+
     const userID = props.userID;
 
     const authToken = localStorage.getItem('auth-token')
@@ -104,7 +106,7 @@ const PeopleProfile = (props) => {
     return (
         <>
             <div className='flex w-full justify-between px-3 py-2'>
-                <Link to={`/profile/${userID}`} className='flex gap-2'>
+                <Link to={`/profile/${userID}`} target='_blank' className='flex gap-2'>
                     <Avatar className='my-auto' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 40, height: 40 }} />
 
                     <div className='flex flex-col justify-center'>
@@ -120,14 +122,17 @@ const PeopleProfile = (props) => {
 
                 {
 
-                    followStatus ?
-                        <Tooltip title="Unfollow">
-                            <button onClick={handleFollowUnfollow} className='h-max bg-slate-200 my-auto px-3 py-1.5 text-slate-700 rounded flex text-sm '>Unfollow</button>
-                        </Tooltip>
-                        :
-                        <Tooltip title="Follow">
-                            <button onClick={handleFollowUnfollow} className='h-max bg-gradient-to-r from-[#8948B8] to-[#8E2BC2] my-auto px-3 py-1.5 text-white rounded flex text-sm '>Follow</button>
-                        </Tooltip>
+                    sessionUserID !== userID ?
+
+                        followStatus ?
+                            <Tooltip title="Unfollow">
+                                <button onClick={handleFollowUnfollow} className='h-max bg-slate-200 my-auto px-3 py-1.5 text-slate-700 rounded flex text-sm '>Unfollow</button>
+                            </Tooltip>
+                            :
+                            <Tooltip title="Follow">
+                                <button onClick={handleFollowUnfollow} className='h-max bg-gradient-to-r from-[#8948B8] to-[#8E2BC2] my-auto px-3 py-1.5 text-white rounded flex text-sm '>Follow</button>
+                            </Tooltip>
+                        : ""
 
                 }
 

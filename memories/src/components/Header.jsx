@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import HomeIcon from '@mui/icons-material/Home';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useNavigate } from 'react-router-dom';
 import logo from '../assets/image/memories_logo.png'
 import MessageIcon from '@mui/icons-material/Message';
 import PeopleIcon from '@mui/icons-material/People';
@@ -28,6 +28,8 @@ import MainContext from '../context/MainContext';
 
 function Header() {
 
+  const navigate = useNavigate()
+
   const context = useContext(MainContext)
   const { userProfileData, fetchSessionUserProfile } = context;
 
@@ -45,7 +47,9 @@ function Header() {
   const [theme, setTheme] = useState(localTheme);
 
   useEffect(() => {
+
     fetchSessionUserProfile()
+
     if (userProfileData) {
       sessionStorage.setItem('sessionUserID', _id)
     }
@@ -197,7 +201,7 @@ function Header() {
             <Tooltip title="Profile" className="mx-auto">
               <PersonIcon style={{ fontSize: 30 }} />
             </Tooltip>
-            
+
           </NavLink>
 
         </div>

@@ -61,9 +61,12 @@ function SignUp() {
       const json = await response.json()
 
       if (json.success) {
+
         setNotification({ status: "true", message: "Account Created", type: "success" })
         sessionStorage.setItem("auth-token", json.authToken)
+        sessionStorage.setItem("email", email)
         navigate('/authenticate')
+
       } else {
         console.log(json);
         setNotification({ status: "true", message: `${json.error}`, type: "error" })

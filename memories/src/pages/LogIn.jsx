@@ -16,7 +16,6 @@ function LogIn() {
 
   const localTheme = localStorage.getItem("theme")
 
-
   const [email, setEmail] = useState("")
   const [password, setpassword] = useState("")
 
@@ -34,9 +33,18 @@ function LogIn() {
     const json = await response.json()
 
     if (json.success) {
+
       localStorage.setItem("auth-token", json.authToken)
       setNotification({ status: "true", message: "Login Sucess", type: "success" })
       navigate('/')
+
+    } else if (json.validateAuth) {
+
+      sessionStorage.setItem("email", email)
+      sessionStorage.setItem("auth-token", json.authToken)
+      setNotification({ status: "true", message: `${json.message}`, type: "success" })
+      navigate('/authenticate')
+
     } else {
       setNotification({ status: "true", message: `${json.error}`, type: "error" })
     }
