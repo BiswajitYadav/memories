@@ -185,7 +185,7 @@ const ViewPost = () => {
       setRedirectURL(`/profile/${userID}`)
     }
 
-  }, [])
+  }, [userID])
 
 
   const fetchUserProfileData = async () => {

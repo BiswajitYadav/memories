@@ -38,7 +38,6 @@ const ForgetPassword = () => {
             sessionStorage.setItem("type", json.type)
 
             setNotification({ status: "true", message: `${json.message}`, type: "info" });
-
             navigate('/authenticate')
 
         } else {

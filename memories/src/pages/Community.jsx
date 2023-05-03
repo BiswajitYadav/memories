@@ -163,7 +163,7 @@ const Community = () => {
 
     useEffect(() => {
 
-        if (searchQuery.length > 3) {
+        if (searchQuery.length >= 3) {
 
             fetchSearchData()
 

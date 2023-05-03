@@ -8,6 +8,7 @@ import { useEffect } from 'react';
 import { Close } from '@mui/icons-material';
 import { CLOUDINARY_URL, CLOUD_NAME, UPLOAD_PRESET } from '../../services/cloudinary';
 import { SERVER_URL } from '../../services/helper';
+import Compressor from 'compressorjs';
 
 const CreatePost = (props) => {
 
@@ -20,6 +21,7 @@ const CreatePost = (props) => {
     const [postType, setPostType] = useState("public")
 
     const [image, setImage] = useState(null)
+    const [compressedImage, setCompressedImage] = useState(null)
     const [imgUrl, setImgUrl] = useState("")
 
     const { profileURL, name } = props;
@@ -37,8 +39,11 @@ const CreatePost = (props) => {
 
 
     const onImageInputChange = (e) => {
+
         setImage(e.target.files[0])
+
         setImgUrl(URL.createObjectURL(e.target.files[0]))
+
     }
 
 
@@ -50,47 +55,60 @@ const CreatePost = (props) => {
 
             setUploadStatus(true)
 
-            const data = new FormData()
-            data.append("file", image)
-            data.append("upload_preset", `${UPLOAD_PRESET}`)
-            data.append("cloud_name", `${CLOUD_NAME}`)
+            new Compressor(image, {
+                quality: 0.6,
+                success: (compressedResult) => {
 
-            const imgUpload = await fetch(`${CLOUDINARY_URL}`, {
-                method: 'POST',
-                body: data
-            });
+                    const data = new FormData()
+                    data.append("file", compressedResult)
+                    data.append("upload_preset", `${UPLOAD_PRESET}`)
+                    data.append("cloud_name", `${CLOUD_NAME}`)
 
-            const jsonData = await imgUpload.json()
+                    fetch(`${CLOUDINARY_URL}`, {
+                        method: 'POST',
+                        body: data
+                    })
+                        .then(res => res.json())
+                        .then(jsonData => {
 
-            if (jsonData.url) {
+                            console.log(jsonData)
 
-                const postUpload = await fetch(`${SERVER_URL}post/create`, {
-                    method: 'POST',
-                    headers: {
-                        "auth-token": localStorage.getItem("auth-token"),
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({ "postImageURL": jsonData.url, "postType": postType, "postCaption": caption })
-                })
+                            if (jsonData.url) {
 
-                const json = await postUpload.json()
+                                fetch(`${SERVER_URL}post/create`, {
+                                    method: 'POST',
+                                    headers: {
+                                        "auth-token": localStorage.getItem("auth-token"),
+                                        "Content-Type": "application/json"
+                                    },
+                                    body: JSON.stringify({ "postImageURL": jsonData.url, "postType": postType, "postCaption": caption })
+                                })
+                                    .then(res => res.json())
+                                    .then(json => {
 
-                if (json.success) {
-                    setNotification({ status: "true", message: "Posted", type: "info" })
-                    setUploadStatus(false)
-                    setCaption("")
-                    setPostType("public")
-                    setImage(null)
-                    setImgUrl("")
-                    handleClose()
+                                        if (json.success) {
+                                            setNotification({ status: "true", message: "Posted", type: "info" })
+                                            setUploadStatus(false)
+                                            setCaption("")
+                                            setPostType("public")
+                                            setImage(null)
+                                            setImgUrl("")
+                                            handleClose()
+                                        }
+
+                                        else {
+                                            setUploadStatus(false)
+                                            setImage(null)
+                                            setImgUrl("")
+                                            setNotification({ status: "true", message: "Heavy file upload less than 10MB", type: "error" })
+                                        }
+                                    })
+
+                            }
+                        })
+
                 }
-
-            } else {
-                setUploadStatus(false)
-                setImage(null)
-                setImgUrl("")
-                setNotification({ status: "true", message: "Heavy file upload less than 10MB", type: "error" })
-            }
+            })
 
         } else {
 
@@ -137,7 +155,7 @@ const CreatePost = (props) => {
                 </Link>
                 <div className='bg-transparent rounded-full flex items-center w-full'>
 
-                    <button className='bg-[#D9D9D9] dark:bg-[#1C1132] rounded-full dark:text-white/60 w-full px-3 py-1.5 lg:px-5 lg:py-2.5 text-[#B5B5B5] lg:text-lg ' onClick={handleOpen} >
+                    <button className='bg-[#D9D9D9] dark:bg-[#1C1132] text-xs sm:text-sm rounded-full dark:text-white/60 w-full px-3 py-1.5 lg:px-5 lg:py-2.5 text-[#B5B5B5] lg:text-lg ' onClick={handleOpen} >
                         Write Something to get Butterflies
                     </button>
 

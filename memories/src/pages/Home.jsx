@@ -105,9 +105,11 @@ const Home = () => {
     })
       .then(res => res.json())
       .then((newData) => {
+
         const mergeData = [...post, ...newData.allPost]
         setPost(mergeData)
         setTotalData(newData.allPostLength)
+        
       })
       .catch((err) => console.error(err));
   };
@@ -127,7 +129,7 @@ const Home = () => {
 
         <Header />
 
-        <div id='scrollableDiv' className='bg-[#D9D9D9] dark:bg-[#1C1132] overflow-y-auto h-[92vh] w-screen flex justify-between gap-x-5 py-4 px-2 sm:px-5 md:px-16 '>
+        <div id='scrollableDiv' className='bg-[#D9D9D9] dark:bg-[#1C1132] overflow-y-auto h-[92vh] w-screen flex justify-between gap-x-5 py-4 px-2 sm:px-5 md:px-16'>
 
           <PeopleSuggestions />
 

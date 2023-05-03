@@ -145,8 +145,31 @@ const MainState = (props) => {
     }
 
     return (
-        <MainContext.Provider value={{ temporaryAuthToken, setTemporaryAuthToken, notification, setNotification, generateOTP, userProfileData, fetchSessionUserProfile, fetchedPost, fetchAllPostHomePage, otherUserProfile, fetchAnotherUserProfile, myPost, fetchMyAllPost, post, setPost, handleStaticPostRemove, createNewComment, commentingStatus, commentUploaded }}>
+
+        <MainContext.Provider value={{
+            temporaryAuthToken,
+            setTemporaryAuthToken,
+            notification,
+            setNotification,
+            generateOTP,
+            userProfileData,
+            fetchSessionUserProfile,
+            fetchedPost,
+            fetchAllPostHomePage,
+            otherUserProfile,
+            fetchAnotherUserProfile,
+            myPost,
+            fetchMyAllPost,
+            post,
+            setPost,
+            handleStaticPostRemove,
+            createNewComment,
+            commentingStatus,
+            commentUploaded
+        }}>
+
             {props.children}
+            
         </MainContext.Provider>
     )
 }

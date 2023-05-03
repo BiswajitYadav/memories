@@ -79,9 +79,9 @@ function SignUp() {
   return (
     <>
 
-      <div className='lg:h-screen bg-[#D9D9D9] dark:bg-[#1C1132] lg:flex lg:items-center lg:justify-around lg:px-52'>
+      <div className='lg:h-screen bg-[#D9D9D9] dark:bg-[#1C1132] lg:flex lg:items-center lg:justify-around lg:px-20 xl:px-52'>
 
-        <div className='flex justify-between mx-5 pt-5 lg:flex-col lg:justify-center lg:w-1/4 lg:gap-y-3'>
+        <div className='flex justify-between mx-5 pt-5 lg:flex-col lg:justify-center lg:w-[50%] xl:w-1/3 lg:gap-y-3'>
           <div className='w-8 text-center justify-center lg:w-48'>
             <img className='' src={logo} alt="logo" />
           </div>
@@ -90,18 +90,18 @@ function SignUp() {
           <div className='hidden dark:text-white lg:block lg:text-xl '>keep your memoires alive and enjoy every moment</div>
         </div>
 
-        <form onSubmit={handleSignupFormSubmit} method='POST' className="flex flex-col h-screen justify-center p-5 rounded-lg lg:w-1/3 2xl:justify-center duration-300">
+        <form onSubmit={handleSignupFormSubmit} method='POST' className="flex flex-col h-[92.5vh] justify-center p-5 rounded-lg lg:w-[50%] xl:w-1/3 2xl:justify-center duration-300 gap-4">
 
           <div className='hidden text-black dark:text-white text-2xl font-semibold lg:block lg:px-5 lg:py-3 lg:mb-4 '>SignUp</div>
-          <input className="px-5 py-3 mb-4 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="text" name='fullName' value={name} onChange={e => setName(e.target.value)} placeholder="Full Name" required />
-          <input className="px-5 py-3 mb-4 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="text" name='userName' pattern="^[^\s]+$" value={userName} onChange={e => setUserName(e.target.value)} placeholder="User Name" required />
-          <input className="px-5 py-3 mb-4 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="email" name='email' value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required />
-          <input className="px-5 py-3 mb-4 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="password" name='password' value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
-          <input className="px-5 py-3 mb-4 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="password" name='repeatPassword' value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)} placeholder="Repeat Password" required />
+          <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="text" name='fullName' value={name} onChange={e => setName(e.target.value)} placeholder="Full Name" required />
+          <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="text" name='userName' pattern="^[^\s]+$" value={userName} onChange={e => setUserName(e.target.value)} placeholder="User Name" required />
+          <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="email" name='email' value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required />
+          <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="password" name='password' value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
+          <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="password" name='repeatPassword' value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)} placeholder="Repeat Password" required />
 
           {passMatch ? <p className='text-red-500 font-medium animate-pulse duration-300 mb-4'>Password match failed !</p> : ""}
 
-          <button className="bg-[#901EC7] p-3 font-bold text-xl text-white bg-gradient-to-bl from-[#573698] to-[#9013C9] rounded-3xl hover:scale-105 duration-300">SIGNUP</button>
+          <button className="bg-[#901EC7] py-2 md:py-3 font-bold text-xl text-white bg-gradient-to-bl from-[#573698] to-[#9013C9] rounded-3xl hover:scale-105 duration-300">SIGNUP</button>
           <Link to="/" className='text-md dark:text-white mt-4 underline underline-offset-2 flex justify-center lg:no-underline lg:hover:underline duration-300'>Already Have an Account ?</Link>
 
         </form>
