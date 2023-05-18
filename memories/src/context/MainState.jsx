@@ -37,6 +37,8 @@ const MainState = (props) => {
 
     const [userProfileData, setUserProfileData] = useState({})
 
+    const [sessionPartner, setSessionPartner] = useState({})
+
     const fetchSessionUserProfile = async () => {
         const response = await fetch(`${SERVER_URL}user/get-user-profile`, {
             method: 'POST',
@@ -46,7 +48,10 @@ const MainState = (props) => {
             }
         })
 
-        const json = await response.json().then(data => setUserProfileData(data))
+        const json = await response.json().then(data => {
+            setUserProfileData(data.user)
+            setSessionPartner(data.partner)
+        })
 
     }
 
@@ -71,6 +76,8 @@ const MainState = (props) => {
 
     const [otherUserProfile, setOtherUserProfile] = useState({})
 
+    const [userPartner, setUserPartner] = useState({})
+
     const fetchAnotherUserProfile = async (userID) => {
 
         const response = await fetch(`${SERVER_URL}user/get-profile-of/${userID}`, {
@@ -85,6 +92,7 @@ const MainState = (props) => {
 
         if (json.success) {
             setOtherUserProfile(json.userProfile)
+            setUserPartner()
         } else {
             setNotification({ status: "true", message: "OTP Sent", type: "success" })
         }
@@ -153,10 +161,12 @@ const MainState = (props) => {
             setNotification,
             generateOTP,
             userProfileData,
+            sessionPartner,
             fetchSessionUserProfile,
             fetchedPost,
             fetchAllPostHomePage,
             otherUserProfile,
+            userPartner,
             fetchAnotherUserProfile,
             myPost,
             fetchMyAllPost,
@@ -169,7 +179,7 @@ const MainState = (props) => {
         }}>
 
             {props.children}
-            
+
         </MainContext.Provider>
     )
 }

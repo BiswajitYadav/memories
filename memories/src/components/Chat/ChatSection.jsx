@@ -37,6 +37,9 @@ const Message = (props) => {
 
 
 const ChatSection = () => {
+
+    
+
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -50,9 +53,10 @@ const ChatSection = () => {
             <div className="h-full w-full bg-white dark:bg-[#1C1132] rounded-md">
                 <div className='h-max flex px-3 lg:px-10 py-2.5 lg:py-3 xl:py-4 justify-between bg-[#FFFFFF] dark:bg-[#2c1a57] rounded-md md:-mx-2 shadow-lg dark:shadow-black'>
                     <div className='flex gap-1 sm:gap-3 lg:gap-5 h-full'>
-                        <Link to="/Chat" className='flex my-auto gap-1 sm:gap-3 lg:gap-5 h-full'>
+                        <Link to="/chat" className='flex my-auto gap-1 sm:gap-3 lg:gap-5 h-full'>
                             <ArrowBackIcon className='md:scale-125 xl:scale-150 text-[#8948B8]' />
                         </Link>
+
                         <Link to="/profile" className='flex gap-1 sm:gap-3 lg:gap-5 h-full'>
                             <Avatar className='my-auto' alt="Travis Howard" src="https://www.w3schools.com/howto/img_avatar.png " sx={{ width: 50, height: 50 }} />
                             <div className='flex flex-col justify-center'>

@@ -1,59 +1,169 @@
 import { Avatar, Tooltip } from '@mui/material'
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import Header from '../components/Header'
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { BsFillChatTextFill } from 'react-icons/bs'
+import { useState } from 'react';
+import { SERVER_URL } from '../services/helper';
+import { useEffect } from 'react';
+import ReactTimeago from 'react-timeago';
 
 
 const ChatSelect = (props) => {
+
+  const sessionUserID = sessionStorage.getItem('sessionUserID')
+
+  const { _id, user, updatedAt, recentMessage } = props.data;
+
+  const [userData, setUserData] = useState({})
+
+  const { name, userName, profileURL } = userData;
+
+  const userID = user?.find(data => data != sessionUserID)
+
+  const fetchUserProfileData = async () => {
+
+    const response = await fetch(`${SERVER_URL}user/get-profile-of/${userID}`, {
+      method: 'POST',
+      headers: {
+        'auth-token': localStorage.getItem('auth-token'),
+        'Content-Type': 'application/json'
+      }
+    });
+
+    const json = await response.json()
+
+    if (json.success) {
+      setUserData(json.userProfile)
+    }
+
+  }
+
+  useEffect(() => {
+
+    if (userID) {
+      fetchUserProfileData()
+    }
+
+  }, [userID])
+
   return (
     <>
-      <NavLink className='hover:bg-[#D9D9D9] lg:hover:rounded-r-md lg:rounded-l-none rounded-md dark:bg-[#1C1132] w-full' to=":chatID">
+
+      <Link className='hover:bg-[#D9D9D9] lg:hover:rounded-r-md lg:rounded-l-none rounded-md dark:hover:bg-[#1C1132] w-full' to={`${_id}`} state={{ data: userData }}>
+
         <div className='flex flex-col h-max dark:text-white px-5 py-3 lg:py-4 gap-5 rounded-md'>
+
           <div className='flex w-full justify-between'>
+
             <div className='flex gap-2'>
-              <Avatar className='my-auto' alt="Travis Howard" src="https://www.w3schools.com/howto/img_avatar.png " sx={{ width: 45, height: 45 }} />
+
+              <Avatar className='my-auto' alt="Travis Howard" src={profileURL} sx={{ width: 45, height: 45 }} />
+
               <div className='flex flex-col justify-center'>
+
                 <div className='flex gap-1'>
-                  <div className='dark:text-white font-semibold text-sm'>Rohit Kumar Pandit</div>
+
+                  <div className='dark:text-white font-semibold text-sm'>{name}</div>
+
                   <Tooltip title="Developer" className="text-gray-400 my-auto">
                     <VerifiedIcon style={{ fontSize: 16 }} />
                   </Tooltip>
+
                 </div>
-                <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>A message</div>
+
+                <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>{recentMessage ? recentMessage : "send a message"}</div>
+
               </div>
+
             </div>
+
           </div>
+
         </div>
-      </NavLink>
+
+      </Link>
+
     </>
   )
 }
 
 
 const Chat = () => {
+
+  const authToken = localStorage.getItem('auth-token')
+
+  const [allChat, setAllChat] = useState([])
+
+  const fetchAllChat = async () => {
+
+    const response = await fetch(`${SERVER_URL}chat/fetch-all-chat`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'auth-token': authToken
+      }
+    })
+
+    const json = await response.json()
+
+    if (json) {
+      setAllChat(json)
+    }
+
+  }
+
+  useEffect(() => {
+    fetchAllChat()
+  }, [])
+
   return (
     <>
       <div className='bg-[#D9D9D9] h-screen w-screen'>
+
         <Header />
+
         <div className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92vh] w-screen overflow-y-auto flex justify-between gap-x-5 py-4 px-2 sm:px-5 md:px-16'>
+
           <div className='bg-white dark:bg-[#231344] rounded-xl w-full flex items-center py-3 flex-row gap-5 shadow-lg justify-between lg:pr-4'>
+
             <div className='w-full md:w-[50%] xl:w-[22%] lg:w-[40%] h-[80vh]'>
+
               <div className='w-full h-full flex flex-col lg:items-center overflow-y-auto md:pr-2 lg:pr-5'>
-                <ChatSelect />
+
+
+                {
+                  allChat?.length ?
+                    allChat?.map((data) => {
+                      return (
+                        <ChatSelect key={data._id} data={data} />
+                      )
+                    })
+                    :
+                    <div className='p-10 opacity-50 dark:text-white'>Send message to someone to start a chat.</div>
+                }
+
+
               </div>
 
             </div>
 
             <div className='hidden md:block md:w-[50%] lg:w-[70%] xl:w-[78%] h-[80vh]'>
+
               <div className='w-full h-full flex justify-center'>
+
                 <div className='flex items-center gap-2 lg:gap-4 justify-center cursor-default select-none'>
+
                   <BsFillChatTextFill className='scale-125 lg:scale-150 text-[#D9D9D9]' />
                   <div className='text-xl lg:text-3xl font-semibold text-[#D9D9D9]'>Select to Chat</div>
+
                 </div>
+
               </div>
+
             </div>
+
           </div>
         </div>
       </div>

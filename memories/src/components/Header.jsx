@@ -6,11 +6,9 @@ import MessageIcon from '@mui/icons-material/Message';
 import PeopleIcon from '@mui/icons-material/People';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
-import DevicesIcon from '@mui/icons-material/Devices';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import { Avatar, Box, Divider, Drawer, IconButton, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Menu, MenuItem, Modal, Tooltip } from '@mui/material';
-import { Logout, PersonAdd, Settings } from '@mui/icons-material';
+import { Avatar, Box, Drawer, IconButton, List, ListItemIcon, Menu, MenuItem, Modal, Tooltip } from '@mui/material';
 import { BiEdit } from 'react-icons/bi'
 import { MdOutlineLiveHelp } from 'react-icons/md'
 import { FiSettings } from 'react-icons/fi'
@@ -33,7 +31,7 @@ function Header() {
   const context = useContext(MainContext)
   const { userProfileData, fetchSessionUserProfile } = context;
 
-  const { _id, name, email, profileURL, gender, userName } = userProfileData;
+  const { _id, name, email, profileURL, gender, userName, isBanned } = userProfileData;
 
   const [openModal, setOpenModal] = useState(false);
   const handleModalOpen = () => setOpenModal(true);
@@ -53,7 +51,18 @@ function Header() {
     if (userProfileData) {
       sessionStorage.setItem('sessionUserID', _id)
     }
+
   }, [])
+
+
+  useEffect(() => {
+
+    if (isBanned === true) {
+      localStorage.removeItem('auth-token')
+      navigate('/login')
+    }
+
+  }, [isBanned])
 
 
   useEffect(() => {
@@ -66,6 +75,7 @@ function Header() {
       localStorage.setItem("theme", "light");
     }
   }, [theme]);
+
 
   const anchor = 'left'
   const [anchorEl, setAnchorEl] = useState(null);

@@ -78,11 +78,11 @@ const UpdatePassword = () => {
               <div className='text-xs md:text-sm text-[#797979]'>Note : Update your password if you think somebody else knows your password.</div>
               <form method='POST' onSubmit={handlePasswordUpdate} className='flex flex-col py-5 gap-4 lg:w-[50%]'>
 
-                <input onChange={onFormInputChange} value={credentials.password} name='password' type="password" className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' placeholder='Current Password' />
+                <input onChange={onFormInputChange} value={credentials.password} name='password' type="password" className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' placeholder='Current Password' required/>
 
-                <input onChange={onFormInputChange} value={credentials.newPassword} name='newPassword' type="password" className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' placeholder='New Password' />
+                <input onChange={onFormInputChange} value={credentials.newPassword} name='newPassword' type="password" className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' placeholder='New Password' required/>
 
-                <input onChange={onFormInputChange} value={credentials.repeatPassword} name='repeatPassword' type="password" className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' placeholder='Repeat Password' />
+                <input onChange={onFormInputChange} value={credentials.repeatPassword} name='repeatPassword' type="password" className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' placeholder='Repeat Password' required/>
 
                 <p className='text-xs text-[#797979]'>Always choose a strong password</p>
 

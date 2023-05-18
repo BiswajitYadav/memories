@@ -140,6 +140,7 @@ const Post = (props) => {
       fetchLikeStatus()
     } else {
       fetchLikeStatus()
+      setNotification({ status: "true", message: `${json.error}`, type: "info" })
     }
 
   }
@@ -202,7 +203,7 @@ const Post = (props) => {
 
     e.preventDefault()
 
-    const response = await fetch(`${SERVER_URL}report/send-report`, {
+    const response = await fetch(`${SERVER_URL}report/post-report`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -238,7 +239,6 @@ const Post = (props) => {
   useEffect(() => {
     fetchUserProfileData()
   }, [userID])
-
 
 
   return (

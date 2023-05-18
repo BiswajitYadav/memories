@@ -93,33 +93,44 @@ function App() {
 
           <Route path="/community" element={
             <Suspense fallback={<LoadingScreen />}>
-              <Community />
+              <UserPrivateRoute>
+                <Community />
+              </UserPrivateRoute>
             </Suspense>
           }></Route>
 
           <Route path="/notification" element={
             <Suspense fallback={<LoadingScreen />}>
-              <Notification />
+              <UserPrivateRoute>
+
+                <Notification />
+              </UserPrivateRoute>
             </Suspense>
           }></Route>
 
           <Route path="/myprofile" element={
             <Suspense fallback={<LoadingScreen />}>
-              <MyProfile />
+              <UserPrivateRoute>
+                <MyProfile />
+              </UserPrivateRoute>
             </Suspense>
           }></Route>
 
           <Route path="/chat">
 
-            <Route path="/chat" element={
+            <Route exact path="/chat" element={
               <Suspense fallback={<LoadingScreen />}>
-                <Chat />
+                <UserPrivateRoute>
+                  <Chat />
+                </UserPrivateRoute>
               </Suspense>
             } />
 
             <Route path=":chatId" element={
               <Suspense fallback={<LoadingScreen />}>
-                <ChatPage />
+                <UserPrivateRoute>
+                  <ChatPage />
+                </UserPrivateRoute>
               </Suspense>
             } />
 
@@ -127,43 +138,57 @@ function App() {
 
           <Route path="/editprofile" element={
             <Suspense fallback={<LoadingScreen />}>
-              <EditProfile />
+              <UserPrivateRoute>
+                <EditProfile />
+              </UserPrivateRoute>
             </Suspense>
           }></Route>
 
           <Route path="/help" element={
             <Suspense fallback={<LoadingScreen />}>
-              <HelpAndSupport />
+              <UserPrivateRoute>
+                <HelpAndSupport />
+              </UserPrivateRoute>
             </Suspense>
           }></Route>
 
           <Route path="/t&c" element={
             <Suspense fallback={<LoadingScreen />}>
-              <TermsAndCondition />
+              <UserPrivateRoute>
+                <TermsAndCondition />
+              </UserPrivateRoute>
             </Suspense>
           }></Route>
 
           <Route path="/partnerprogram" element={
             <Suspense fallback={<LoadingScreen />}>
-              <PartnerProgram />
+              <UserPrivateRoute>
+                <PartnerProgram />
+              </UserPrivateRoute>
             </Suspense>
           }></Route>
 
           <Route path="/profile/:userID" element={
             <Suspense fallback={<LoadingScreen />}>
-              <UserProfile />
+              <UserPrivateRoute>
+                <UserProfile />
+              </UserPrivateRoute>
             </Suspense>
           }></Route>
 
           <Route path="/createprofile" element={
             <Suspense fallback={<LoadingScreen />}>
-              <CreateProfileInfo />
+              <UserPrivateRoute>
+                <CreateProfileInfo />
+              </UserPrivateRoute>
             </Suspense>
           }></Route>
 
           <Route path="/post/:postID" element={
             <Suspense fallback={<LoadingScreen />}>
-              <ViewPost />
+              <UserPrivateRoute>
+                <ViewPost />
+              </UserPrivateRoute>
             </Suspense>
           }></Route>
 

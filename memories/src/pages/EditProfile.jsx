@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import SampleProfileImage from '../assets/image/sample-profile.webp'
 import { SERVER_URL } from '../services/helper';
 import { CLOUDINARY_URL, CLOUD_NAME, UPLOAD_PRESET } from '../services/cloudinary';
+import Compressor from 'compressorjs';
+import { CircularProgress } from '@mui/material'
 
 const EditProfile = () => {
 
@@ -17,6 +19,10 @@ const EditProfile = () => {
   const { setNotification, userProfileData, fetchSessionUserProfile } = context;
 
   const { _id, name, email, profileURL, gender, userName, DOB, bio } = userProfileData;
+
+  const [editProfileLoader, setEditProfileLoader] = useState(false)
+  
+  const [uploadImageLoader, setUploadImageLoader] = useState(false)
 
   const [image, setImage] = useState(null)
 
@@ -40,43 +46,52 @@ const EditProfile = () => {
 
   const handleChangeProfile = async () => {
 
-    const data = new FormData()
-    data.append("file", image)
-    data.append("upload_preset", `${UPLOAD_PRESET}`)
-    data.append("cloud_name", `${CLOUD_NAME}`)
+    new Compressor(image, {
+      quality: 0.6,
+      success: (compressedResult) => {
 
-    const imgUpload = await fetch(`${CLOUDINARY_URL}`, {
-      method: 'POST',
-      body: data
-    });
 
-    const jsonData = await imgUpload.json()
+        const data = new FormData()
+        data.append("file", compressedResult)
+        data.append("upload_preset", `${UPLOAD_PRESET}`)
+        data.append("cloud_name", `${CLOUD_NAME}`)
 
-    if (jsonData) {
+        fetch(`${CLOUDINARY_URL}`, {
+          method: 'POST',
+          body: data
+        }).then(res => res.json())
+          .then(data => {
 
-      const response = await fetch(`${SERVER_URL}user/edit-user-profile`, {
-        method: 'PUT',
-        headers: {
-          'auth-token': localStorage.getItem("auth-token"),
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          "profileURL": jsonData.url
-        })
-      })
+            if (data) {
 
-      const json = await response.json()
+              fetch(`${SERVER_URL}user/edit-user-profile`, {
+                method: 'PUT',
+                headers: {
+                  'auth-token': localStorage.getItem("auth-token"),
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                  "profileURL": data.url
+                })
+              })
+                .then(res => res.json())
+                .then(json => {
+                  if (json.success) {
+                    fetchSessionUserProfile()
+                    setImage(null)
+                    setNotification({ status: "true", message: `${json.message}`, type: "success" })
+                  } else {
+                    setNotification({ status: "true", message: "Something went wrong", type: "error" });
+                  }
+                })
+            }
 
-      if (json.success) {
-        fetchSessionUserProfile()
-        setImage(null)
-        setNotification({ status: "true", message: `${json.message}`, type: "success" })
-      } else {
-        setNotification({ status: "true", message: "Something went wrong", type: "error" });
+          })
       }
-    }
+    })
 
   }
+
 
 
   const onFormInputChange = (e) => {

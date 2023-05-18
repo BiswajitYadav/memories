@@ -1,6 +1,6 @@
 import { CircularProgress, Modal, Tooltip } from '@mui/material'
 import React from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import Header from '../components/Header'
 import Post from '../components/Home/Post'
 import VerifiedIcon from '@mui/icons-material/Verified';
@@ -24,7 +24,7 @@ import PeopleProfile from '../components/PeopleProfile'
 
 const UserProfile = () => {
 
-    const { otherUserProfile, fetchAnotherUserProfile, setNotification } = useContext(MainContext)
+    const { otherUserProfile, fetchAnotherUserProfile, userPartner, setNotification } = useContext(MainContext)
 
     const { name, bio, userName, profileURL } = otherUserProfile;
 
@@ -35,6 +35,8 @@ const UserProfile = () => {
     const params = useParams()
     const { userID } = params;
 
+    const navigate = useNavigate()
+
     const [followersModalOpen, setFollowersModalOpen] = useState(false);
     const handlefollowersModalOpen = () => setFollowersModalOpen(true);
     const handlefollowersModalClosed = () => setFollowersModalOpen(false);
@@ -43,6 +45,27 @@ const UserProfile = () => {
     const handlefollowingsModalOpen = () => setFollowingsModalOpen(true);
     const handlefollowingsModalClosed = () => setFollowingsModalOpen(false);
 
+
+    // handle chat
+
+    const handleFetchChat = async () => {
+
+        const response = await fetch(`${SERVER_URL}chat/fetch-chat`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': authToken
+            },
+            body: JSON.stringify({ userID })
+        })
+
+        const json = await response.json()
+
+        if (json.success) {
+            navigate(`/chat/${json.chatID}`)
+        }
+
+    }
 
     // handle follow
 
@@ -408,7 +431,7 @@ const UserProfile = () => {
                                             Unfollow
                                         </button>
 
-                                        <button className='flex gap-1 w-max px-4 items-center bg-white py-1.5 lg:py-2 hover:bg-slate-100 duration-200 font-semibold rounded-md text-lg'>
+                                        <button onClick={handleFetchChat} className='flex gap-1 w-max px-4 items-center bg-white py-1.5 lg:py-2 hover:bg-slate-100 duration-200 font-semibold rounded-md text-lg'>
                                             <MessageIcon />
                                         </button>
 
