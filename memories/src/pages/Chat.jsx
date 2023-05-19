@@ -59,7 +59,7 @@ const ChatSelect = (props) => {
 
             <div className='flex gap-2'>
 
-              <Avatar className='my-auto' alt="Travis Howard" src={profileURL} sx={{ width: 45, height: 45 }} />
+              <Avatar className='my-auto' alt={`${name?.slice(0, 1)}`} src={profileURL} sx={{ width: 45, height: 45 }} />
 
               <div className='flex flex-col justify-center'>
 
@@ -73,7 +73,7 @@ const ChatSelect = (props) => {
 
                 </div>
 
-                <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>{recentMessage ? recentMessage : "send a message"}</div>
+                <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>{recentMessage ? recentMessage.length > 20 ? recentMessage.slice(0, 20) + "..." : recentMessage : "send a message"}</div>
 
               </div>
 
