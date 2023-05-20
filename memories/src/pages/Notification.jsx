@@ -6,7 +6,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import CircularProgress from '@mui/material/CircularProgress';
 import { Link } from 'react-router-dom';
 import SmartToyTwoToneIcon from '@mui/icons-material/SmartToyTwoTone';
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 
 const NotificationElement = (props) => {
 
@@ -127,33 +127,44 @@ const Notification = () => {
                     <div className='bg-white dark:bg-[#231344] rounded-xl w-full flex px-1 sm:px-5 md:px-10 py-3 md:py-6 shadow-lg '>
                         <div className='bg-[#F1F1F1] dark:bg-[#1C1132] rounded border-[2px] border-[#D9D9D9] dark:border-[#33215A] w-[95%] sm:w-[85%] md:w-[80%] lg:w-[60%] p-1.5 md:p-3 mx-auto'>
 
-                            <div id='scrollProvider' className='overflow-y-auto w-full h-full p-1 md:p-2 lg:p-4'>
+                            {
+                                notification && notification.length !== 0 ?
 
-                                <InfiniteScroll
-                                    dataLength={notification.length}
-                                    next={fetchMoreData}
-                                    hasMore={notification.length < Number(totalNotificationData)}
-                                    className='flex flex-col h-full items-center justify-center'
-                                    scrollableTarget="scrollProvider"
-                                >
+                                    <div id='scrollProvider' className='overflow-y-auto w-full h-full p-1 md:p-2 lg:p-4'>
 
-
-                                    {
-                                        notification.length ?
-                                            notification?.map((data) => {
-                                                return (
-                                                    <NotificationElement key={data._id} data={data} />
-                                                )
-                                            })
-                                            :
-                                            <div className='flex w-full justify-center'><CircularProgress className='text-black dark:text-white' /></div>
-                                    }
-
-                                </InfiniteScroll>
+                                        <InfiniteScroll
+                                            dataLength={notification.length}
+                                            next={fetchMoreData}
+                                            hasMore={notification.length < Number(totalNotificationData)}
+                                            className='flex flex-col h-full items-center justify-center'
+                                            scrollableTarget="scrollProvider"
+                                        >
 
 
+                                            {
+                                                notification.length ?
+                                                    notification?.map((data) => {
+                                                        return (
+                                                            <NotificationElement key={data._id} data={data} />
+                                                        )
+                                                    })
+                                                    :
+                                                    <div className='flex w-full justify-center'><CircularProgress className='text-black dark:text-white' /></div>
+                                            }
 
-                            </div>
+                                        </InfiniteScroll>
+
+                                    </div>
+
+                                    :
+
+                                    <div className='h-full opacity-70 flex flex-col gap-2 items-center justify-center text-black select-none dark:text-white'>
+                                        <NotificationsNoneIcon />
+                                        <div>No new notifications</div>
+                                    </div>
+                            }
+
+
 
                         </div>
                     </div>

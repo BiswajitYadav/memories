@@ -1,5 +1,5 @@
 import { Avatar, Tooltip } from '@mui/material'
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import Header from '../components/Header'
 import VerifiedIcon from '@mui/icons-material/Verified';
@@ -8,13 +8,15 @@ import { useState } from 'react';
 import { SERVER_URL } from '../services/helper';
 import { useEffect } from 'react';
 import ReactTimeago from 'react-timeago';
+import MainContext from '../context/MainContext';
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 
 const ChatSelect = (props) => {
 
   const sessionUserID = sessionStorage.getItem('sessionUserID')
 
-  const { _id, user, updatedAt, recentMessage } = props.data;
+  const { _id, user, updatedAt, recentMessage, newMessage, newMessageBy } = props.data;
 
   const [userData, setUserData] = useState({})
 
@@ -57,11 +59,11 @@ const ChatSelect = (props) => {
 
           <div className='flex w-full justify-between'>
 
-            <div className='flex gap-2'>
+            <div className='flex gap-2 w-full'>
 
               <Avatar className='my-auto' alt={`${name?.slice(0, 1)}`} src={profileURL} sx={{ width: 45, height: 45 }} />
 
-              <div className='flex flex-col justify-center'>
+              <div className='flex flex-col justify-center w-full'>
 
                 <div className='flex gap-1'>
 
@@ -73,7 +75,51 @@ const ChatSelect = (props) => {
 
                 </div>
 
-                <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>{recentMessage ? recentMessage.length > 20 ? recentMessage.slice(0, 20) + "..." : recentMessage : "send a message"}</div>
+                <div className="flex items-center justify-between w-full ">
+
+                  {
+                    newMessage ?
+                      sessionUserID !== newMessageBy ?
+                        <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>
+                          {
+                            recentMessage ? recentMessage.length > 20 ?
+                              recentMessage.slice(0, 20) + "..."
+                              :
+                              recentMessage : "send a message"
+                          }
+                        </div>
+                        : null
+                      :
+                      <div className=' dark:text-slate-200 text-slate-600 text-sm font-light'>
+                        {
+                          recentMessage ? recentMessage.length > 20 ?
+                            recentMessage.slice(0, 20) + "..."
+                            :
+                            recentMessage : "send a message"
+                        }
+                      </div>
+                  }
+
+                  {
+                    newMessage ?
+                      sessionUserID !== newMessageBy ?
+                        <div className='bg-green-500 rounded-full p-1.5 h-max w-max'>
+                        </div>
+                        : null
+                      : null
+                  }
+
+                  {
+                    !newMessage ?
+                      sessionUserID === newMessageBy ?
+                        <div className='h-max w-max text-blue-500 dark:text-blue-400'>
+                          <DoneAllIcon style={{fontSize:18}} />
+                        </div>
+                        : null
+                      : null
+                  }
+
+                </div>
 
               </div>
 
@@ -92,31 +138,15 @@ const ChatSelect = (props) => {
 
 const Chat = () => {
 
+
   const authToken = localStorage.getItem('auth-token')
 
-  const [allChat, setAllChat] = useState([])
-
-  const fetchAllChat = async () => {
-
-    const response = await fetch(`${SERVER_URL}chat/fetch-all-chat`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'auth-token': authToken
-      }
-    })
-
-    const json = await response.json()
-
-    if (json) {
-      setAllChat(json)
-    }
-
-  }
+  const { allChat, setAllChat, fetchAllChat } = useContext(MainContext)
 
   useEffect(() => {
     fetchAllChat()
   }, [])
+
 
   return (
     <>

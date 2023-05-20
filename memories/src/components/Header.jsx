@@ -162,15 +162,34 @@ function Header() {
     </Box >
   );
 
+  // const { allChat, setAllChat, fetchAllChat } = useContext(MainContext)
+
+  // useEffect(() => {
+  //   fetchAllChat()
+  // }, [])
+
+  // const [chatNotificationCount, setChatNotificationCount] = useState(0)
+
+  // const sessionUserID = sessionStorage.getItem('sessionUserID')
+
+  // useEffect(() => {
+
+  //   const data = allChat?.filter(data => data.newMessage === true && data.newMessageBy != sessionUserID)
+
+  // }, [])
+
   return (
+
     <>
-      <header className='hidden md:flex justify-around lg:gap-x-40 h-14 bg-white shadow-md dark:bg-[#231344]'>
+      <header className='hidden md:flex justify-around lg:gap-x-40 h-14 w-full bg-white shadow-md dark:bg-[#231344]'>
 
         <Link to="/" className='my-auto'>
           <Tooltip title="The Memories">
             <img className='w-12 h-12' src={logo} alt="logo" />
           </Tooltip>
         </Link>
+
+
 
         <div className='flex gap-3 h-full item-center'>
 

@@ -29,12 +29,13 @@ const Message = (props) => {
         <>
 
             {
+
                 senderID === _id ?
                     <div className='flex gap-1.5 items-end w-full justify-end'>
 
                         <div className='text-xs text-black/50 dark:text-white/50'>00:00</div>
 
-                        <div className='bg-[#EFEFEF] w-max max-w-[70%] px-3 py-1 rounded-t-lg rounded-l-lg self-end shadow-lg dark:shadow-md dark:shadow-black flex gap-1 text-sm lg:text-base'>
+                        <div className='bg-[#EFEFEF] w-max max-w-[70%] px-3 py-1 rounded-t-lg rounded-l-lg self-end shadow-lg dark:shadow-md dark:shadow-black/20 flex gap-1 text-sm lg:text-base break-all'>
 
                             <div>
                                 {message}
@@ -46,7 +47,7 @@ const Message = (props) => {
                     :
                     <div className='flex gap-1.5 items-end'>
 
-                        <div className='bg-[#8948B8] text-white w-max max-w-[70%] px-3 py-1 rounded-t-lg rounded-r-lg shadow-lg dark:shadow-md dark:shadow-black flex flex-col gap-1 text-sm lg:text-base'>
+                        <div className='bg-[#8948B8] text-white w-max max-w-[70%] px-3 py-1 rounded-t-lg rounded-r-lg shadow-lg dark:shadow-md dark:shadow-black/20 flex flex-col gap-1 text-sm lg:text-base break-all'>
 
                             <div>
                                 {message}
@@ -58,10 +59,6 @@ const Message = (props) => {
 
                     </div>
             }
-
-
-
-
 
         </>
     )
@@ -124,9 +121,12 @@ const ChatSection = () => {
 
         e.preventDefault()
 
-        // socket.emit('stop-typing', chatId)
+        socket.emit('stop-typing', { "room": chatId, "userID": userProfileData._id })
 
         socket.emit("message", { "message": messageInput, "chatID": chatId, "senderID": userProfileData._id });
+
+        
+        setMessageInput("")
 
         setSendEnabled(false)
 
@@ -141,17 +141,11 @@ const ChatSection = () => {
 
         const json = await response.json()
 
-        setMessageInput("")
-
     }
 
     useEffect(() => {
         fetchAllMessage()
     }, [])
-
-    useEffect(() => {
-        chatSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
-    }, [messages])
 
     // IO handlers
 
@@ -165,11 +159,29 @@ const ChatSection = () => {
 
         socket.on('connected', () => setSocketConnected(true))
 
-        socket.on('typing', () => setIsTyping(true))
+        socket.on('stop-typing', (payload) => {
+            setIsTyping(false)
+        })
 
-        socket.on('stop-typing', () => setIsTyping(false))
+        socket.on('typing', (payload) => {
+
+            if (payload.room === chatId && userProfileData._id != payload.userID) {
+                setIsTyping(true)
+            }
+
+        })
 
     }, [])
+
+    useEffect(() => {
+
+        if (messageInput.length !== 0) {
+            socket.emit('typing', { "room": chatId, "userID": userProfileData._id })
+        } else {
+            socket.emit('stop-typing', { "room": chatId, "userID": userProfileData._id })
+        }
+
+    }, [messageInput.length])
 
     useEffect(() => {
 
@@ -182,6 +194,10 @@ const ChatSection = () => {
         })
 
     })
+
+    useEffect(() => {
+        chatSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages])
 
     return (
         <>
@@ -248,7 +264,7 @@ const ChatSection = () => {
 
                     <div className='h-full w-full overflow-y-auto my-2 flex gap-6 flex-col p-2 md:p-3'>
 
-                        <div className="mx-auto bg-cyan-600 shadow-lg rounded-md px-2 py-1 text-white">Message in the chat are end-to-end encrypted</div>
+                        <div className="mx-auto bg-cyan-600 shadow-lg text-sm rounded-md px-2 py-1 text-white">Message in the chat are end-to-end encrypted</div>
 
                         {
                             messages?.length ?
@@ -263,7 +279,20 @@ const ChatSection = () => {
                                 undefined
                         }
 
-                        <div ref={chatSectionRef} />
+                        {
+                            isTyping ?
+                                <div className='bg-[#8948B8] text-white w-max max-w-[70%] px-3 py-2 rounded-t-lg rounded-r-lg shadow-lg dark:shadow-md dark:shadow-black/20 flex gap-1 text-sm lg:text-base'>
+
+                                    <div className='bg-white/80 animate-bounce duration-300 rounded-full p-1 h-max w-max'></div>
+                                    <div className='bg-white/80 animate-bounce duration-300 rounded-full p-1 h-max w-max'></div>
+                                    <div className='bg-white/80 animate-bounce duration-300 rounded-full p-1 h-max w-max'></div>
+
+                                </div>
+                                :
+                                null
+                        }
+
+                        <div className='p-2' ref={chatSectionRef} />
 
                     </div>
 

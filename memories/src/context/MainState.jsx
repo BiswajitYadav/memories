@@ -152,6 +152,27 @@ const MainState = (props) => {
 
     }
 
+
+    const [allChat, setAllChat] = useState([])
+
+    const fetchAllChat = async () => {
+
+        const response = await fetch(`${SERVER_URL}chat/fetch-all-chat`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': authToken
+            }
+        })
+
+        const json = await response.json()
+
+        if (json) {
+            setAllChat(json)
+        }
+
+    }
+
     return (
 
         <MainContext.Provider value={{
@@ -175,7 +196,10 @@ const MainState = (props) => {
             handleStaticPostRemove,
             createNewComment,
             commentingStatus,
-            commentUploaded
+            commentUploaded,
+            allChat,
+            setAllChat,
+            fetchAllChat
         }}>
 
             {props.children}
