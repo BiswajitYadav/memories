@@ -12,8 +12,10 @@ import { useEffect } from 'react';
 import EmojiPicker from 'emoji-picker-react';
 import { IO_SERVER_URL, SERVER_URL } from './../../services/helper';
 import { useContext } from 'react';
+import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MainContext from './../../context/MainContext';
 import io from 'socket.io-client'
+import moment from 'moment/moment';
 
 const socket = io.connect(`${IO_SERVER_URL}`)
 
@@ -23,7 +25,27 @@ const Message = (props) => {
 
     const { _id } = userProfileData;
 
-    const { senderID, data, message } = props.data
+    const { senderID, date, message } = props.data
+
+    const formatDate = (dateString) => {
+        const date = moment(dateString);
+        const today = moment();
+
+        // Check if the date is today
+        if (date.isSame(today, 'day')) {
+            return date.format('h:mm A'); // Example format: 12:00 PM
+        }
+
+        // Check if the date is yesterday
+        if (date.isSame(today.subtract(1, 'day'), 'day')) {
+            return 'Yesterday';
+        }
+
+        // Format the date using the desired format for older dates
+        return date.format('MMM D, YYYY'); // Example format: May 20, 2023
+    };
+
+    const formatedDate = formatDate(date)
 
     return (
         <>
@@ -33,7 +55,13 @@ const Message = (props) => {
                 senderID === _id ?
                     <div className='flex gap-1.5 items-end w-full justify-end'>
 
-                        <div className='text-xs text-black/50 dark:text-white/50'>00:00</div>
+                        <Tooltip title={
+                            formatedDate
+                        }>
+                            <div className='text-xs text-black/30 dark:text-white/30 cursor-pointer'>
+                                <InfoOutlinedIcon style={{ fontSize: 15 }} />
+                            </div>
+                        </Tooltip>
 
                         <div className='bg-[#EFEFEF] w-max max-w-[70%] px-3 py-1 rounded-t-lg rounded-l-lg self-end shadow-lg dark:shadow-md dark:shadow-black/20 flex gap-1 text-sm lg:text-base break-all'>
 
@@ -55,7 +83,13 @@ const Message = (props) => {
 
                         </div>
 
-                        <div className='text-xs text-black/50 dark:text-white/50'>00:00</div>
+                        <Tooltip title={
+                            formatedDate
+                        }>
+                            <div className='text-xs text-black/30 dark:text-white/30 cursor-pointer'>
+                                <InfoOutlinedIcon style={{ fontSize: 15 }} />
+                            </div>
+                        </Tooltip>
 
                     </div>
             }
@@ -125,7 +159,7 @@ const ChatSection = () => {
 
         socket.emit("message", { "message": messageInput, "chatID": chatId, "senderID": userProfileData._id });
 
-        
+
         setMessageInput("")
 
         setSendEnabled(false)
@@ -207,7 +241,7 @@ const ChatSection = () => {
 
                     <div className='flex gap-1 sm:gap-3 lg:gap-5 h-full'>
 
-                        <Link to="/chat" className='flex my-auto gap-1 sm:gap-3 lg:gap-5 h-full p-2'>
+                        <Link onClick={fetchAllMessage} to="/chat" className='flex my-auto gap-1 sm:gap-3 lg:gap-5 h-full p-2'>
                             <ArrowBackIcon className='md:scale-125 xl:scale-150 text-[#8948B8]' />
                         </Link>
 

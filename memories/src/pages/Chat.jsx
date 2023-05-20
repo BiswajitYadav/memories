@@ -10,6 +10,8 @@ import { useEffect } from 'react';
 import ReactTimeago from 'react-timeago';
 import MainContext from '../context/MainContext';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
+import DoneIcon from '@mui/icons-material/Done';
+import moment from 'moment';
 
 
 const ChatSelect = (props) => {
@@ -50,6 +52,23 @@ const ChatSelect = (props) => {
 
   }, [userID])
 
+  const formatDate = (dateString) => {
+    const date = moment(dateString);
+    const today = moment();
+
+    if (date.isSame(today, 'day')) {
+      return date.format('h:mm A')
+    }
+
+    if (date.isSame(today.subtract(1, 'day'), 'day')) {
+      return 'Yesterday';
+    }
+
+    return date.format('DD-MM-YY');
+  };
+
+  const formatedDate = formatDate(updatedAt)
+
   return (
     <>
 
@@ -65,30 +84,33 @@ const ChatSelect = (props) => {
 
               <div className='flex flex-col justify-center w-full'>
 
-                <div className='flex gap-1'>
+                <div className="flex justify-between w-full items-center">
 
-                  <div className='dark:text-white font-semibold text-sm'>{name}</div>
+                  <div className='flex gap-1'>
 
-                  <Tooltip title="Developer" className="text-gray-400 my-auto">
-                    <VerifiedIcon style={{ fontSize: 16 }} />
-                  </Tooltip>
+                    <div className='dark:text-white font-semibold text-sm'>{name}</div>
+
+                    <Tooltip title="Developer" className="text-gray-400 my-auto">
+                      <VerifiedIcon style={{ fontSize: 16 }} />
+                    </Tooltip>
+
+                  </div>
+
+                  <div className='text-xs opacity-50'>{formatedDate}</div>
 
                 </div>
-
                 <div className="flex items-center justify-between w-full ">
 
                   {
-                    newMessage ?
-                      sessionUserID !== newMessageBy ?
-                        <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>
-                          {
-                            recentMessage ? recentMessage.length > 20 ?
-                              recentMessage.slice(0, 20) + "..."
-                              :
-                              recentMessage : "send a message"
-                          }
-                        </div>
-                        : null
+                    newMessage && sessionUserID !== newMessageBy ?
+                      <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>
+                        {
+                          recentMessage ? recentMessage.length > 20 ?
+                            recentMessage.slice(0, 20) + "..."
+                            :
+                            recentMessage : "send a message"
+                        }
+                      </div>
                       :
                       <div className=' dark:text-slate-200 text-slate-600 text-sm font-light'>
                         {
@@ -113,7 +135,17 @@ const ChatSelect = (props) => {
                     !newMessage ?
                       sessionUserID === newMessageBy ?
                         <div className='h-max w-max text-blue-500 dark:text-blue-400'>
-                          <DoneAllIcon style={{fontSize:18}} />
+                          <DoneAllIcon style={{ fontSize: 18 }} />
+                        </div>
+                        : null
+                      : null
+                  }
+
+                  {
+                    newMessage ?
+                      sessionUserID === newMessageBy ?
+                        <div className='h-max w-max text-slate-500 dark:text-white'>
+                          <DoneIcon style={{ fontSize: 18 }} />
                         </div>
                         : null
                       : null
@@ -138,10 +170,7 @@ const ChatSelect = (props) => {
 
 const Chat = () => {
 
-
-  const authToken = localStorage.getItem('auth-token')
-
-  const { allChat, setAllChat, fetchAllChat } = useContext(MainContext)
+  const { allChat, fetchAllChat } = useContext(MainContext)
 
   useEffect(() => {
     fetchAllChat()
@@ -158,10 +187,9 @@ const Chat = () => {
 
           <div className='bg-white dark:bg-[#231344] rounded-xl w-full flex items-center py-3 flex-row gap-5 shadow-lg justify-between lg:pr-4'>
 
-            <div className='w-full md:w-[50%] xl:w-[22%] lg:w-[40%] h-[80vh]'>
+            <div className='w-full md:w-[50%] lg:w-[40%] xl:w-[25%] h-[80vh] '>
 
               <div className='w-full h-full flex flex-col lg:items-center overflow-y-auto md:pr-2 lg:pr-5'>
-
 
                 {
                   allChat?.length ?
@@ -179,7 +207,7 @@ const Chat = () => {
 
             </div>
 
-            <div className='hidden md:block md:w-[50%] lg:w-[70%] xl:w-[78%] h-[80vh]'>
+            <div className='hidden md:block md:w-[50%] lg:w-[60%] xl:w-[75%] h-[80vh]'>
 
               <div className='w-full h-full flex justify-center'>
 
