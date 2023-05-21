@@ -10,14 +10,11 @@ import EmojiEmotionsIcon from '@mui/icons-material/EmojiEmotions';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useEffect } from 'react';
 import EmojiPicker from 'emoji-picker-react';
-import { IO_SERVER_URL, SERVER_URL } from './../../services/helper';
+import { IO_SERVER_URL, SERVER_URL, socket } from './../../services/helper';
 import { useContext } from 'react';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MainContext from './../../context/MainContext';
-import io from 'socket.io-client'
 import moment from 'moment/moment';
-
-const socket = io.connect(`${IO_SERVER_URL}`)
 
 const Message = (props) => {
 
@@ -33,7 +30,7 @@ const Message = (props) => {
 
         // Check if the date is today
         if (date.isSame(today, 'day')) {
-            return date.format('h:mm A'); // Example format: 12:00 PM
+            return date.format('h:mm A');
         }
 
         // Check if the date is yesterday
@@ -42,7 +39,7 @@ const Message = (props) => {
         }
 
         // Format the date using the desired format for older dates
-        return date.format('MMM D, YYYY'); // Example format: May 20, 2023
+        return date.format('D MMM YYYY, h:mm A');
     };
 
     const formatedDate = formatDate(date)
