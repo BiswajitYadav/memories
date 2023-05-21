@@ -62,7 +62,7 @@ const UserProfile = () => {
         const json = await response.json()
 
         if (json.success) {
-            navigate(`/chat/${json.chatID}`, { state: { data: otherUserProfile } })
+            navigate(`/chat/${json.chatData._id}`, { state: { data: otherUserProfile, chatData: json.chatData } })
         }
 
     }

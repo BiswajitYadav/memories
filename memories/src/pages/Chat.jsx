@@ -1,17 +1,48 @@
-import { Avatar, Tooltip } from '@mui/material'
+import { Avatar, Badge, Tooltip } from '@mui/material'
 import React, { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import Header from '../components/Header'
 import VerifiedIcon from '@mui/icons-material/Verified';
 import { BsFillChatTextFill } from 'react-icons/bs'
 import { useState } from 'react';
-import { SERVER_URL } from '../services/helper';
+import { SERVER_URL, socket } from '../services/helper';
 import { useEffect } from 'react';
 import ReactTimeago from 'react-timeago';
 import MainContext from '../context/MainContext';
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 import DoneIcon from '@mui/icons-material/Done';
 import moment from 'moment';
+import styled from 'styled-components';
+
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    backgroundColor: 'blue',
+    color: 'blue',
+    boxShadow: `0 0 0 2px`,
+    '&::after': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      borderRadius: '50%',
+      animation: 'ripple 1.2s infinite ease-in-out',
+      border: '1px solid currentColor',
+      content: '""',
+    },
+  },
+  '@keyframes ripple': {
+    '0%': {
+      transform: 'scale(.8)',
+      opacity: 1,
+    },
+    '100%': {
+      transform: 'scale(2.4)',
+      opacity: 0,
+    },
+  },
+}));
 
 
 const ChatSelect = (props) => {
@@ -69,10 +100,39 @@ const ChatSelect = (props) => {
 
   const formatedDate = formatDate(updatedAt)
 
+  const [isOnline, setIsOnline] = useState(false)
+
+  const [isTyping, setIsTyping] = useState(false)
+
+  useEffect(() => {
+
+    socket.on('user-stop-typing', (payload) => {
+      setIsTyping(false)
+    })
+
+    socket.on('user-typing', (payload) => {
+
+      if (payload.room == _id && userData._id != payload.userID) {
+        setIsTyping(true)
+      }
+
+    })
+
+    socket.on('is-connected', (payload) => {
+
+      console.log(payload)
+      if (userID == payload) {
+        setIsOnline(true)
+      }
+
+    })
+
+  }, [])
+
   return (
     <>
 
-      <Link className='hover:bg-[#D9D9D9] lg:hover:rounded-r-md lg:rounded-l-none rounded-md dark:hover:bg-[#1C1132] w-full' to={`${_id}`} state={{ data: userData }}>
+      <Link className='hover:bg-[#D9D9D9] lg:hover:rounded-r-md lg:rounded-l-none rounded-md dark:hover:bg-[#1C1132] w-full' to={`${_id}`} state={{ data: userData, chatData: props.data }}>
 
         <div className='flex flex-col h-max dark:text-white px-5 py-3 lg:py-4 gap-5 rounded-md'>
 
@@ -80,7 +140,17 @@ const ChatSelect = (props) => {
 
             <div className='flex gap-2 w-full'>
 
-              <Avatar className='my-auto' alt={`${name?.slice(0, 1)}`} src={profileURL} sx={{ width: 45, height: 45 }} />
+              <StyledBadge
+                overlap="circular"
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                variant={isOnline ? "dot" : ""}
+              >
+
+                <Avatar alt={`${name?.slice(0, 1)}`} src={profileURL} sx={{ width: 45, height: 45 }} />
+
+              </StyledBadge>
+
+              {/* <Avatar className='my-auto' alt={`${name?.slice(0, 1)}`} src={profileURL} sx={{ width: 45, height: 45 }} /> */}
 
               <div className='flex flex-col justify-center w-full'>
 
@@ -102,24 +172,27 @@ const ChatSelect = (props) => {
                 <div className="flex items-center justify-between w-full ">
 
                   {
-                    newMessage && sessionUserID !== newMessageBy ?
-                      <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>
-                        {
-                          recentMessage ? recentMessage.length > 20 ?
-                            recentMessage.slice(0, 20) + "..."
-                            :
-                            recentMessage : "send a message"
-                        }
-                      </div>
+                    isTyping ?
+                      <div className=' dark:text-slate-200 text-slate-600 text-sm font-light'>typing...</div>
                       :
-                      <div className=' dark:text-slate-200 text-slate-600 text-sm font-light'>
-                        {
-                          recentMessage ? recentMessage.length > 20 ?
-                            recentMessage.slice(0, 20) + "..."
-                            :
-                            recentMessage : "send a message"
-                        }
-                      </div>
+                      newMessage && sessionUserID !== newMessageBy ?
+                        <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>
+                          {
+                            recentMessage ? recentMessage.length > 20 ?
+                              recentMessage.slice(0, 20) + "..."
+                              :
+                              recentMessage : "send a message"
+                          }
+                        </div>
+                        :
+                        <div className=' dark:text-slate-200 text-slate-600 text-sm font-light'>
+                          {
+                            recentMessage ? recentMessage.length > 20 ?
+                              recentMessage.slice(0, 20) + "..."
+                              :
+                              recentMessage : "send a message"
+                          }
+                        </div>
                   }
 
                   {
@@ -170,12 +243,28 @@ const ChatSelect = (props) => {
 
 const Chat = () => {
 
-  const { allChat, fetchAllChat } = useContext(MainContext)
+  const { allChat, fetchAllChat, userProfileData, fetchSessionUserProfile } = useContext(MainContext)
 
   useEffect(() => {
-    fetchAllChat()
+
   }, [])
 
+  // IO HANDLERS
+  useEffect(() => {
+
+    fetchAllChat()
+
+    socket.on('refresh', (payload) => {
+
+      if (payload.refreshUserID == userProfileData._id) {
+        fetchAllChat()
+      } else {
+        return;
+      }
+
+    })
+
+  }, [])
 
   return (
     <>

@@ -99,13 +99,18 @@ const Message = (props) => {
 const ChatSection = () => {
 
     const authToken = localStorage.getItem('auth-token')
+    const sessionUserID = sessionStorage.getItem('sessionUserID')
 
-    const { userProfileData } = useContext(MainContext)
+    const { userProfileData, fetchAllChat } = useContext(MainContext)
 
     const location = useLocation()
-    const { data } = location.state;
+    const { data, chatData } = location.state;
 
     const { _id, name, userName, profileURL } = data;
+
+    const { user, updatedAt, recentMessage, newMessage, newMessageBy } = chatData;
+
+    const otherUserID = user?.find(data => data != sessionUserID)
 
     const params = useParams()
     const { chatId } = params
@@ -126,7 +131,7 @@ const ChatSection = () => {
     const fetchAllMessage = async () => {
 
         socket.emit("join-chat", chatId);
-
+        
         const response = await fetch(`${SERVER_URL}chat/fetch-message`, {
             method: 'POST',
             headers: {
@@ -135,11 +140,13 @@ const ChatSection = () => {
             },
             body: JSON.stringify({ chatID: chatId })
         })
-
+        
         const json = await response.json()
-
+        
         if (json.success) {
+            fetchAllChat()
             setMessages(json.message)
+            socket.emit('refresh', { "room": chatId, "refreshUserID": otherUserID });
         }
 
     }
@@ -156,7 +163,6 @@ const ChatSection = () => {
 
         socket.emit("message", { "message": messageInput, "chatID": chatId, "senderID": userProfileData._id });
 
-
         setMessageInput("")
 
         setSendEnabled(false)
@@ -172,6 +178,10 @@ const ChatSection = () => {
 
         const json = await response.json()
 
+        if (json.success) {
+            socket.emit('refresh', { "room": chatId, "refreshUserID": otherUserID });
+        }
+
     }
 
     useEffect(() => {
@@ -180,15 +190,9 @@ const ChatSection = () => {
 
     // IO handlers
 
-    const [socketConnected, setSocketConnected] = useState(false)
-
     const [isTyping, setIsTyping] = useState(false)
 
     useEffect(() => {
-
-        socket.emit('setup', userProfileData)
-
-        socket.on('connected', () => setSocketConnected(true))
 
         socket.on('stop-typing', (payload) => {
             setIsTyping(false)
@@ -206,10 +210,14 @@ const ChatSection = () => {
 
     useEffect(() => {
 
-        if (messageInput.length !== 0) {
+        if (messageInput.length !== 0 && messageInput != "") {
+
             socket.emit('typing', { "room": chatId, "userID": userProfileData._id })
+            socket.emit('user-typing', { "room": chatId, "userID": userProfileData._id })
+
         } else {
             socket.emit('stop-typing', { "room": chatId, "userID": userProfileData._id })
+            socket.emit('user-stop-typing', { "room": chatId, "userID": userProfileData._id })
         }
 
     }, [messageInput.length])
@@ -243,7 +251,7 @@ const ChatSection = () => {
                         </Link>
 
                         <Link to={`/profile/${_id}`} className='flex gap-1 sm:gap-3 lg:gap-5 h-full'>
-                            <Avatar className='my-auto' alt={`${name.slice(0, 1)}`} src={profileURL} sx={{ width: 50, height: 50 }} />
+                            <Avatar className='my-auto' alt={`${name?.slice(0, 1)}`} src={profileURL} sx={{ width: 50, height: 50 }} />
                             <div className='flex flex-col justify-center'>
                                 <div className='flex gap-1 '>
                                     <div className='dark:text-white font-semibold lg:text-lg text-sm'>{name}</div>

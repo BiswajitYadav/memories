@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MainContext from './MainContext'
 import { useState } from 'react'
-import { SERVER_URL } from '../services/helper'
+import { SERVER_URL, socket } from '../services/helper'
+import { useRef } from 'react'
 
 const MainState = (props) => {
 
     const authToken = localStorage.getItem("auth-token")
+    const sessionUserID = sessionStorage.getItem('sessionUserID')
 
     const [post, setPost] = useState([]);
 
@@ -119,10 +121,7 @@ const MainState = (props) => {
 
     }
 
-
     // Comment Api
-
-    // 
 
     const [commentingStatus, setCommentingStatus] = useState(false)
     const [commentUploaded, setCommentUploaded] = useState(false)
@@ -152,6 +151,7 @@ const MainState = (props) => {
 
     }
 
+    const [chatNotificationCount, setChatNotificationCount] = useState(0)
 
     const [allChat, setAllChat] = useState([])
 
@@ -169,9 +169,36 @@ const MainState = (props) => {
 
         if (json) {
             setAllChat(json)
+            const data = json?.filter(data => data.newMessage === true && data.newMessageBy != sessionUserID)
+            setChatNotificationCount(data.length)
         }
 
     }
+
+    // IO handlers
+
+    const [socketConnected, setSocketConnected] = useState(false)
+
+    useEffect(() => {
+        if (authToken) {
+            fetchSessionUserProfile()
+        }
+    }, [])
+
+    useEffect(() => {
+
+        if (userProfileData) {
+
+            socket.emit('setup', userProfileData)
+
+            socket.emit('is-connected', userProfileData._id)
+
+            socket.on('connected', () => setSocketConnected(true))
+
+
+        }
+
+    }, [userProfileData])
 
     return (
 
@@ -199,7 +226,8 @@ const MainState = (props) => {
             commentUploaded,
             allChat,
             setAllChat,
-            fetchAllChat
+            fetchAllChat,
+            chatNotificationCount
         }}>
 
             {props.children}

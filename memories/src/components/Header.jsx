@@ -8,7 +8,7 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import PersonIcon from '@mui/icons-material/Person';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import WbSunnyIcon from '@mui/icons-material/WbSunny';
-import { Avatar, Box, Drawer, IconButton, List, ListItemIcon, Menu, MenuItem, Modal, Tooltip } from '@mui/material';
+import { Avatar, Badge, Box, Drawer, IconButton, List, ListItemIcon, Menu, MenuItem, Modal, Tooltip } from '@mui/material';
 import { BiEdit } from 'react-icons/bi'
 import { MdOutlineLiveHelp } from 'react-icons/md'
 import { FiSettings } from 'react-icons/fi'
@@ -162,21 +162,7 @@ function Header() {
     </Box >
   );
 
-  // const { allChat, setAllChat, fetchAllChat } = useContext(MainContext)
-
-  // useEffect(() => {
-  //   fetchAllChat()
-  // }, [])
-
-  // const [chatNotificationCount, setChatNotificationCount] = useState(0)
-
-  // const sessionUserID = sessionStorage.getItem('sessionUserID')
-
-  // useEffect(() => {
-
-  //   const data = allChat?.filter(data => data.newMessage === true && data.newMessageBy != sessionUserID)
-
-  // }, [])
+  const { chatNotificationCount } = useContext(MainContext)
 
   return (
 
@@ -204,7 +190,11 @@ function Header() {
           <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/chat">
 
             <Tooltip title="Messages" className="mx-auto">
-              <MessageIcon style={{ fontSize: 30 }} />
+
+              <Badge badgeContent={chatNotificationCount} color="error">
+                <MessageIcon style={{ fontSize: 30 }} />
+              </Badge>
+
             </Tooltip>
 
           </NavLink>
@@ -395,16 +385,25 @@ function Header() {
 
 
         <div className='flex gap-3 shadow-md bg-white dark:bg-[#231344] h-max w-screen item-center justify-center sm:pt-2'>
+
           <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB] w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/">
             <Tooltip title="Home" className="mx-auto">
               <HomeIcon style={{ fontSize: 30 }} />
             </Tooltip>
           </NavLink>
+
           <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/chat">
+
             <Tooltip title="Messages" className="mx-auto">
-              <MessageIcon style={{ fontSize: 25 }} />
+
+              <Badge badgeContent={chatNotificationCount} color="error">
+                <MessageIcon style={{ fontSize: 25 }} />
+              </Badge>
+
             </Tooltip>
+
           </NavLink>
+
           <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/community">
             <Tooltip title="Community" className="mx-auto">
               <PeopleIcon style={{ fontSize: 28 }} />
