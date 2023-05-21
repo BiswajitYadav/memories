@@ -48,7 +48,7 @@ const NotificationElement = (props) => {
             {
                 interaction ?
 
-                    <div div className='hover:bg-white duration-300 ease-in-out text-black dark:text-white hover:dark:bg-[#231344] w-full p-3 md:p-5 rounded-lg hover:shadow-lg select-none flex items-center gap-2 xl:gap-4 my-auto text-sm md:text-lg xl:text-xl cursor-pointer' >
+                    <div div className='hover:bg-white duration-300 ease-in-out text-black dark:text-white hover:dark:bg-[#231344] w-full p-3 md:p-5 rounded-lg hover:shadow-lg select-none flex items-center gap-2 my-auto text-sm md:text-lg xl:text-xl cursor-pointer' >
 
                         <Link
                             to={`/profile/${userInteracted}`}
@@ -63,7 +63,7 @@ const NotificationElement = (props) => {
 
                     :
 
-                    <div className='hover:bg-white duration-300 ease-in-out text-black dark:text-white hover:dark:bg-[#231344] w-full p-3 md:p-5 rounded-lg hover:shadow-lg select-none flex items-center gap-2 xl:gap-4 my-auto text-sm md:text-lg xl:text-xl cursor-pointer'>
+                    <div className='hover:bg-white duration-300 ease-in-out text-black dark:text-white hover:dark:bg-[#231344] w-full p-3 md:p-5 rounded-lg hover:shadow-lg select-none flex items-center gap-2 my-auto text-sm md:text-lg xl:text-xl cursor-pointer'>
                         <div className='bg-white dark:bg-[#231344] p-1 rounded-full' >
                             <SmartToyTwoToneIcon fontSize="large" />
                         </div>

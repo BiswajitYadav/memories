@@ -15,6 +15,8 @@ import { useContext } from 'react';
 import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 import MainContext from './../../context/MainContext';
 import moment from 'moment/moment';
+import CryptoJS from 'crypto-js';
+
 
 const Message = (props) => {
 
@@ -22,7 +24,23 @@ const Message = (props) => {
 
     const { _id } = userProfileData;
 
-    const { senderID, date, message } = props.data
+    const { senderID, date, message, chatID } = props.data
+
+    const encryptedBytes = CryptoJS.enc.Base64.parse(message);
+    const keyBytes = CryptoJS.enc.Utf8.parse(chatID);
+
+    const decrypted = CryptoJS.AES.decrypt(
+        {
+            ciphertext: encryptedBytes,
+        },
+        keyBytes,
+        {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.Pkcs7,
+        }
+    );
+
+    const decryptedMessage = decrypted.toString(CryptoJS.enc.Utf8);
 
     const formatDate = (dateString) => {
         const date = moment(dateString);
@@ -63,7 +81,7 @@ const Message = (props) => {
                         <div className='bg-[#EFEFEF] w-max max-w-[70%] px-3 py-1 rounded-t-lg rounded-l-lg self-end shadow-lg dark:shadow-md dark:shadow-black/20 flex gap-1 text-sm lg:text-base break-all'>
 
                             <div>
-                                {message}
+                                {decryptedMessage}
                             </div>
 
                         </div>
@@ -75,7 +93,7 @@ const Message = (props) => {
                         <div className='bg-[#8948B8] text-white w-max max-w-[70%] px-3 py-1 rounded-t-lg rounded-r-lg shadow-lg dark:shadow-md dark:shadow-black/20 flex flex-col gap-1 text-sm lg:text-base break-all'>
 
                             <div>
-                                {message}
+                                {decryptedMessage}
                             </div>
 
                         </div>
@@ -131,7 +149,7 @@ const ChatSection = () => {
     const fetchAllMessage = async () => {
 
         socket.emit("join-chat", chatId);
-        
+
         const response = await fetch(`${SERVER_URL}chat/fetch-message`, {
             method: 'POST',
             headers: {
@@ -140,9 +158,9 @@ const ChatSection = () => {
             },
             body: JSON.stringify({ chatID: chatId })
         })
-        
+
         const json = await response.json()
-        
+
         if (json.success) {
             fetchAllChat()
             setMessages(json.message)
@@ -161,7 +179,16 @@ const ChatSection = () => {
 
         socket.emit('stop-typing', { "room": chatId, "userID": userProfileData._id })
 
-        socket.emit("message", { "message": messageInput, "chatID": chatId, "senderID": userProfileData._id });
+        const messageBytes = CryptoJS.enc.Utf8.parse(messageInput);
+        const keyBytes = CryptoJS.enc.Utf8.parse(chatId);
+
+        const encryptedMessage = CryptoJS.AES.encrypt(messageBytes, keyBytes, {
+            mode: CryptoJS.mode.ECB,
+            padding: CryptoJS.pad.Pkcs7,
+        });
+
+
+        socket.emit("message", { "message": encryptedMessage.toString(), "chatID": chatId, "senderID": userProfileData._id });
 
         setMessageInput("")
 
@@ -173,7 +200,7 @@ const ChatSection = () => {
                 'Content-Type': 'application/json',
                 'auth-token': authToken
             },
-            body: JSON.stringify({ "message": messageInput, "chatID": chatId })
+            body: JSON.stringify({ "message": encryptedMessage.toString(), "chatID": chatId })
         })
 
         const json = await response.json()

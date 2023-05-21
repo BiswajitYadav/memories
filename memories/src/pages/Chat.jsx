@@ -13,6 +13,7 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 import DoneIcon from '@mui/icons-material/Done';
 import moment from 'moment';
 import styled from 'styled-components';
+import CryptoJS from 'crypto-js';
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -83,6 +84,22 @@ const ChatSelect = (props) => {
 
   }, [userID])
 
+  const encryptedBytes = CryptoJS.enc.Base64.parse(recentMessage);
+  const keyBytes = CryptoJS.enc.Utf8.parse(_id);
+
+  const decrypted = CryptoJS.AES.decrypt(
+    {
+      ciphertext: encryptedBytes,
+    },
+    keyBytes,
+    {
+      mode: CryptoJS.mode.ECB,
+      padding: CryptoJS.pad.Pkcs7,
+    }
+  );
+
+  const decryptedMessage = decrypted.toString(CryptoJS.enc.Utf8);
+
   const formatDate = (dateString) => {
     const date = moment(dateString);
     const today = moment();
@@ -120,7 +137,6 @@ const ChatSelect = (props) => {
 
     socket.on('is-connected', (payload) => {
 
-      console.log(payload)
       if (userID == payload) {
         setIsOnline(true)
       }
@@ -178,19 +194,19 @@ const ChatSelect = (props) => {
                       newMessage && sessionUserID !== newMessageBy ?
                         <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>
                           {
-                            recentMessage ? recentMessage.length > 20 ?
-                              recentMessage.slice(0, 20) + "..."
+                            decryptedMessage ? decryptedMessage.length > 20 ?
+                              decryptedMessage.slice(0, 20) + "..."
                               :
-                              recentMessage : "send a message"
+                              decryptedMessage : "send a message"
                           }
                         </div>
                         :
                         <div className=' dark:text-slate-200 text-slate-600 text-sm font-light'>
                           {
-                            recentMessage ? recentMessage.length > 20 ?
-                              recentMessage.slice(0, 20) + "..."
+                            decryptedMessage ? decryptedMessage.length > 20 ?
+                              decryptedMessage.slice(0, 20) + "..."
                               :
-                              recentMessage : "send a message"
+                              decryptedMessage : "send a message"
                           }
                         </div>
                   }
