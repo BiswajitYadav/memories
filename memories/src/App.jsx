@@ -7,6 +7,7 @@ import MainState from './context/MainState'
 import NotificationSnackbar from "./components/NotificationSnackbar";
 import UserPrivateRoute from "./routes/UserPrivateRoute";
 import ScrollToTop from "./components/ScrollToTop";
+import SessionPrivateRoute from "./routes/SessionPrivateRoute";
 
 // pages
 const Chat = React.lazy(() => import('./pages/Chat'))
@@ -28,7 +29,7 @@ const ChatPage = React.lazy(() => import("./pages/ChatPage"))
 const CreateProfileInfo = React.lazy(() => import("./pages/CreateProfileInfo"))
 const PartnerProgram = React.lazy(() => import("./pages/PartnerProgram"))
 const ViewPost = React.lazy(() => import("./pages/ViewPost"))
-
+const NotFound = React.lazy(() => import('./pages/NotFound'))
 
 
 function App() {
@@ -42,14 +43,7 @@ function App() {
 
         <Routes>
 
-
-          <Route path="/" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <UserPrivateRoute>
-                <Home />
-              </UserPrivateRoute>
-            </Suspense>
-          }></Route>
+          {/* non auth user routes */}
 
           <Route path="/login" element={
             <Suspense fallback={<LoadingScreenGeneral />}>
@@ -57,17 +51,9 @@ function App() {
             </Suspense>
           }></Route>
 
-
-
           <Route path="/signup" element={
             <Suspense fallback={<LoadingScreenGeneral />}>
               <SignUp />
-            </Suspense>
-          }></Route>
-
-          <Route path="/authenticate" element={
-            <Suspense fallback={<LoadingScreenGeneral />}>
-              <TwoFA />
             </Suspense>
           }></Route>
 
@@ -77,41 +63,38 @@ function App() {
             </Suspense>
           }></Route>
 
+          {/* semi auth user routes */}
+
+          <Route path="/createprofile" element={
+            <Suspense fallback={<LoadingScreen />}>
+              <SessionPrivateRoute>
+                <CreateProfileInfo />
+              </SessionPrivateRoute>
+            </Suspense>
+          }></Route>
+
+          <Route path="/authenticate" element={
+            <Suspense fallback={<LoadingScreenGeneral />}>
+              <SessionPrivateRoute>
+                <TwoFA />
+              </SessionPrivateRoute>
+            </Suspense>
+          }></Route>
+
           <Route path="/resetpassword" element={
             <Suspense fallback={<LoadingScreenGeneral />}>
-              <ResetPassword />
+              <SessionPrivateRoute>
+                <ResetPassword />
+              </SessionPrivateRoute>
             </Suspense>
           }></Route>
 
-          <Route path="/updatepassword" element={
-            <Suspense fallback={<LoadingScreenGeneral />}>
-              <UpdatePassword />
-            </Suspense>
-          }></Route>
+          {/* authenticated user routes */}
 
-
-
-          <Route path="/community" element={
+          <Route path="/" element={
             <Suspense fallback={<LoadingScreen />}>
               <UserPrivateRoute>
-                <Community />
-              </UserPrivateRoute>
-            </Suspense>
-          }></Route>
-
-          <Route path="/notification" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <UserPrivateRoute>
-
-                <Notification />
-              </UserPrivateRoute>
-            </Suspense>
-          }></Route>
-
-          <Route path="/myprofile" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <UserPrivateRoute>
-                <MyProfile />
+                <Home />
               </UserPrivateRoute>
             </Suspense>
           }></Route>
@@ -176,14 +159,6 @@ function App() {
             </Suspense>
           }></Route>
 
-          <Route path="/createprofile" element={
-            <Suspense fallback={<LoadingScreen />}>
-              <UserPrivateRoute>
-                <CreateProfileInfo />
-              </UserPrivateRoute>
-            </Suspense>
-          }></Route>
-
           <Route path="/post/:postID" element={
             <Suspense fallback={<LoadingScreen />}>
               <UserPrivateRoute>
@@ -191,6 +166,46 @@ function App() {
               </UserPrivateRoute>
             </Suspense>
           }></Route>
+
+          <Route path="/updatepassword" element={
+            <Suspense fallback={<LoadingScreenGeneral />}>
+              <UserPrivateRoute>
+                <UpdatePassword />
+              </UserPrivateRoute>
+            </Suspense>
+          }></Route>
+
+          <Route path="/community" element={
+            <Suspense fallback={<LoadingScreen />}>
+              <UserPrivateRoute>
+                <Community />
+              </UserPrivateRoute>
+            </Suspense>
+          }></Route>
+
+          <Route path="/notification" element={
+            <Suspense fallback={<LoadingScreen />}>
+              <UserPrivateRoute>
+                <Notification />
+              </UserPrivateRoute>
+            </Suspense>
+          }></Route>
+
+          <Route path="/myprofile" element={
+            <Suspense fallback={<LoadingScreen />}>
+              <UserPrivateRoute>
+                <MyProfile />
+              </UserPrivateRoute>
+            </Suspense>
+          }></Route>
+
+          <Route path="*" element={
+            <Suspense fallback={<LoadingScreenGeneral />}>
+              <NotFound />
+            </Suspense>
+          }>
+
+          </Route>
 
         </Routes>
 

@@ -235,11 +235,11 @@ const ViewPost = () => {
 
   return (
     <>
-      <div className='bg-[#D9D9D9] dark:bg-slate-900 h-screen'>
+      <div className='bg-[#D9D9D9] dark:bg-slate-900 h-screen w-full'>
 
         <Header />
 
-        <div className='bg-[#D9D9D9] dark:bg-[#1C1132] lg:h-[92vh] w-screen overflow-y-auto flex justify-between py-4 px-2 sm:px-5 md:px-14 lg:px-12 xl:px-16'>
+        <div className='bg-[#D9D9D9] dark:bg-[#1C1132] lg:h-[92vh] w-full overflow-y-auto flex justify-between py-4 px-2 sm:px-5 md:px-14 lg:px-12 xl:px-16'>
 
           <div className='bg-white dark:bg-[#231344] rounded-xl w-full flex flex-col lg:flex-row items-center shadow-lg'>
 

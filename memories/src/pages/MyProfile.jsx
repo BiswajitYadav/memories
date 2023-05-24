@@ -167,7 +167,7 @@ const MyProfile = () => {
         <>
             <div className='bg-[#D9D9D9] dark:bg-slate-900 h-screen'>
                 <Header />
-                <div id='scrollableDivUserProfile' className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92vh] w-screen overflow-y-auto flex flex-col gap-x-5'>
+                <div id='scrollableDivUserProfile' className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92vh] w-full overflow-y-auto flex flex-col gap-x-5'>
                     <div className='w-full h-max flex items-center flex-col px-2 py-5'>
 
                         <div className='bg-white dark:bg-[#231344] w-full md:w-[75%] lg:w-[60%] xl:w-[40%] flex gap-6 lg:gap-8 xl:gap-6 rounded-t-md lg:rounded-md shadow-md p-3 xl:p-5'>

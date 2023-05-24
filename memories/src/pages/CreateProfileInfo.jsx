@@ -6,6 +6,8 @@ import PhotoCameraIcon from '@mui/icons-material/PhotoCamera';
 import { SERVER_URL } from '../services/helper';
 import MainContext from '../context/MainContext';
 import { CLOUDINARY_URL, CLOUD_NAME, UPLOAD_PRESET } from '../services/cloudinary';
+import Compressor from 'compressorjs';
+
 
 const CreateProfileInfo = () => {
 
@@ -35,48 +37,58 @@ const CreateProfileInfo = () => {
 
         if (image) {
 
-            const data = new FormData()
-            data.append("file", image)
-            data.append("upload_preset", `${UPLOAD_PRESET}`)
-            data.append("cloud_name", `${CLOUD_NAME}`)
+            new Compressor(image, {
+                quality: 0.5,
+                success: (compressedResult) => {
 
-            const imgURL = await fetch(`${CLOUDINARY_URL}`, {
-                method: 'POST',
-                body: data
+                    const data = new FormData()
+                    data.append("file", compressedResult)
+                    data.append("upload_preset", `${UPLOAD_PRESET}`)
+                    data.append("cloud_name", `${CLOUD_NAME}`)
+
+                    fetch(`${CLOUDINARY_URL}`, {
+                        method: 'POST',
+                        body: data
+                    })
+                        .then(res => res.json())
+                        .then(json => {
+
+                            if (json.url) {
+
+                                const mainData = {
+                                    "DOB": DOB,
+                                    "gender": gender,
+                                    "profileURL": json.url
+                                }
+
+                                fetch(`${SERVER_URL}user/edit-user-profile`, {
+                                    method: 'PUT',
+                                    headers: {
+                                        'auth-token': sessionStorage.getItem("auth-token"),
+                                        'Content-Type': 'application/json'
+                                    },
+                                    body: JSON.stringify(mainData)
+                                })
+                                    .then(res => res.json())
+                                    .then(data => {
+
+                                        if (data.success) {
+                                            setNotification({ status: "true", message: `${data.message}`, type: "success" })
+                                            localStorage.setItem("auth-token", sessionStorage.getItem("auth-token"))
+                                            navigate('/')
+                                        } else {
+                                            setNotification({ status: "true", message: `${data.error}`, type: "error" });
+                                        }
+
+                                    })
+
+                            } else {
+                                setNotification({ status: "true", message: "Something went wrong", type: "error" });
+                            }
+
+                        })
+                }
             })
-
-            const json = await imgURL.json()
-
-            if (json.url) {
-
-                const mainData = {
-                    "DOB": DOB,
-                    "gender": gender,
-                    "profileURL": json.url
-                }
-
-                const response = await fetch(`${SERVER_URL}user/edit-user-profile`, {
-                    method: 'PUT',
-                    headers: {
-                        'auth-token': sessionStorage.getItem("auth-token"),
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(mainData)
-                })
-
-                const data = await response.json()
-
-                if (data.success) {
-                    setNotification({ status: "true", message: `${data.message}`, type: "success" })
-                    localStorage.setItem("auth-token", sessionStorage.getItem("auth-token"))
-                    navigate('/')
-                } else {
-                    setNotification({ status: "true", message: `${data.error}`, type: "error" });
-                }
-
-            } else {
-                setNotification({ status: "true", message: "Something went wrong", type: "error" });
-            }
 
         } else {
 

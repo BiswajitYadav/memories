@@ -153,9 +153,10 @@ const CreatePost = (props) => {
                 <Link to="/myprofile">
                     <Avatar className='my-auto' alt="Travis Howard" src={profileURL} sx={{ width: 45, height: 45 }} />
                 </Link>
+
                 <div className='bg-transparent rounded-full flex items-center w-full'>
 
-                    <button className='bg-[#D9D9D9] dark:bg-[#1C1132] text-xs sm:text-sm rounded-full dark:text-white/60 w-full px-3 py-1.5 lg:px-5 lg:py-2.5 text-[#B5B5B5] lg:text-lg ' onClick={handleOpen} >
+                    <button className='bg-[#D9D9D9] dark:bg-[#1C1132] text-xs sm:text-sm rounded-full dark:text-white/60 w-full px-3 lg:px-5 py-2.5 text-[#B5B5B5] lg:text-lg' onClick={handleOpen} >
                         Write Something to get Butterflies
                     </button>
 

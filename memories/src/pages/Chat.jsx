@@ -284,11 +284,11 @@ const Chat = () => {
 
   return (
     <>
-      <div className='bg-[#D9D9D9] h-screen w-screen'>
+      <div className='bg-[#D9D9D9] h-screen w-full'>
 
         <Header />
 
-        <div className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92vh] w-screen overflow-y-auto flex justify-between gap-x-5 py-4 px-2 sm:px-5 md:px-16'>
+        <div className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92vh] w-full overflow-y-auto flex justify-between gap-x-5 py-4 px-2 sm:px-5 md:px-16'>
 
           <div className='bg-white dark:bg-[#231344] rounded-xl w-full flex items-center py-3 flex-row gap-5 shadow-lg justify-between lg:pr-4'>
 

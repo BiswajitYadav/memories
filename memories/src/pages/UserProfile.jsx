@@ -259,11 +259,11 @@ const UserProfile = () => {
 
     return (
         <>
-            <div className='bg-[#D9D9D9] dark:bg-slate-900 h-screen'>
+            <div className='bg-[#D9D9D9] dark:bg-slate-900 h-screen w-full'>
 
                 <Header />
 
-                <div id='scrollableDivUserProfile' className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92vh] w-screen overflow-y-auto flex flex-col gap-x-5'>
+                <div id='scrollableDivUserProfile' className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92vh] w-full overflow-y-auto flex flex-col gap-x-5'>
 
                     <div className='w-full h-full flex items-center flex-col px-2 py-5'>
 

@@ -61,6 +61,7 @@ const Like = (props) => {
                 {/* <Tooltip title="Follow">
                     <button className='h-max bg-gradient-to-r from-[#8948B8] to-[#8E2BC2] my-auto px-3 py-1 text-white rounded flex '>Follow</button>
                 </Tooltip> */}
+                
             </div>
         </>
     )

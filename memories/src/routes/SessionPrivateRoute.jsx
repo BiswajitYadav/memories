@@ -1,8 +1,8 @@
 import React from 'react'
 import { Navigate } from 'react-router-dom'
 
-function UserPrivateRoute({ children }) {
-    return sessionStorage.getItem("auth-token") ? children : <Navigate to="/signup" />
+function SessionPrivateRoute({ children }) {
+    return sessionStorage.getItem("auth-token") || sessionStorage.getItem('email') ? children : <Navigate to="/signup" />
 }
 
-export default UserPrivateRoute
+export default SessionPrivateRoute
