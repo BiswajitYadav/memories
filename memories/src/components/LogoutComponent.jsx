@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 
 const LogoutComponent = (props) => {
 
-    const { name, profileURL } = props;
+    const { name, profileURL, partner } = props;
 
     const navigate = useNavigate()
 
@@ -24,15 +24,21 @@ const LogoutComponent = (props) => {
                     overlap="circular"
                     anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
                     badgeContent={
-                        <Tooltip title="Developer">
-                            <VerifiedIcon fontSize='large' className='text-gray-400 drop-shadow-lg rounded-full' />
-                        </Tooltip>
-                        // <Tooltip  title="Organization">
-                        //     <VerifiedIcon className='text-yellow-400' />
-                        // </Tooltip>
-                        // <Tooltip  title="Partner">
-                        //     <VerifiedIcon className='text-blue-400' />
-                        // </Tooltip>
+
+                        partner?.verificationType == "dev" ?
+                            <Tooltip title="Developer" className="text-gray-400 my-auto">
+                                <VerifiedIcon fontSize='large' />
+                            </Tooltip>
+                            : partner?.verificationType == "celeb" ?
+                                <Tooltip title="Public Figure" className="text-blue-400 my-auto">
+                                    <VerifiedIcon fontSize='large' />
+                                </Tooltip>
+                                : partner?.verificationType == "org" ?
+                                    <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                                        <VerifiedIcon fontSize='large' />
+                                    </Tooltip>
+                                    : null
+
                     }>
                     <Avatar sx={{ height: '150px', width: '150px' }} src={profileURL} alt={name?.slice(0, 1)} className='' />
                 </Badge>
@@ -41,7 +47,7 @@ const LogoutComponent = (props) => {
                     <div className='text-xl lg:text-2xl font-semibold dark:text-white'>{name}</div>
                     <button onClick={handleLogout} className='w-full bg-slate-200 text-black hover:bg-[#FF0000] py-2 xl:py-3 duration-300 hover:text-white text-lg font-semibold rounded-lg'>LOGOUT</button>
                 </div>
-            </div>
+            </div >
         </>
     )
 }

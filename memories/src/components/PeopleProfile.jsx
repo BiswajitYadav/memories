@@ -20,6 +20,8 @@ const PeopleProfile = (props) => {
 
     const { name, userName, profileURL } = userData;
 
+    const [partner, setPartner] = useState({})
+
     const fetchUserProfileData = async () => {
 
         const response = await fetch(`${SERVER_URL}user/get-profile-of/${userID}`, {
@@ -34,6 +36,7 @@ const PeopleProfile = (props) => {
 
         if (json.success) {
             setUserData(json.userProfile)
+            setPartner(json.partner)
         }
 
     }
@@ -112,9 +115,23 @@ const PeopleProfile = (props) => {
                     <div className='flex flex-col justify-center'>
                         <div className='flex gap-1'>
                             <div className='dark:text-white font-semibold text-sm'>{name}</div>
-                            <Tooltip title="Developer" className="text-gray-400 my-auto">
-                                <VerifiedIcon style={{ fontSize: 16 }} />
-                            </Tooltip>
+
+                            {
+                                partner?.verificationType == "dev" ?
+                                    <Tooltip title="Developer" className="text-gray-400 my-auto">
+                                        <VerifiedIcon style={{ fontSize: 16 }} />
+                                    </Tooltip>
+                                    : partner?.verificationType == "celeb" ?
+                                        <Tooltip title="Public Figure" className="text-blue-400 my-auto">
+                                            <VerifiedIcon style={{ fontSize: 16 }} />
+                                        </Tooltip>
+                                        : partner?.verificationType == "org" ?
+                                            <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                                                <VerifiedIcon style={{ fontSize: 16 }} />
+                                            </Tooltip>
+                                            : null
+                            }
+
                         </div>
                         <div className=' text-slate-400 text-xs'>@{userName}</div>
                     </div>

@@ -73,6 +73,7 @@ const Post = (props) => {
   const handleReportModalClose = () => setReportModal(false);
 
   const [userData, setUserData] = useState({})
+  const [partnerData, setPartnerData] = useState({})
 
   const fetchUserProfileData = async () => {
 
@@ -88,6 +89,7 @@ const Post = (props) => {
 
     if (json.success) {
       setUserData(json.userProfile)
+      setPartnerData(json.partner)
     }
 
   }
@@ -250,18 +252,29 @@ const Post = (props) => {
             <Avatar className='my-auto' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 45, height: 45 }} />
             <div className='flex flex-col justify-center'>
               <div className='flex gap-1'>
+
                 <div className='dark:text-white font-semibold text-sm'>{name}</div>
-                <Tooltip title="Developer" className="text-gray-400 my-auto">
-                  <VerifiedIcon style={{ fontSize: 16 }} />
-                </Tooltip>
-                <Tooltip title="Developer" className="text-blue-400 my-auto">
-                  <VerifiedIcon style={{ fontSize: 16 }} />
-                </Tooltip>
-                <Tooltip title="Developer" className="text-yellow-400 my-auto">
-                  <VerifiedIcon style={{ fontSize: 16 }} />
-                </Tooltip>
+
+                {
+                  partnerData?.verificationType == "dev" ?
+                    <Tooltip title="Developer" className="text-gray-400 my-auto">
+                      <VerifiedIcon style={{ fontSize: 16 }} />
+                    </Tooltip>
+                    : partnerData?.verificationType == "celeb" ?
+                      <Tooltip title="Public Figure" className="text-blue-400 my-auto">
+                        <VerifiedIcon style={{ fontSize: 16 }} />
+                      </Tooltip>
+                      : partnerData?.verificationType == "org" ?
+                        <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                          <VerifiedIcon style={{ fontSize: 16 }} />
+                        </Tooltip>
+                        : null
+                }
+
               </div>
+              
               <div className=' text-slate-400 text-xs'>@{userName}</div>
+
             </div>
           </Link>
 

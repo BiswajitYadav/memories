@@ -178,9 +178,21 @@ const MyProfile = () => {
 
                                     <div className='font-bold text-lg sm:text-xl xl:text-2xl'>{name}</div>
 
-                                    <Tooltip title="Developer" className="text-gray-400 my-auto">
-                                        <VerifiedIcon style={{ fontSize: 16 }} />
-                                    </Tooltip>
+                                    {
+                                        sessionPartner?.verificationType == "dev" ?
+                                            <Tooltip title="Developer" className="text-gray-400 my-auto">
+                                                <VerifiedIcon style={{ fontSize: 16 }} />
+                                            </Tooltip>
+                                            : sessionPartner?.verificationType == "celeb" ?
+                                                <Tooltip title="Public Figure" className="text-blue-400 my-auto">
+                                                    <VerifiedIcon style={{ fontSize: 16 }} />
+                                                </Tooltip>
+                                                : sessionPartner?.verificationType == "org" ?
+                                                    <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                                                        <VerifiedIcon style={{ fontSize: 16 }} />
+                                                    </Tooltip>
+                                                    : null
+                                    }
 
                                     <Link to="/editprofile">
                                         <button className='hidden lg:block text-sm ml-4 py-1 px-3 rounded-md shadow-md hover:scale-105 duration-300 bg-slate-100 text-black
@@ -191,12 +203,12 @@ const MyProfile = () => {
 
                                 <div className=' dark:text-slate-200 text-slate-600 text-sm sm:text-sm font-semibold'>@{userName}</div>
 
-                                <div className='font-semibold text-sm py-2 lg:py-3 text-gray-400'>Developer</div>
+                                <div className='font-semibold text-sm py-2 lg:py-3 text-gray-400'>{sessionPartner?.verificationText}</div>
 
                                 <div className='hidden md:flex gap-x-4 lg:gap-x-8 dark:text-white'>
 
                                     <div className='flex items-baseline gap-1'>
-                                        <span className='font-bold flex justify-center text-lg'>{totalData ? totalData : "N/A"}</span>
+                                        <span className='font-bold flex justify-center text-lg'>{totalData ? totalData : "0"}</span>
                                         <span className='text-xs'>posts</span>
                                     </div>
 
@@ -377,9 +389,7 @@ const MyProfile = () => {
                                     })
                                 }
 
-
                             </InfiniteScroll>
-
 
                         </div>
                     </div>

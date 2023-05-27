@@ -24,7 +24,7 @@ import PeopleProfile from '../components/PeopleProfile'
 
 const UserProfile = () => {
 
-    const { otherUserProfile, fetchAnotherUserProfile, userPartner, setNotification } = useContext(MainContext)
+    const { otherUserProfile, fetchAnotherUserProfile, partner, setNotification } = useContext(MainContext)
 
     const { name, bio, userName, profileURL } = otherUserProfile;
 
@@ -272,14 +272,28 @@ const UserProfile = () => {
                             <div className='gap-4 md:gap-5 select-none'>
                                 <div className='flex gap-1 dark:text-white'>
                                     <div className='font-bold text-lg sm:text-xl xl:text-2xl'>{name}</div>
-                                    <Tooltip title="Developer" className="text-gray-400 my-auto">
-                                        <VerifiedIcon style={{ fontSize: 16 }} />
-                                    </Tooltip>
+
+                                    {
+                                        partner?.verificationType == "dev" ?
+                                            <Tooltip title="Developer" className="text-gray-400 my-auto">
+                                                <VerifiedIcon style={{ fontSize: 16 }} />
+                                            </Tooltip>
+                                            : partner?.verificationType == "celeb" ?
+                                                <Tooltip title="Public Figure" className="text-blue-400 my-auto">
+                                                    <VerifiedIcon style={{ fontSize: 16 }} />
+                                                </Tooltip>
+                                                : partner?.verificationType == "org" ?
+                                                    <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                                                        <VerifiedIcon style={{ fontSize: 16 }} />
+                                                    </Tooltip>
+                                                    : null
+                                    }
+
                                 </div>
 
                                 <div className=' dark:text-slate-200 text-slate-600 text-sm sm:text-sm font-semibold'>@{userName}</div>
 
-                                <div className='font-semibold text-sm py-2 lg:py-3 text-gray-400'>Developer</div>
+                                <div className='font-semibold text-sm py-2 lg:py-3 text-gray-400'>{partner?.verificationText}</div>
 
                                 <div className='hidden md:flex gap-x-4 lg:gap-x-8 dark:text-white'>
 

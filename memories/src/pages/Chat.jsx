@@ -54,6 +54,8 @@ const ChatSelect = (props) => {
 
   const [userData, setUserData] = useState({})
 
+  const [partner, setPartner] = useState({})
+
   const { name, userName, profileURL } = userData;
 
   const userID = user?.find(data => data != sessionUserID)
@@ -72,6 +74,7 @@ const ChatSelect = (props) => {
 
     if (json.success) {
       setUserData(json.userProfile)
+      setPartner(json.partner)
     }
 
   }
@@ -84,10 +87,10 @@ const ChatSelect = (props) => {
 
   }, [userID])
 
-  const encryptedBytes = CryptoJS.enc.Base64.parse(recentMessage);
-  const keyBytes = CryptoJS.enc.Utf8.parse(_id);
+  const encryptedBytes = recentMessage ? CryptoJS.enc.Base64.parse(recentMessage) : null
+  const keyBytes = recentMessage ? CryptoJS.enc.Utf8.parse(_id) : null
 
-  const decrypted = CryptoJS.AES.decrypt(
+  const decrypted = recentMessage ? CryptoJS.AES.decrypt(
     {
       ciphertext: encryptedBytes,
     },
@@ -96,9 +99,11 @@ const ChatSelect = (props) => {
       mode: CryptoJS.mode.ECB,
       padding: CryptoJS.pad.Pkcs7,
     }
-  );
+  )
+    :
+    null
 
-  const decryptedMessage = decrypted.toString(CryptoJS.enc.Utf8);
+  const decryptedMessage = recentMessage ? decrypted.toString(CryptoJS.enc.Utf8) : null
 
   const formatDate = (dateString) => {
     const date = moment(dateString);
@@ -148,7 +153,7 @@ const ChatSelect = (props) => {
   return (
     <>
 
-      <Link className='hover:bg-[#D9D9D9] lg:hover:rounded-r-md lg:rounded-l-none rounded-md dark:hover:bg-[#1C1132] w-full' to={`${_id}`} state={{ data: userData, chatData: props.data }}>
+      <Link className='hover:bg-[#D9D9D9] lg:hover:rounded-r-md lg:rounded-l-none rounded-md dark:hover:bg-[#1C1132] w-full' to={`${_id}`} state={{ data: userData, chatData: props.data, partner: partner }}>
 
         <div className='flex flex-col h-max dark:text-white px-5 py-3 lg:py-4 gap-5 rounded-md'>
 
@@ -166,8 +171,6 @@ const ChatSelect = (props) => {
 
               </StyledBadge>
 
-              {/* <Avatar className='my-auto' alt={`${name?.slice(0, 1)}`} src={profileURL} sx={{ width: 45, height: 45 }} /> */}
-
               <div className='flex flex-col justify-center w-full'>
 
                 <div className="flex justify-between w-full items-center">
@@ -176,9 +179,21 @@ const ChatSelect = (props) => {
 
                     <div className='dark:text-white font-semibold text-sm'>{name}</div>
 
-                    <Tooltip title="Developer" className="text-gray-400 my-auto">
-                      <VerifiedIcon style={{ fontSize: 16 }} />
-                    </Tooltip>
+                    {
+                      partner?.verificationType == "dev" ?
+                        <Tooltip title="Developer" className="text-gray-400 my-auto">
+                          <VerifiedIcon style={{ fontSize: 16 }} />
+                        </Tooltip>
+                        : partner?.verificationType == "celeb" ?
+                          <Tooltip title="Public Figure" className="text-blue-400 my-auto">
+                            <VerifiedIcon style={{ fontSize: 16 }} />
+                          </Tooltip>
+                          : partner?.verificationType == "org" ?
+                            <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                              <VerifiedIcon style={{ fontSize: 16 }} />
+                            </Tooltip>
+                            : null
+                    }
 
                   </div>
 
@@ -191,11 +206,11 @@ const ChatSelect = (props) => {
                     isTyping ?
                       <div className=' dark:text-slate-200 text-slate-600 text-sm font-light'>typing...</div>
                       :
-                      newMessage && sessionUserID !== newMessageBy ?
+                      newMessage && sessionUserID != newMessageBy ?
                         <div className=' dark:text-slate-200 text-slate-600 text-sm font-semibold'>
                           {
-                            decryptedMessage ? decryptedMessage.length > 20 ?
-                              decryptedMessage.slice(0, 20) + "..."
+                            decryptedMessage ? decryptedMessage?.length > 20 ?
+                              decryptedMessage?.slice(0, 20) + "..."
                               :
                               decryptedMessage : "send a message"
                           }
@@ -203,8 +218,8 @@ const ChatSelect = (props) => {
                         :
                         <div className=' dark:text-slate-200 text-slate-600 text-sm font-light'>
                           {
-                            decryptedMessage ? decryptedMessage.length > 20 ?
-                              decryptedMessage.slice(0, 20) + "..."
+                            decryptedMessage ? decryptedMessage?.length > 20 ?
+                              decryptedMessage?.slice(0, 20) + "..."
                               :
                               decryptedMessage : "send a message"
                           }

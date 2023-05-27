@@ -78,7 +78,7 @@ const MainState = (props) => {
 
     const [otherUserProfile, setOtherUserProfile] = useState({})
 
-    const [userPartner, setUserPartner] = useState({})
+    const [partner, setPartner] = useState({})
 
     const fetchAnotherUserProfile = async (userID) => {
 
@@ -94,7 +94,7 @@ const MainState = (props) => {
 
         if (json.success) {
             setOtherUserProfile(json.userProfile)
-            setUserPartner()
+            setPartner(json.partner)
         } else {
             setNotification({ status: "true", message: "OTP Sent", type: "success" })
         }
@@ -214,7 +214,7 @@ const MainState = (props) => {
             fetchedPost,
             fetchAllPostHomePage,
             otherUserProfile,
-            userPartner,
+            partner,//partner info for another user
             fetchAnotherUserProfile,
             myPost,
             fetchMyAllPost,

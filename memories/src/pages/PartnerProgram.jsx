@@ -116,7 +116,7 @@ const PartnerProgram = () => {
                             </IconButton>
 
                             {
-                                partnerFormStatus ? "Profile Settings" : "Apply for Partnership Program by filling the form."
+                                !partnerFormStatus ? "Partners Profile Settings" : "Apply for Partnership Program by filling the form."
                             }
 
                         </div>
@@ -280,14 +280,16 @@ const PartnerProgram = () => {
 
                         }
 
-
                         <div className='flex flex-col items-start w-full h-full lg:hidden'>
+
                             <IconButton className='dark:text-white'>
                                 <ArrowBackIcon />
                             </IconButton>
+
                             <div className='m-auto text-lg opacity-60 font-bold'>
                                 Please visit desktop site to apply for partner program.
                             </div>
+
                         </div>
                     </div>
 

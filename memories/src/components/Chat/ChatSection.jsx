@@ -122,7 +122,7 @@ const ChatSection = () => {
     const { userProfileData, fetchAllChat } = useContext(MainContext)
 
     const location = useLocation()
-    const { data, chatData } = location.state;
+    const { data, chatData, partner } = location.state;
 
     const { _id, name, userName, profileURL } = data;
 
@@ -283,9 +283,21 @@ const ChatSection = () => {
                                 <div className='flex gap-1 '>
                                     <div className='dark:text-white font-semibold lg:text-lg text-sm'>{name}</div>
 
-                                    <Tooltip title="Developer" className="text-gray-400 my-auto">
-                                        <VerifiedIcon style={{ fontSize: 16 }} />
-                                    </Tooltip>
+                                    {
+                                        partner?.verificationType == "dev" ?
+                                            <Tooltip title="Developer" className="text-gray-400 my-auto">
+                                                <VerifiedIcon style={{ fontSize: 16 }} />
+                                            </Tooltip>
+                                            : partner?.verificationType == "celeb" ?
+                                                <Tooltip title="Public Figure" className="text-blue-400 my-auto">
+                                                    <VerifiedIcon style={{ fontSize: 16 }} />
+                                                </Tooltip>
+                                                : partner?.verificationType == "org" ?
+                                                    <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                                                        <VerifiedIcon style={{ fontSize: 16 }} />
+                                                    </Tooltip>
+                                                    : null
+                                    }
 
                                 </div>
                                 <div className=' dark:text-slate-200 text-slate-600 text-xs lg:text-sm font-semibold'>@{userName}</div>

@@ -18,7 +18,7 @@ import InfiniteScroll from 'react-infinite-scroll-component'
 
 const LogoutComponentHome = (props) => {
 
-  const { profileURL, name, userName } = props;
+  const { profileURL, name, userName, partner } = props;
 
   const [logoutModalOpen, setLogoutModalOpen] = useState(false);
   const handleLogoutModalOpen = () => setLogoutModalOpen(true);
@@ -33,15 +33,23 @@ const LogoutComponentHome = (props) => {
             <div className='flex flex-col justify-center'>
               <div className='flex gap-1'>
                 <div className='dark:text-white font-semibold text-sm'>{name}</div>
-                <Tooltip title="Developer" className="text-gray-400 my-auto">
-                  <VerifiedIcon style={{ fontSize: 16 }} />
-                </Tooltip>
-                {/* <Tooltip title="Developer" className="text-blue-400 my-auto">
-              <VerifiedIcon style={{ fontSize: 16 }} />
-            </Tooltip>
-            <Tooltip title="Developer" className="text-yellow-400 my-auto">
-              <VerifiedIcon style={{ fontSize: 16 }} />
-            </Tooltip> */}
+
+                {
+                  partner?.verificationType == "dev" ?
+                    <Tooltip title="Developer" className="text-gray-400 my-auto">
+                      <VerifiedIcon style={{ fontSize: 16 }} />
+                    </Tooltip>
+                    : partner?.verificationType == "celeb" ?
+                      <Tooltip title="Public Figure" className="text-blue-400 my-auto">
+                        <VerifiedIcon style={{ fontSize: 16 }} />
+                      </Tooltip>
+                      : partner?.verificationType == "org" ?
+                        <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                          <VerifiedIcon style={{ fontSize: 16 }} />
+                        </Tooltip>
+                        : null
+                }
+
               </div>
               <div className=' text-slate-500 text-xs'>@{userName}</div>
             </div>
@@ -67,7 +75,7 @@ const LogoutComponentHome = (props) => {
                   </button>
                 </div>
                 <div className='flex flex-col'>
-                  <LogoutComponent name={name} profileURL={profileURL} />
+                  <LogoutComponent name={name} profileURL={profileURL} partner={partner} />
                 </div>
               </div>
             </div>
@@ -82,7 +90,7 @@ const Home = () => {
 
   const context = useContext(MainContext)
 
-  const { userProfileData, fetchedPost, fetchAllPostHomePage } = context;
+  const { userProfileData, fetchedPost, fetchAllPostHomePage, sessionPartner } = context;
 
   const { _id, name, email, profileURL, gender, userName } = userProfileData;
 
@@ -183,7 +191,7 @@ const Home = () => {
 
           </div>
 
-          <LogoutComponentHome name={name} userName={userName} profileURL={profileURL} />
+          <LogoutComponentHome name={name} userName={userName} profileURL={profileURL} partner={sessionPartner} />
 
         </div >
       </div >
