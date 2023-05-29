@@ -87,6 +87,8 @@ const ViewPost = () => {
 
   const [userData, setUserData] = useState({})
 
+  const [partnerData, setPartnerData] = useState({})
+
   // setting up the like part
 
   const label = { inputProps: { 'aria-label': 'Checkbox demo' } };
@@ -202,6 +204,7 @@ const ViewPost = () => {
 
     if (json.success) {
       setUserData(json.userProfile)
+      setPartnerData(json.partner)
     }
   }
 
@@ -265,15 +268,21 @@ const ViewPost = () => {
                 <div className='flex flex-col justify-center'>
                   <div className='flex gap-1'>
                     <div className='dark:text-white font-semibold text-sm'>{name}</div>
-                    <Tooltip title="Developer" className="text-gray-400 my-auto">
-                      <VerifiedIcon style={{ fontSize: 16 }} />
-                    </Tooltip>
-                    <Tooltip title="Developer" className="text-blue-400 my-auto">
-                      <VerifiedIcon style={{ fontSize: 16 }} />
-                    </Tooltip>
-                    <Tooltip title="Developer" className="text-yellow-400 my-auto">
-                      <VerifiedIcon style={{ fontSize: 16 }} />
-                    </Tooltip>
+                    {
+                      partnerData?.verificationType === "dev" ?
+                        <Tooltip title="Developer" className="text-gray-400 my-auto">
+                          <VerifiedIcon style={{ fontSize: 16 }} />
+                        </Tooltip>
+                        : partnerData?.verificationType === "celeb" ?
+                          <Tooltip title="Public Figure" className="text-blue-400 my-auto">
+                            <VerifiedIcon style={{ fontSize: 16 }} />
+                          </Tooltip>
+                          : partnerData?.verificationType === "org" ?
+                            <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                              <VerifiedIcon style={{ fontSize: 16 }} />
+                            </Tooltip>
+                            : null
+                    }
                   </div>
                   <div className=' text-slate-400 text-xs'>@{userName}</div>
                 </div>

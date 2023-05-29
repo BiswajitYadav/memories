@@ -256,15 +256,15 @@ const Post = (props) => {
                 <div className='dark:text-white font-semibold text-sm'>{name}</div>
 
                 {
-                  partnerData?.verificationType == "dev" ?
+                  partnerData?.verificationType === "dev" ?
                     <Tooltip title="Developer" className="text-gray-400 my-auto">
                       <VerifiedIcon style={{ fontSize: 16 }} />
                     </Tooltip>
-                    : partnerData?.verificationType == "celeb" ?
+                    : partnerData?.verificationType === "celeb" ?
                       <Tooltip title="Public Figure" className="text-blue-400 my-auto">
                         <VerifiedIcon style={{ fontSize: 16 }} />
                       </Tooltip>
-                      : partnerData?.verificationType == "org" ?
+                      : partnerData?.verificationType === "org" ?
                         <Tooltip title="Organization" className="text-yellow-400 my-auto">
                           <VerifiedIcon style={{ fontSize: 16 }} />
                         </Tooltip>
