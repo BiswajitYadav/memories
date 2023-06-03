@@ -336,6 +336,7 @@ const MyProfile = () => {
                         </div>
 
                         {/* profile page for small devices */}
+
                         <div className='w-full bg-white dark:bg-[#231344] gap-6 rounded-b-md shadow-md'>
 
                             <div className='flex md:hidden px-2 w-full justify-around py-3 text-xs dark:text-white'>

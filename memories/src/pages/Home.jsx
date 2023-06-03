@@ -13,6 +13,7 @@ import MainContext from '../context/MainContext'
 import { useEffect } from 'react'
 import { SERVER_URL } from '../services/helper'
 import InfiniteScroll from 'react-infinite-scroll-component'
+import PostLoader from '../components/Loader/PostLoader'
 // import CircularProgress from '@mui/material/CircularProgress';
 
 
@@ -100,7 +101,13 @@ const Home = () => {
 
   const [totalData, setTotalData] = useState(0)
 
+  const [loaderPost, setLoaderPost] = useState(false)
+
   const fetchData = () => {
+
+    if (post.length == 0) {
+      setLoaderPost(true)
+    }
 
     let pageNo = Math.ceil(post.length / pageLimit) + 1;
 
@@ -114,6 +121,7 @@ const Home = () => {
       .then(res => res.json())
       .then((newData) => {
 
+        setLoaderPost(false)
         const mergeData = [...post, ...newData.allPost]
         setPost(mergeData)
         setTotalData(newData.allPostLength)
@@ -167,27 +175,32 @@ const Home = () => {
 
             </div>
 
-            <InfiniteScroll
-              dataLength={post.length}
-              next={fetchMoreData}
-              hasMore={post.length < Number(totalData)}
-              className='flex flex-col h-full items-center justify-center'
-              scrollableTarget="scrollableDiv"
-            >
+            {
+              !loaderPost && post?.length > 0 ?
 
-              {
-                post.length ?
-                  post?.map((data) => {
-                    return (
-                      <Post key={data._id} data={data} />
-                    )
-                  })
-                  :
-                  <div className='flex w-full justify-center'><CircularProgress className='text-black dark:text-white' /></div>
-              }
+                <InfiniteScroll
+                  dataLength={post.length}
+                  next={fetchMoreData}
+                  hasMore={post.length < Number(totalData)}
+                  className='flex flex-col h-full items-center justify-center'
+                  scrollableTarget="scrollableDiv"
+                  loader={<PostLoader />}
+                >
 
+                  {
+                    post?.map((data) => {
+                      return (
+                        <Post key={data._id} data={data} />
+                      )
+                    })
+                  }
 
-            </InfiniteScroll>
+                </InfiniteScroll>
+
+                :
+
+                <PostLoader />
+            }
 
           </div>
 
