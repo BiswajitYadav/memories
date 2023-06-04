@@ -23,6 +23,7 @@ import { Favorite, FavoriteBorder } from '@mui/icons-material';
 import ReadMoreReact from 'read-more-react';
 import InfiniteScroll from 'react-infinite-scroll-component'
 import PeopleProfile from './PeopleProfile';
+import ImageLoader from './Loader/ImageLoader';
 
 const MyPost = (props) => {
 
@@ -34,7 +35,7 @@ const MyPost = (props) => {
 
     const context = useContext(MainContext)
 
-    const { userProfileData, setNotification, fetchMyAllPost, handleStaticPostRemove,sessionPartner } = context;
+    const { userProfileData, setNotification, fetchMyAllPost, handleStaticPostRemove, sessionPartner } = context;
 
     const { name, email, profileURL, gender, userName, bio } = userProfileData;
 
@@ -390,12 +391,12 @@ const MyPost = (props) => {
                 {
                     postImageURL ?
                         <Link className='w-full min-h-max max-h-[60vh] bg-black rounded-md' to={`/post/${props.postID}`}>
-                            <img className='w-full object-contain min-h-full max-h-[60vh] rounded-md' src={postImageURL} alt="image" />
+
+                            <ImageLoader src={postImageURL} />
+
                         </Link> :
                         ""
                 }
-
-
 
 
                 <div className='dark:text-white w-full whitespace-pre-line flex font-medium px-1'>

@@ -30,6 +30,8 @@ import PeopleProfile from '../PeopleProfile';
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import LinkIcon from '@mui/icons-material/Link';
 
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import ImageLoader from './../Loader/ImageLoader';
 
 const Post = (props) => {
 
@@ -72,10 +74,14 @@ const Post = (props) => {
   const handleReportModalOpen = () => setReportModal(true);
   const handleReportModalClose = () => setReportModal(false);
 
+  const [profileLoader, setProfileLoader] = useState(true)
+
   const [userData, setUserData] = useState({})
   const [partnerData, setPartnerData] = useState({})
 
   const fetchUserProfileData = async () => {
+
+    setProfileLoader(true)
 
     const response = await fetch(`${SERVER_URL}user/get-profile-of/${userID}`, {
       method: 'POST',
@@ -88,6 +94,7 @@ const Post = (props) => {
     const json = await response.json()
 
     if (json.success) {
+      setProfileLoader(false)
       setUserData(json.userProfile)
       setPartnerData(json.partner)
     }
@@ -248,35 +255,53 @@ const Post = (props) => {
       <div className='flex flex-col bg-white dark:bg-[#231344] h-max w-full justify-center items-center rounded-md shadow-lg px-2 sm:px-5 py-4 md:py-5 gap-2 md:gap-3 mb-5'>
 
         <div className='flex w-full justify-between'>
-          <Link to={redirectURL} className='flex w-max self-start gap-2'>
-            <Avatar className='my-auto' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 45, height: 45 }} />
-            <div className='flex flex-col justify-center'>
-              <div className='flex gap-1'>
 
-                <div className='dark:text-white font-semibold text-sm'>{name}</div>
+          {
+            profileLoader ?
+              <div className='flex gap-2 animate-pulse w-full'>
+                <Avatar className='my-auto' alt="" src="" sx={{ width: 40, height: 40 }} />
 
-                {
-                  partnerData?.verificationType === "dev" ?
-                    <Tooltip title="Developer" className="text-gray-400 my-auto">
-                      <VerifiedIcon style={{ fontSize: 16 }} />
-                    </Tooltip>
-                    : partnerData?.verificationType === "celeb" ?
-                      <Tooltip title="Public Figure" className="text-blue-400 my-auto">
-                        <VerifiedIcon style={{ fontSize: 16 }} />
-                      </Tooltip>
-                      : partnerData?.verificationType === "org" ?
-                        <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                <div className='flex flex-col gap-2 justify-center w-full'>
+
+                  <div className='dark:text-white font-semibold text-sm bg-slate-200 w-[100%] md:w-[50%] p-1 rounded-lg' ></div>
+
+                  <div className=' text-slate-400 text-xs bg-slate-200 w-[70%] md:w-[30%] p-1 rounded-lg'></div>
+
+                </div>
+              </div>
+              :
+              <Link to={redirectURL} className='flex w-max self-start gap-2'>
+
+                <Avatar className='my-auto' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 45, height: 45 }} />
+
+                <div className='flex flex-col justify-center'>
+                  <div className='flex gap-1'>
+
+                    <div className='dark:text-white font-semibold text-sm'>{name}</div>
+
+                    {
+                      partnerData?.verificationType === "dev" ?
+                        <Tooltip title="Developer" className="text-gray-400 my-auto">
                           <VerifiedIcon style={{ fontSize: 16 }} />
                         </Tooltip>
-                        : null
-                }
+                        : partnerData?.verificationType === "celeb" ?
+                          <Tooltip title="Public Figure" className="text-blue-400 my-auto">
+                            <VerifiedIcon style={{ fontSize: 16 }} />
+                          </Tooltip>
+                          : partnerData?.verificationType === "org" ?
+                            <Tooltip title="Organization" className="text-yellow-400 my-auto">
+                              <VerifiedIcon style={{ fontSize: 16 }} />
+                            </Tooltip>
+                            : null
+                    }
 
-              </div>
-              
-              <div className=' text-slate-400 text-xs'>@{userName}</div>
+                  </div>
 
-            </div>
-          </Link>
+                  <div className=' text-slate-400 text-xs'>@{userName}</div>
+
+                </div>
+              </Link>
+          }
 
           <IconButton
             onClick={handleClick}
@@ -426,10 +451,13 @@ const Post = (props) => {
 
         {
           postImageURL ?
-            <Link className='w-full min-h-max max-h-[60vh] bg-black rounded-md' to={`/post/${_id}`}>
-              <img className='w-full object-contain min-h-full max-h-[60vh] rounded-md' src={postImageURL} alt="Image" />
-            </Link> :
-            ""
+            <Link className='w-full flex flex-col justify-center min-h-max max-h-[60vh] bg-black rounded-md' to={`/post/${_id}`}>
+
+              <ImageLoader src={postImageURL} />
+
+            </Link>
+            :
+            null
         }
 
         <div className='dark:text-white w-full flex whitespace-pre-wrap font-medium px-1 my-1'>
@@ -603,7 +631,7 @@ const Post = (props) => {
 
         </form>
 
-      </div>
+      </div >
     </>
   )
 }
