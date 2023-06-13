@@ -86,17 +86,6 @@ const Suggestion = (props) => {
 
                             <div className='dark:text-white font-semibold text-sm lg:text-base'>{name}</div>
 
-                            <Tooltip title="Developer" className="text-gray-400 my-auto">
-                                <VerifiedIcon style={{ fontSize: 16 }} />
-                            </Tooltip>
-
-                            {/* <Tooltip title="Developer" className="text-blue-400 my-auto">
-              <VerifiedIcon style={{ fontSize: 16 }} />
-            </Tooltip>
-            <Tooltip title="Developer" className="text-yellow-400 my-auto">
-              <VerifiedIcon style={{ fontSize: 16 }} />
-            </Tooltip> */}
-
                         </div>
 
                         <div className=' text-slate-400 text-xs md:text-xs lg:text-sm'>@{userName}</div>

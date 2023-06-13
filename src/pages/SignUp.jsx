@@ -68,7 +68,6 @@ function SignUp() {
         navigate('/authenticate')
 
       } else {
-        console.log(json);
         setNotification({ status: "true", message: `${json.error}`, type: "error" })
       }
 

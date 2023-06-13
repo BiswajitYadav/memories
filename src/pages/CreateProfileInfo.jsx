@@ -38,7 +38,7 @@ const CreateProfileInfo = () => {
         if (image) {
 
             new Compressor(image, {
-                quality: 0.5,
+                quality: 0.6,
                 success: (compressedResult) => {
 
                     const data = new FormData()

@@ -103,15 +103,15 @@ const Home = () => {
 
   const [loaderPost, setLoaderPost] = useState(false)
 
-  const fetchData = () => {
+  const fetchData = (refresh) => {
 
-    if (post.length == 0) {
+    if (post.length < 0 || refresh) {
       setLoaderPost(true)
     }
 
     let pageNo = Math.ceil(post.length / pageLimit) + 1;
 
-    fetch(`${SERVER_URL}post/fetch-all-post-user/${pageNo}`, {
+    fetch(`${SERVER_URL}post/fetch-all-post-user/${refresh ? 1 : pageNo}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -122,8 +122,7 @@ const Home = () => {
       .then((newData) => {
 
         setLoaderPost(false)
-        const mergeData = [...post, ...newData.allPost]
-        setPost(mergeData)
+        refresh ? setPost(newData.allPost) : setPost([...post, ...newData.allPost])
         setTotalData(newData.allPostLength)
 
       })
@@ -143,7 +142,7 @@ const Home = () => {
     <>
       <div className='bg-[#D9D9D9] h-screen w-full dark:bg-slate-900'>
 
-        <Header />
+        <Header refresh={() => fetchData(true)} />
 
         <div id='scrollableDiv' className='bg-[#D9D9D9] dark:bg-[#1C1132] overflow-y-auto h-[92vh] w-full flex justify-between gap-x-5 py-4 px-2 sm:px-5 md:px-16'>
 
@@ -151,7 +150,7 @@ const Home = () => {
 
           <div className='w-full md:w-[80%] lg:w-[70%] xl:w-[50%] duration-300 flex flex-col gap-2 md:gap-5 mx-auto'>
 
-            <CreatePost userID={_id} profileURL={profileURL} name={name} />
+            <CreatePost userID={_id} profileURL={profileURL} name={name} refresh={() => fetchData(true)} />
 
             <div className='flex gap-5 items-center justify-end w-full'>
 

@@ -9,8 +9,6 @@ import { FaDiscord } from 'react-icons/fa'
 import WidgetsIcon from '@mui/icons-material/Widgets';
 import { useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close';
-import Followers from '../components/PeopleProfile'
-import Followings from '../components/Followings'
 import MessageIcon from '@mui/icons-material/Message';
 import { SERVER_URL } from '../services/helper'
 import { useContext } from 'react'
@@ -19,7 +17,8 @@ import { useEffect } from 'react'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import staticAvatar from '../assets/image/sample-profile.webp'
 import PeopleProfile from '../components/PeopleProfile'
-
+import PostLoader from './../components/Loader/PostLoader';
+import CameraAltIcon from '@mui/icons-material/CameraAlt';
 
 
 const UserProfile = () => {
@@ -128,9 +127,11 @@ const UserProfile = () => {
 
 
     useEffect(() => {
+        setPost([])
         fetchAnotherUserProfile(userID)
     }, [userID])
 
+    const [postLoading, setPostLoading] = useState(true)
 
     const pageLimit = 5
 
@@ -138,29 +139,44 @@ const UserProfile = () => {
 
     const [totalData, setTotalData] = useState(0)
 
-    const fetchData = () => {
+    const fetchData = async (isNewUser) => {
 
         let pageNo = Math.ceil(post.length / pageLimit) + 1;
 
-        fetch(`${SERVER_URL}post/fetch-user-post/${userID}/${pageNo}`, {
+        // if (isNewUser) {
+
+        //     setPost([])
+        //     setTotalData(0)
+        //     setPostLoading(true)
+
+        // }
+
+        await fetch(`${SERVER_URL}post/fetch-user-post/${userID}/${isNewUser ? 1 : pageNo}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'auth-token': localStorage.getItem('auth-token')
             }
         })
-            .then(res => res.json())
+            .then(res =>
+                res.json()
+            )
             .then((newData) => {
-                const mergeData = [...post, ...newData.usersPost]
-                setPost(mergeData)
+
+                setPostLoading(false)
+
+                isNewUser ? setPost(newData.usersPost) : setPost([...post, ...newData.usersPost])
+
                 setTotalData(newData.usersPostLength)
+
             })
             .catch((err) => console.error(err));
+
     };
 
     useEffect(() => {
 
-        fetchData()
+        fetchData(true)
 
     }, [userID])
 
@@ -177,11 +193,11 @@ const UserProfile = () => {
 
     const [totalFollowersData, setTotalFollowersData] = useState(0)
 
-    const fetchAllFollowers = async () => {
+    const fetchAllFollowers = async (refreshData) => {
 
         let pageNo = Math.ceil(followersData.length / pageLimitFollowers) + 1;
 
-        fetch(`${SERVER_URL}follow/fetch-followers/${pageNo}`, {
+        fetch(`${SERVER_URL}follow/fetch-followers/${refreshData ? 1 : pageNo}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -191,8 +207,7 @@ const UserProfile = () => {
         })
             .then(res => res.json())
             .then((newData) => {
-                const mergeData = [...followersData, ...newData.userFollowers]
-                setFollowersData(mergeData)
+                refreshData ? setFollowersData(newData.userFollowers) : setFollowersData([...followersData, ...newData.userFollowers])
                 setTotalFollowersData(newData.userFollowersTotal)
             })
             .catch((err) => console.error(err));
@@ -201,7 +216,9 @@ const UserProfile = () => {
     useEffect(() => {
 
         if (userID) {
-            fetchAllFollowers()
+            fetchAllFollowers(true)
+            setFollowersModalOpen(false)
+            setFollowingsModalOpen(false)
         }
 
     }, [userID])
@@ -221,11 +238,11 @@ const UserProfile = () => {
 
     const [totalFollowingData, setTotalFollowingData] = useState(0)
 
-    const fetchAllFollowing = async () => {
+    const fetchAllFollowing = async (refreshData) => {
 
         let pageNo = Math.ceil(followingData.length / pageLimitFollowing) + 1;
 
-        fetch(`${SERVER_URL}follow/fetch-following/${pageNo}`, {
+        fetch(`${SERVER_URL}follow/fetch-following/${refreshData ? 1 : pageNo}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -235,8 +252,7 @@ const UserProfile = () => {
         })
             .then(res => res.json())
             .then((newData) => {
-                const mergeData = [...followingData, ...newData.userFollowing]
-                setFollowingData(mergeData)
+                refreshData ? setFollowingData(newData.userFollowing) : setFollowingData([...followingData, ...newData.userFollowing])
                 setTotalFollowingData(newData.userFollowingTotal)
             })
             .catch((err) => console.error(err));
@@ -244,14 +260,12 @@ const UserProfile = () => {
 
     useEffect(() => {
         if (userID) {
-            fetchAllFollowing()
+            fetchAllFollowing(true)
         }
     }, [userID])
 
     const fetchMoreFollowingData = () => {
-
         fetchAllFollowing()
-
     }
 
     // -------------------
@@ -326,10 +340,12 @@ const UserProfile = () => {
 
                         <div className='flex md:hidden px-2 w-full justify-around py-3 text-xs dark:text-white'>
                             <div><span className='font-extrabold flex justify-center text-lg'>{totalData ? totalData : "N/A"}</span> posts</div>
+
                             <button onClick={handlefollowersModalOpen} className='flex flex-col items-center'>
                                 <span className='font-bold flex justify-center text-lg'>{totalFollowersData}</span>
                                 <span className='text-xs'>followers</span>
                             </button>
+
                             <Modal
                                 open={followersModalOpen}
                                 onClose={handlefollowersModalClosed}
@@ -350,7 +366,7 @@ const UserProfile = () => {
                                             </button>
                                         </div>
 
-                                        <div id='scrollableDivFollower' className='flex flex-col overflow-y-auto h-[35vh] scroll-smooth '>
+                                        <div id='scrollableDivFollower' className='flex flex-col overflow-y-auto h-[30vh] md:h-[35vh] scroll-smooth '>
 
                                             <InfiniteScroll
                                                 dataLength={followersData.length}
@@ -375,10 +391,12 @@ const UserProfile = () => {
                                     </div>
                                 </div>
                             </Modal>
+
                             <button onClick={handlefollowingsModalOpen} className='flex items-center flex-col'>
                                 <span className='font-extrabold flex justify-center text-lg'>{totalFollowingData}</span>
                                 <span className='text-xs'>followings</span>
                             </button>
+
                             <Modal
                                 open={followingsModalOpen}
                                 onClose={handlefollowingsModalClosed}
@@ -422,6 +440,7 @@ const UserProfile = () => {
                                     </div>
                                 </div>
                             </Modal>
+
                         </div>
 
                         <div className='py-1 md:hidden dark:text-white whitespace-pre-wrap'>
@@ -454,7 +473,7 @@ const UserProfile = () => {
                                     <button onClick={handleFollowUnfollow} className='flex w-full md:w-[75%] lg:w-[50%] xl:w-[40%] justify-center bg-[#8948B8] text-white py-1.5 lg:py-2 hover:bg-[#8E2BC2] duration-200 font-semibold rounded-md text-lg'>
                                         Follow
                                     </button>
-                                : ""
+                                : null
                             }
 
                         </div>
@@ -468,26 +487,43 @@ const UserProfile = () => {
 
                         <div className='w-full md:w-[80%] lg:w-[50%] xl:w-[40%] duration-300 flex flex-col gap-7 mx-auto'>
 
-                            <InfiniteScroll
-                                dataLength={post.length}
-                                next={fetchMoreData}
-                                hasMore={post.length < Number(totalData)}
-                                className='flex flex-col'
-                                scrollableTarget="scrollableDivUserProfile"
-                            >
+                            {
+                                postLoading ?
 
-                                {
-                                    post.length ?
-                                        post?.map((data) => {
-                                            return (
-                                                <Post key={data._id} data={data} />
-                                            )
-                                        })
+                                    <PostLoader />
+
+                                    :
+                                    !postLoading && post.length < 1 ?
+
+                                        <div className='w-full flex flex-col gap-5 p-10 h-max items-center opacity-70'>
+
+                                            <div className='outline outline-2 outline-slate-400 text-slate-400 rounded-full p-4'>
+                                                <CameraAltIcon fontSize='medium' />
+                                            </div>
+
+                                            <div className='font-bold text-lg text-slate-400'>No Posts Yet</div>
+
+                                        </div>
+
                                         :
-                                        <div className='flex w-full justify-center'><CircularProgress className='text-black dark:text-white' /></div>
-                                }
+                                        <InfiniteScroll
+                                            dataLength={post.length}
+                                            next={fetchMoreData}
+                                            hasMore={post.length < Number(totalData)}
+                                            className='flex flex-col'
+                                            scrollableTarget="scrollableDivUserProfile"
+                                        >
 
-                            </InfiniteScroll>
+                                            {
+                                                post?.map((data) => {
+                                                    return (
+                                                        <Post key={data._id} data={data} />
+                                                    )
+                                                })
+                                            }
+
+                                        </InfiniteScroll>
+                            }
 
                         </div>
 

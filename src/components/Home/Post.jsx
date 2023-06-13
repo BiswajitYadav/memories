@@ -196,6 +196,7 @@ const Post = (props) => {
   const [commentText, setCommentText] = useState("")
 
   const uploadComment = (e) => {
+    
     e.preventDefault()
     setCommentText("")
     createNewComment(postID, commentText)
@@ -519,6 +520,7 @@ const Post = (props) => {
               <CommentIcon style={{ fontSize: 30 }} />
             </button>
           </Tooltip>
+          
           <Modal
             open={commentModalOpen}
             onClose={handleCommentModalClosed}

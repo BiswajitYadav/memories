@@ -88,15 +88,9 @@ const Comment = (props) => {
 
     const context = useContext(MainContext)
 
-    const { createNewComment, commentingStatus, commentUploaded } = context;
+    const { createNewComment, commentingStatus, commentUploaded, userProfileData } = context;
 
     const [commentTextInput, setCommentTextInput] = useState("")
-
-    const uploadComment = (e) => {
-        e.preventDefault()
-        setCommentTextInput("")
-        createNewComment(postID, commentTextInput)
-    }
 
     // handling comment apis
 
@@ -105,11 +99,11 @@ const Comment = (props) => {
     const [commentData, setCommentData] = useState([])
     const [totalComment, setTotalComment] = useState(0)
 
-    const fetchCommentsByPostID = () => {
+    const fetchCommentsByPostID = (refresh) => {
 
         let pageNo = Math.ceil(commentData.length / pageLimitComment) + 1;
 
-        fetch(`${SERVER_URL}comment/fetch-comment-of-post/${postID}/${pageNo}`, {
+        fetch(`${SERVER_URL}comment/fetch-comment-of-post/${postID}/${refresh ? 1 : pageNo}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -119,9 +113,10 @@ const Comment = (props) => {
             .then(res => res.json())
             .then((newData) => {
 
-                const mergeData = [...commentData, ...newData.commentList]
-                setCommentData(mergeData)
+                refresh ? setCommentData(newData.commentList) : setCommentData([...commentData, ...newData.commentList])
+
                 setTotalComment(newData.commentListSize)
+
 
             })
             .catch((err) => console.error(err))
@@ -136,12 +131,21 @@ const Comment = (props) => {
         fetchCommentsByPostID()
     }
 
+    const uploadComment = (e) => {
+        createNewComment(postID, commentTextInput)
+        e.preventDefault()
+        setCommentTextInput("")
+        fetchCommentsByPostID(true)
+    }
+
 
     return (
         <>
 
             <form method='POST' onSubmit={uploadComment} className='bg-[#D9D9D9] dark:bg-[#1C1132] rounded-full flex items-center py-0.5 md:px-2 md:py-1 w-full'>
-                <Avatar className='my-auto' alt="Travis Howard" src="https://www.w3schools.com/howto/img_avatar.png " sx={{ width: 45, height: 45 }} />
+
+                <Avatar className='my-auto' alt={userProfileData.name?.slice(0, 1)} src={userProfileData.profileURL} sx={{ width: 45, height: 45 }} />
+                
                 <input value={commentTextInput} onChange={e => setCommentTextInput(e.target.value)} className='px-2 md:px-4 bg-transparent w-full focus:outline-none dark:text-white' type="text" placeholder='Add a comment...' required />
                 <button type="submit" className='text-[#573698] dark:text-white/70 rounded-full hover:scale-105 duration-200 px-1.5'>
                     <SendIcon style={{ fontSize: 30 }} />

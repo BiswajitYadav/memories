@@ -69,7 +69,7 @@ const Like = (props) => {
 
 
                         <Link to={`/profile/${userID}`} className='flex gap-2'>
-                            <Avatar className='my-auto' alt="Travis Howard" src={profileURL} sx={{ width: 40, height: 40 }} />
+                            <Avatar className='my-auto' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 40, height: 40 }} />
 
                             <div className='flex flex-col justify-center'>
                                 <div className='flex gap-1'>

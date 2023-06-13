@@ -24,7 +24,7 @@ const CreatePost = (props) => {
     const [compressedImage, setCompressedImage] = useState(null)
     const [imgUrl, setImgUrl] = useState("")
 
-    const { profileURL, name } = props;
+    const { profileURL, name, refresh } = props;
 
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
@@ -71,8 +71,6 @@ const CreatePost = (props) => {
                         .then(res => res.json())
                         .then(jsonData => {
 
-                            console.log(jsonData)
-
                             if (jsonData.url) {
 
                                 fetch(`${SERVER_URL}post/create`, {
@@ -94,6 +92,7 @@ const CreatePost = (props) => {
                                             setImage(null)
                                             setImgUrl("")
                                             handleClose()
+                                            refresh()
                                         }
 
                                         else {
@@ -129,6 +128,7 @@ const CreatePost = (props) => {
                 setCaption("")
                 setPostType("public")
                 handleClose()
+                refresh()
             }
 
         }
@@ -151,7 +151,7 @@ const CreatePost = (props) => {
             <div className='flex bg-white dark:bg-[#231344] h-[15%] justify-center items-center rounded-md shadow-lg p-2 lg:p-3 gap-2'>
 
                 <Link to="/myprofile">
-                    <Avatar className='my-auto' alt="Travis Howard" src={profileURL} sx={{ width: 45, height: 45 }} />
+                    <Avatar className='my-auto' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 45, height: 45 }} />
                 </Link>
 
                 <div className='bg-transparent rounded-full flex items-center w-full'>

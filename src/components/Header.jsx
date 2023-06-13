@@ -24,9 +24,11 @@ import LogoutComponent from '../components/LogoutComponent';
 import { list } from 'postcss';
 import MainContext from '../context/MainContext';
 
-function Header() {
+function Header(props) {
 
   const navigate = useNavigate()
+
+  const { refresh } = props
 
   const context = useContext(MainContext)
   const { userProfileData, fetchSessionUserProfile } = context;
@@ -179,7 +181,7 @@ function Header() {
 
         <div className='flex gap-3 h-full item-center'>
 
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB]  w-20 flex items-center' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center')} to="/" onClick={refresh}>
 
             <Tooltip title="Home" className="mx-auto">
               <HomeIcon style={{ fontSize: 35 }} />
@@ -365,7 +367,7 @@ function Header() {
       </Modal>
 
       {/* Navbar for small devices */}
-      
+
       <header className='md:hidden bg-white shadow-md dark:bg-[#231344]'>
 
         <Drawer
@@ -387,7 +389,7 @@ function Header() {
 
         <div className='flex gap-3 shadow-md bg-white dark:bg-[#231344] h-max w-full item-center justify-center sm:pt-2'>
 
-          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB] w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/">
+          <NavLink className={({ isActive }) => (isActive ? 'dark:text-white border-b-4 border-[#00B2CB] w-20 flex items-center py-1.5' : 'dark:text-white dark:opacity-50  text-slate-400 w-20 flex items-center py-1.5')} to="/" onClick={refresh}>
             <Tooltip title="Home" className="mx-auto">
               <HomeIcon style={{ fontSize: 30 }} />
             </Tooltip>

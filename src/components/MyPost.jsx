@@ -217,7 +217,9 @@ const MyPost = (props) => {
 
     return (
         <>
+        
             <div className='flex flex-col bg-white dark:bg-[#231344] h-max w-full justify-center items-center rounded-md shadow-lg px-2 sm:px-5 py-4 sm:py-5 gap-3 scroll-smooth'>
+
                 <div className='flex w-full justify-between'>
 
                     <div className='flex w-full content-start gap-2'>
@@ -399,7 +401,7 @@ const MyPost = (props) => {
                 }
 
 
-                <div className='dark:text-white w-full whitespace-pre-line flex font-medium px-1'>
+                <div className='dark:text-white w-full flex whitespace-pre-wrap font-medium px-1 my-1'>
 
                     {/* <ReadMoreReact text={editedPostCaption}
                         min={0}
