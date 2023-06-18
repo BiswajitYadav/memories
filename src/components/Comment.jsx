@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import SendIcon from '@mui/icons-material/Send';
-import { Avatar } from '@mui/material';
+import { Avatar, IconButton } from '@mui/material';
 import { Link } from 'react-router-dom';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import InfiniteScroll from 'react-infinite-scroll-component'
 import CircularProgress from '@mui/material/CircularProgress';
@@ -13,7 +14,11 @@ import MainContext from '../context/MainContext';
 
 const CommentItem = (props) => {
 
-    const { userID, commentText, postID, date } = props.data;
+    const authToken = localStorage.getItem('auth-token')
+
+    const { _id, userID, commentText, postID, date } = props.data;
+
+    const { refresh } = props;
 
     const [userProfile, setUserProfile] = useState({})
 
@@ -59,21 +64,48 @@ const CommentItem = (props) => {
         }
     }, [userID])
 
+    const handleDeleteComment = async () => {
+
+        await fetch(`${SERVER_URL}comment/delete`, {
+            method: 'POST',
+            headers: {
+                'auth-token': authToken,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ commentID: _id })
+        }).then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    refresh()
+                }
+            })
+
+    }
+
     return (
         <>
-            <div className='flex gap-2 py-3 md:px-2 w-full'>
-                <Link to={redirectURL}>
-                    <Avatar className='' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 45, height: 45 }} />
-                </Link>
-                <div className='flex flex-col w-full'>
-                    <div className='flex items-center gap-2 dark:text-white'>
-                        <Link to={redirectURL}>
-                            <div className='font-semibold text-sm'>{name}</div>
-                        </Link>
-                        <ReactTimeago className='text-xs opacity-50' date={date} />
+            <div className='flex items-center justify-between gap-2 w-full'>
+                <div className="flex items-center gap-2 py-3 md:px-2 ">
+                    <Link to={redirectURL}>
+                        <Avatar className='' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 45, height: 45 }} />
+                    </Link>
+                    <div className='flex flex-col w-full'>
+                        <div className='flex items-center gap-2 dark:text-white'>
+                            <Link to={redirectURL}>
+                                <div className='font-semibold text-sm'>{name}</div>
+                            </Link>
+                            <ReactTimeago className='text-xs opacity-50' date={date} />
+                        </div>
+                        <div className='w-full break-normal dark:text-white'>{commentText}</div>
                     </div>
-                    <div className='w-full break-normal dark:text-white'>{commentText}</div>
                 </div>
+                {
+                    userID == sessionUserID ?
+                        <IconButton onClick={handleDeleteComment} className='dark:text-white text-black opacity-50 hover:opacity-100 transition-all duration-300'>
+                            <DeleteIcon />
+                        </IconButton>
+                        : null
+                }
             </div>
         </>
     )
@@ -132,10 +164,12 @@ const Comment = (props) => {
     }
 
     const uploadComment = (e) => {
-        createNewComment(postID, commentTextInput)
         e.preventDefault()
+        createNewComment(postID, commentTextInput)
         setCommentTextInput("")
-        fetchCommentsByPostID(true)
+        setInterval(() => {
+            fetchCommentsByPostID(true)
+        }, 2000);
     }
 
 
@@ -145,7 +179,7 @@ const Comment = (props) => {
             <form method='POST' onSubmit={uploadComment} className='bg-[#D9D9D9] dark:bg-[#1C1132] rounded-full flex items-center py-0.5 md:px-2 md:py-1 w-full'>
 
                 <Avatar className='my-auto' alt={userProfileData.name?.slice(0, 1)} src={userProfileData.profileURL} sx={{ width: 45, height: 45 }} />
-                
+
                 <input value={commentTextInput} onChange={e => setCommentTextInput(e.target.value)} className='px-2 md:px-4 bg-transparent w-full focus:outline-none dark:text-white' type="text" placeholder='Add a comment...' required />
                 <button type="submit" className='text-[#573698] dark:text-white/70 rounded-full hover:scale-105 duration-200 px-1.5'>
                     <SendIcon style={{ fontSize: 30 }} />
@@ -171,7 +205,7 @@ const Comment = (props) => {
 
                                         return (
 
-                                            <CommentItem key={data._id} data={data} />
+                                            <CommentItem key={data._id} data={data} refresh={() => fetchCommentsByPostID(true)} />
 
                                         )
 
