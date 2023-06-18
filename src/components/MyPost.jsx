@@ -397,7 +397,7 @@ const MyPost = (props) => {
                             <ImageLoader src={postImageURL} />
 
                         </Link> :
-                        ""
+                        null
                 }
 
 

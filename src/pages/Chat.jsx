@@ -299,7 +299,7 @@ const Chat = () => {
 
   return (
     <>
-      <div className='bg-[#D9D9D9] h-screen w-full'>
+      <div className='bg-[#D9D9D9] dark:bg-[#1C1132] h-screen w-full'>
 
         <Header />
 
@@ -334,7 +334,7 @@ const Chat = () => {
                 <div className='flex items-center gap-2 lg:gap-4 justify-center cursor-default select-none'>
 
                   <BsFillChatTextFill className='scale-125 lg:scale-150 text-[#D9D9D9]' />
-                  <div className='text-xl lg:text-3xl font-semibold text-[#D9D9D9]'>Select to Chat</div>
+                  <div className='text-xl lg:text-3xl font-semibold text-[#D9D9D9]'>Tap to Chat</div>
 
                 </div>
 

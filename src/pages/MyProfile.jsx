@@ -372,7 +372,7 @@ const MyProfile = () => {
                             <WidgetsIcon /><div>POST</div>
                         </div>
 
-                        <div className='flex flex-col gap-4 mt-5 w-full md:w-[75%] lg:w-[60%] xl:w-[40%] items-center '>
+                        <div className='flex flex-col gap-4 mt-5 w-full md:w-[75%] lg:w-[60%] xl:w-[40%] '>
 
                             <InfiniteScroll
                                 dataLength={post.length}
