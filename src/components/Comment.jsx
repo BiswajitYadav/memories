@@ -100,7 +100,7 @@ const CommentItem = (props) => {
                     </div>
                 </div>
                 {
-                    userID == sessionUserID ?
+                    userID === sessionUserID ?
                         <IconButton onClick={handleDeleteComment} className='dark:text-white text-black opacity-50 hover:opacity-100 transition-all duration-300'>
                             <DeleteIcon />
                         </IconButton>
