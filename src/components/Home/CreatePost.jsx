@@ -64,6 +64,8 @@ const CreatePost = (props) => {
                     data.append("upload_preset", `${UPLOAD_PRESET}`)
                     data.append("cloud_name", `${CLOUD_NAME}`)
 
+                    console.log(data)
+
                     fetch(`${CLOUDINARY_URL}`, {
                         method: 'POST',
                         body: data
