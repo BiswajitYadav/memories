@@ -497,7 +497,7 @@ const Post = (props) => {
         <div className='flex gap-3 w-full items-center'>
 
 
-          <Tooltip title={!likeStatus ? "Like" : "Dislike"} className="text-red-600 cursor-pointer transition-all ease-in-out hover:scale-110 duration-300">
+          <Tooltip title={!likeStatus ? "Like" : "Liked"} className="text-red-600 cursor-pointer transition-all ease-in-out hover:scale-110 duration-300">
 
             <Checkbox
               color='error'
@@ -633,7 +633,7 @@ const Post = (props) => {
 
         </form>
 
-      </div >
+      </div>
     </>
   )
 }
