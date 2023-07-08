@@ -48,7 +48,7 @@ const NotificationElement = (props) => {
             {
                 interaction ?
 
-                    <div div className='hover:bg-white duration-300 ease-in-out text-black dark:text-white hover:dark:bg-[#231344] w-full p-3 md:p-5 rounded-lg hover:shadow-lg select-none flex items-center gap-2 my-auto text-sm md:text-lg xl:text-xl cursor-pointer' >
+                    <div div className='hover:bg-white duration-300 ease-in-out text-black dark:text-white hover:dark:bg-[#231344] w-full px-1 py-3 md:p-5 rounded-lg hover:shadow-lg select-none flex  items-center flex-wrap gap-2 my-auto text-sm md:text-lg xl:text-xl cursor-pointer' >
 
                         <Link
                             to={`/profile/${userInteracted}`}
@@ -57,9 +57,9 @@ const NotificationElement = (props) => {
                             <Avatar className='my-auto' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 35, height: 35 }} />
                             <span className='font-bold'>{name}</span>
                         </Link>
-                        <div className=''>{notificationText}</div>
+                        {notificationText}
 
-                    </div >
+                    </div>
 
                     :
 

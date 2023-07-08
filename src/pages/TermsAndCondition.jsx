@@ -8,7 +8,7 @@ const TermsAndCondition = () => {
             <div className='bg-[#D9D9D9] dark:bg-slate-900 h-screen w-full'>
                 <Header />
                 <div className='bg-[#D9D9D9] dark:bg-[#1C1132] overflow-y-auto h-max lg:h-[92vh] w-full flex justify-between gap-x-5 py-3 px-2 sm:px-5 md:px-9 md:py-5 lg:px-5 xl:px-16'>
-                    <div className='bg-white dark:bg-[#231344] dark:shadow-black rounded-xl w-full flex shadow-lg p-1'>
+                    <div className='bg-white dark:bg-[#231344] dark:shadow-black rounded-xl w-full flex shadow-lg pr-1'>
                         <SideBarNav />
                         <div className='h-[80vh] overflow-y-auto w-full p-3 md:p-8 xl:p-10 dark:text-white'>
                             <div className='text-lg font-semibold'>Welcome to Memories! By accessing and using our website, you agree to be bound by the following terms and conditions:</div>
