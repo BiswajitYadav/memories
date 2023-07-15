@@ -13,7 +13,7 @@ import Compressor from 'compressorjs';
 const CreatePost = (props) => {
 
     const context = useContext(MainContext)
-    const { userProfileData, fetchAllPostHomePage, setNotification } = context;
+    const { userProfileData, fetchAllPostHomePage, setNotification, fetchMyPostData } = context;
 
     const [uploadStatus, setUploadStatus] = useState(false)
 
@@ -90,6 +90,7 @@ const CreatePost = (props) => {
                                             setNotification({ status: "true", message: "Posted", type: "info" })
                                             setUploadStatus(false)
                                             setCaption("")
+                                            fetchMyPostData(true)
                                             setPostType("public")
                                             setImage(null)
                                             setImgUrl("")
@@ -127,6 +128,7 @@ const CreatePost = (props) => {
             if (json.success) {
                 setNotification({ status: "true", message: "Posted", type: "info" })
                 setUploadStatus(false)
+                fetchMyPostData(true)
                 setCaption("")
                 setPostType("public")
                 handleClose()

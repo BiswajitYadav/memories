@@ -25,7 +25,7 @@ const MyProfile = () => {
     const authToken = localStorage.getItem('auth-token')
 
     const context = useContext(MainContext)
-    const { userProfileData, fetchSessionUserProfile, post, setPost, sessionPartner } = context;
+    const { userProfileData, fetchSessionUserProfile, post, setPost, sessionPartner, totalMyPostData, fetchMyPostData } = context;
 
     const { _id, name, email, profileURL, gender, userName, bio } = userProfileData;
 
@@ -41,37 +41,14 @@ const MyProfile = () => {
         fetchSessionUserProfile()
     }, [])
 
-
-    const pageLimit = 5
-
-    const [totalData, setTotalData] = useState(0)
-
-    const fetchData = () => {
-
-        let pageNo = Math.ceil(post.length / pageLimit) + 1;
-
-        fetch(`${SERVER_URL}post/fetch-my-post/${pageNo}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': localStorage.getItem('auth-token')
-            }
-        })
-            .then(res => res.json())
-            .then((newData) => {
-                const mergeData = [...post, ...newData.myPost]
-                setPost(mergeData)
-                setTotalData(newData.myPostLength)
-            })
-            .catch((err) => console.error(err));
-    };
+    
 
     useEffect(() => {
-        fetchData()
+        fetchMyPostData()
     }, [])
 
     const fetchMoreData = () => {
-        fetchData()
+        fetchMyPostData()
     }
 
     // followers API calls
@@ -167,7 +144,7 @@ const MyProfile = () => {
             <div className='bg-[#D9D9D9] dark:bg-slate-900 h-screen'>
                 <Header />
                 <div id='scrollableDivUserProfile' className='bg-[#D9D9D9] dark:bg-[#1C1132] h-[92vh] w-full overflow-y-auto flex flex-col gap-x-5'>
-                    
+
                     <div className='w-full h-max flex items-center flex-col px-2 py-5'>
 
                         <div className='bg-white dark:bg-[#231344] w-full md:w-[75%] lg:w-[60%] xl:w-[40%] flex gap-6 lg:gap-8 xl:gap-6 rounded-t-md lg:rounded-md shadow-md p-3 xl:p-5'>
@@ -208,7 +185,7 @@ const MyProfile = () => {
                                 <div className='hidden md:flex gap-x-4 lg:gap-x-8 dark:text-white'>
 
                                     <div className='flex items-baseline gap-1'>
-                                        <span className='font-bold flex justify-center text-lg'>{totalData ? totalData : "0"}</span>
+                                        <span className='font-bold flex justify-center text-lg'>{totalMyPostData ? totalMyPostData : "0"}</span>
                                         <span className='text-xs'>posts</span>
                                     </div>
 
@@ -342,7 +319,7 @@ const MyProfile = () => {
                             <div className='flex md:hidden px-2 w-full justify-around py-3 text-xs dark:text-white'>
 
                                 <div>
-                                    <span className='font-extrabold flex justify-center text-lg'>{totalData ? totalData : "N/A"}</span>
+                                    <span className='font-extrabold flex justify-center text-lg'>{totalMyPostData ? totalMyPostData : "N/A"}</span>
                                     posts</div>
 
                                 <button onClick={handlefollowersModalOpen}>
@@ -377,7 +354,7 @@ const MyProfile = () => {
                             <InfiniteScroll
                                 dataLength={post.length}
                                 next={fetchMoreData}
-                                hasMore={post.length < Number(totalData)}
+                                hasMore={post.length < Number(totalMyPostData)}
                                 className='flex flex-col gap-4 w-full duration-300 transition-all'
                                 scrollableTarget="scrollableDivUserProfile"
                             >

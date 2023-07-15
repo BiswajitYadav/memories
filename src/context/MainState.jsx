@@ -16,6 +16,31 @@ const MainState = (props) => {
         setPost(updatedItems);
     }
 
+    const pageLimit = 5
+
+    const [totalMyPostData, setTotalMyPostData] = useState(0)
+
+    const fetchMyPostData = (isNew) => {
+
+        let pageNo = Math.ceil(post.length / pageLimit) + 1;
+
+        fetch(`${SERVER_URL}post/fetch-my-post/${isNew ? 1 : pageNo}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': localStorage.getItem('auth-token')
+            }
+        })
+            .then(res => res.json())
+            .then((newData) => {
+
+                isNew ? setPost(newData.myPost) : setPost([...post, ...newData.myPost])
+                setTotalMyPostData(newData.myPostLength)
+
+            })
+            .catch((err) => console.error(err));
+    };
+
     const [notification, setNotification] = useState({})
 
     const [temporaryAuthToken, setTemporaryAuthToken] = useState("")
@@ -102,24 +127,6 @@ const MainState = (props) => {
     }
 
 
-    const [myPost, setMyPost] = useState([])
-
-    const fetchMyAllPost = async () => {
-        const response = await fetch(`${SERVER_URL}post/fetch-my-post`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'auth-token': authToken
-            }
-        })
-
-        const json = await response.json()
-
-        if (json) {
-            setMyPost(json)
-        }
-
-    }
 
     // Comment Api
 
@@ -175,6 +182,24 @@ const MainState = (props) => {
 
     }
 
+    // mutual followers
+
+    const [mutualDataList, setMutualDataList] = useState([])
+
+    const fetchMutualDataList = () => {
+
+        fetch(`${SERVER_URL}follow/fetch-mutual-follow`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'auth-token': authToken
+            }
+        })
+            .then(res => res.json())
+            .then(json => setMutualDataList(json))
+
+    }
+
     // IO handlers
 
     const [socketConnected, setSocketConnected] = useState(false)
@@ -214,10 +239,10 @@ const MainState = (props) => {
             fetchedPost,
             fetchAllPostHomePage,
             otherUserProfile,
-            partner,//partner info for another user
+            partner,
+            totalMyPostData,
+            fetchMyPostData,
             fetchAnotherUserProfile,
-            myPost,
-            fetchMyAllPost,
             post,
             setPost,
             handleStaticPostRemove,
@@ -227,7 +252,9 @@ const MainState = (props) => {
             allChat,
             setAllChat,
             fetchAllChat,
-            chatNotificationCount
+            chatNotificationCount,
+            mutualDataList,
+            fetchMutualDataList
         }}>
 
             {props.children}

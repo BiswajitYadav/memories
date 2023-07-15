@@ -14,7 +14,7 @@ const PeopleProfile = (props) => {
 
     const authToken = localStorage.getItem('auth-token')
 
-    const { setNotification } = useContext(MainContext)
+    const { setNotification, fetchMutualDataList } = useContext(MainContext)
 
     const [userData, setUserData] = useState({})
 
@@ -71,6 +71,8 @@ const PeopleProfile = (props) => {
 
         if (json.success) {
 
+            fetchMutualDataList()
+
             if (json.followingStatus) {
                 setFollowStatus(true)
             } else {
@@ -118,6 +120,7 @@ const PeopleProfile = (props) => {
                 {
                     loading ?
                         <div className='flex gap-2 animate-pulse w-full'>
+
                             <Avatar className='my-auto' alt="" src="" sx={{ width: 40, height: 40 }} />
 
                             <div className='flex flex-col gap-2 justify-center w-full'>
@@ -134,6 +137,7 @@ const PeopleProfile = (props) => {
 
                         <>
                             <Link to={`/profile/${userID}`} className='flex gap-2'>
+                                
                                 <Avatar className='my-auto' alt={name?.slice(0, 1)} src={profileURL} sx={{ width: 40, height: 40 }} />
 
                                 <div className='flex flex-col justify-center'>

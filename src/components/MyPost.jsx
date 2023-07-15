@@ -35,7 +35,7 @@ const MyPost = (props) => {
 
     const context = useContext(MainContext)
 
-    const { userProfileData, setNotification, fetchMyAllPost, handleStaticPostRemove, sessionPartner } = context;
+    const { userProfileData, setNotification, handleStaticPostRemove, sessionPartner } = context;
 
     const { name, email, profileURL, gender, userName, bio } = userProfileData;
 
@@ -217,7 +217,7 @@ const MyPost = (props) => {
 
     return (
         <>
-        
+
             <div className='flex flex-col bg-white dark:bg-[#231344] h-max w-full justify-center items-center rounded-md shadow-lg px-2 sm:px-5 py-4 sm:py-5 gap-3 scroll-smooth'>
 
                 <div className='flex w-full justify-between'>

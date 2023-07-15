@@ -99,6 +99,8 @@ const Home = () => {
 
   const [post, setPost] = useState([]);
 
+  const [dataType, setDataType] = useState('recent')
+
   const [totalData, setTotalData] = useState(0)
 
   const [loaderPost, setLoaderPost] = useState(false)
@@ -111,7 +113,9 @@ const Home = () => {
 
     let pageNo = Math.ceil(post.length / pageLimit) + 1;
 
-    fetch(`${SERVER_URL}post/fetch-all-post-user/${refresh ? 1 : pageNo}`, {
+    const urlType = dataType === 'recent' ? 'fetch-recommended-post' : 'fetch-all-post-user'
+
+    fetch(`${SERVER_URL}post/${urlType}/${refresh ? 1 : pageNo}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -128,6 +132,10 @@ const Home = () => {
       })
       .catch((err) => console.error(err));
   };
+
+  useEffect(() => {
+    fetchData(true)
+  }, [dataType])
 
   useEffect(() => {
     fetchData()
@@ -158,14 +166,16 @@ const Home = () => {
 
                 <div className='text-xs dark:text-white cursor-default'>Sort By :</div>
 
-                <select name="" id="" className='dark:bg-[#231344] py-1.5 bg-[#F1F1F1] dark:text-white rounded cursor-pointer text-sm px-1.5 w-max shadow-md'>
+                <select name="" id="" value={dataType} onChange={e => {
+                  setDataType(e.target.value)
+                }} className='dark:bg-[#231344] py-1.5 bg-[#F1F1F1] dark:text-white rounded cursor-pointer text-sm px-1.5 w-max shadow-md'>
 
-                  <option value="">
-                    Top
+                  <option value="recent">
+                    Recent
                   </option>
 
-                  <option value="">
-                    Recent
+                  <option value="top">
+                    Top
                   </option>
 
                 </select>
@@ -183,7 +193,7 @@ const Home = () => {
                   hasMore={post.length < Number(totalData)}
                   className='flex flex-col h-full items-center justify-center'
                   scrollableTarget="scrollableDiv"
-                  loader={<PostLoader />}
+                  loader={post?.length === totalData ? <PostLoader /> : null}
                 >
 
                   {
