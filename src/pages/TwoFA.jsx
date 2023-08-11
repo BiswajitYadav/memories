@@ -95,7 +95,7 @@ const TwoFA = () => {
                             </div>
 
                             <button type='submit' className='bg-gradient-to-b from-[#9013C9] to-[#573698] text-white dark:text-white py-1.5 md:py-3 rounded-full text-lg font-semibold select-none'>VERIFY OTP</button>
-                            
+
                         </form>
                     </div>
                     <div className='dark:text-white p-3 text-sm lg:hidden'>We take care of your data with security as we have mentioned in our <Link className='underline font-semibold'> privacy policy.</Link></div>

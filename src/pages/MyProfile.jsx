@@ -27,7 +27,7 @@ const MyProfile = () => {
     const context = useContext(MainContext)
     const { userProfileData, fetchSessionUserProfile, post, setPost, sessionPartner, totalMyPostData, fetchMyPostData } = context;
 
-    const { _id, name, email, profileURL, gender, userName, bio } = userProfileData;
+    const { _id, name, email, profileURL, gender, userName, bio, isPartner } = userProfileData;
 
     const [followersModalOpen, setFollowersModalOpen] = useState(false);
     const handlefollowersModalOpen = () => setFollowersModalOpen(true);
@@ -41,7 +41,7 @@ const MyProfile = () => {
         fetchSessionUserProfile()
     }, [])
 
-    
+
 
     useEffect(() => {
         fetchMyPostData()
@@ -297,17 +297,21 @@ const MyProfile = () => {
 
                                 </div>
 
-                                <div className='hidden md:flex gap-5'>
+                                {
+                                    isPartner ?
+                                        <div className='hidden md:flex gap-5'>
 
-                                    <a className='cursor-pointer text-slate-500 hover:text-red-500 duration-200' target="_blank" href="/"><AiFillYoutube style={{ fontSize: 30 }} /></a>
+                                            <a className='cursor-pointer text-slate-500 hover:text-red-500 duration-200' target="_blank" href="/"><AiFillYoutube style={{ fontSize: 30 }} /></a>
 
-                                    <a className='cursor-pointer text-slate-500 hover:text-pink-600 duration-200' target="_blank" href="/"><AiFillInstagram style={{ fontSize: 30 }} /></a>
+                                            <a className='cursor-pointer text-slate-500 hover:text-pink-600 duration-200' target="_blank" href="/"><AiFillInstagram style={{ fontSize: 30 }} /></a>
 
-                                    <a className='cursor-pointer text-slate-500 hover:text-violet-600 duration-200' target="_blank" href="/"><AiFillGithub style={{ fontSize: 30 }} /></a>
+                                            <a className='cursor-pointer text-slate-500 hover:text-violet-600 duration-200' target="_blank" href="/"><AiFillGithub style={{ fontSize: 30 }} /></a>
 
-                                    <a className='cursor-pointer text-slate-500 hover:text-sky-600 duration-200' target="_blank" href="/"><FaDiscord style={{ fontSize: 30 }} /></a>
+                                            <a className='cursor-pointer text-slate-500 hover:text-sky-600 duration-200' target="_blank" href="/"><FaDiscord style={{ fontSize: 30 }} /></a>
 
-                                </div>
+                                        </div>
+                                        : null
+                                }
 
                             </div>
                         </div>
@@ -336,12 +340,16 @@ const MyProfile = () => {
                                 {bio}
                             </div>
 
-                            <div className='flex md:hidden gap-7 py-3 justify-center'>
-                                <a className='cursor-pointer text-red-600' href="/"><AiFillYoutube style={{ fontSize: 25 }} /></a>
-                                <a className='cursor-pointer text-pink-700' href="/"><AiFillInstagram style={{ fontSize: 25 }} /></a>
-                                <a className='cursor-pointer text-purple-600' href="/"><AiFillGithub style={{ fontSize: 25 }} /></a>
-                                <a className='cursor-pointer text-sky-500' href="/"><FaDiscord style={{ fontSize: 25 }} /></a>
-                            </div>
+                            {
+                                isPartner ?
+                                    <div className='flex md:hidden gap-7 py-3 justify-center'>
+                                        <a className='cursor-pointer text-red-600' href="/"><AiFillYoutube style={{ fontSize: 25 }} /></a>
+                                        <a className='cursor-pointer text-pink-700' href="/"><AiFillInstagram style={{ fontSize: 25 }} /></a>
+                                        <a className='cursor-pointer text-purple-600' href="/"><AiFillGithub style={{ fontSize: 25 }} /></a>
+                                        <a className='cursor-pointer text-sky-500' href="/"><FaDiscord style={{ fontSize: 25 }} /></a>
+                                    </div>
+                                    : null
+                            }
 
                         </div>
 

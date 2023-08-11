@@ -95,8 +95,8 @@ function SignUp() {
           <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="text" name='fullName' value={name} onChange={e => setName(e.target.value)} placeholder="Full Name" required />
           <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="text" name='userName' pattern="^[^\s]+$" value={userName} onChange={e => setUserName(e.target.value)} placeholder="User Name" required />
           <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="email" name='email' value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required />
-          <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="password" name='password' value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
-          <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="password" name='repeatPassword' value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)} placeholder="Repeat Password" required />
+          <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="password" minLength={8} name='password' value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
+          <input className="px-5 py-2 md:py-3 bg-transparent border-black dark:text-white border dark:border-white rounded-3xl" type="password" minLength={8} name='repeatPassword' value={repeatPassword} onChange={e => setRepeatPassword(e.target.value)} placeholder="Repeat Password" required />
 
           {passMatch ? <p className='text-red-500 font-medium animate-pulse duration-300 mb-4'>Password match failed !</p> : ""}
 

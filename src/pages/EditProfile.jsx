@@ -206,7 +206,7 @@ const EditProfile = () => {
                     </div>
                   </div>
 
-                  <div className='px-1 py-3 flex-col gap-2 flex'>
+                  {/* <div className='px-1 py-3 flex-col gap-2 flex'>
                     <div className='font-semibold dark:text-white'>Social Links</div>
                     <div className=' flex flex-col gap-3 py-1'>
                       <input type="text" placeholder='Instagram' className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' />
@@ -214,7 +214,7 @@ const EditProfile = () => {
                       <input type="text" placeholder='Github' className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' />
                       <input type="text" placeholder='Discord' className='bg-[#F1F1F1] w-full px-4 py-2 rounded-md border-[2px] border-[#D9D9D9] dark:bg-[#1C1132] dark:text-white dark:border-[#33215A]' />
                     </div>
-                  </div>
+                  </div> */}
 
                 </div>
 
