@@ -35,7 +35,7 @@ const MyPost = (props) => {
 
     const context = useContext(MainContext)
 
-    const { userProfileData, setNotification, handleStaticPostRemove, sessionPartner } = context;
+    const { userProfileData, setNotification, handleStaticPostRemove, sessionPartner, createNewComment } = context;
 
     const { name, email, profileURL, gender, userName, bio } = userProfileData;
 
@@ -74,6 +74,16 @@ const MyPost = (props) => {
     const [postCaptionInput, setPostCaptionInput] = useState(postCaption)
 
     const [editButtonInfo, setEditButtonInfo] = useState("Save")
+
+    const [commentText, setCommentText] = useState("")
+
+    const uploadComment = (e) => {
+
+        e.preventDefault()
+        setCommentText("")
+        createNewComment(_id, commentText)
+
+    }
 
     const handlePostEdit = async (e) => {
 
@@ -499,7 +509,7 @@ const MyPost = (props) => {
                         aria-describedby="modal-modal-description"
                         className="flex justify-center items-center"
                     >
-                        <div className='py-3 px-3 md:p-4 h-[60%] w-[90%] md:w-[60%] lg:px-5 lg:py-3 bg-white dark:bg-[#231344] lg:w-[40%] rounded-lg'>
+                        <div className='py-3 px-3 md:p-4 h-max w-[90%] md:w-[60%] lg:px-5 lg:py-3 bg-white dark:bg-[#231344] lg:w-[40%] rounded-lg'>
                             <div className='bg-white dark:bg-[#231344]'>
                                 <div className='flex justify-between dark:text-white'>
                                     <div className='flex items-center gap-1 py-3 lg:py-5'>
@@ -511,7 +521,7 @@ const MyPost = (props) => {
                                     </button>
                                 </div>
 
-                                <div id='scrollableDiv' className='flex flex-col overflow-y-auto h-[45vh] scroll-smooth '>
+                                <div id='scrollableDiv' className='flex flex-col overflow-y-auto h-[350px] scroll-smooth '>
 
                                     {
                                         likeData.length ?
@@ -561,15 +571,14 @@ const MyPost = (props) => {
 
                 </div>
 
-
-
-                <form className='bg-[#D9D9D9] dark:bg-[#1C1132] rounded-full flex items-center px-2 py-1 w-full'>
-                    <input className='p-1 px-2 md:px-8 bg-transparent w-full focus:outline-none dark:text-white' type="text" placeholder='Write a comment...' />
+                <form method='POST' onSubmit={uploadComment} className='bg-[#D9D9D9] dark:bg-[#1C1132] rounded-full flex items-center px-2 py-1 w-full'>
+                    <input value={commentText} onChange={e => setCommentText(e.target.value)} required className='p-1 px-2 md:px-8 bg-transparent w-full focus:outline-none dark:text-white' type="text" placeholder='Write a comment...' />
                     <button className='text-[#573698] dark:text-white/70 rounded-full hover:scale-105 duration-200'>
                         <SendIcon style={{ fontSize: 30 }} />
                     </button>
                 </form>
-            </div >
+
+            </div>
         </>
     )
 }

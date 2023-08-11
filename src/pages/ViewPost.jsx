@@ -362,6 +362,7 @@ const ViewPost = () => {
                 </Modal>
 
                 <button onClick={handleLikeModalOpen} className='dark:text-white text-xs flex hover:underline duration-200'>Liked by {totalLikeData}</button>
+
                 <Modal
                   open={likeModalOpen}
                   onClose={handleLikeModalClosed}
@@ -387,7 +388,7 @@ const ViewPost = () => {
                         </button>
 
                       </div>
-                      <div id='scrollableDiv' className='flex flex-col overflow-y-auto h-[45vh] scroll-smooth '>
+                      <div id='scrollableDiv' className='flex flex-col overflow-y-auto h-[350px] scroll-smooth '>
 
                         {
                           likeData.length ?

@@ -573,7 +573,7 @@ const Post = (props) => {
 
                 </div>
 
-                <div id='scrollableDiv' className='flex flex-col overflow-y-auto h-[45vh] scroll-smooth '>
+                <div id='scrollableLikeDiv' className='flex flex-col overflow-y-auto h-[350px] scroll-smooth '>
 
                   {
                     likeData.length ?
@@ -583,7 +583,7 @@ const Post = (props) => {
                         next={fetchMoreLikeData}
                         hasMore={likeData.length < Number(totalLikeData)}
                         className='flex flex-col h-full items-center justify-center'
-                        scrollableTarget="scrollableDiv"
+                        scrollableTarget="scrollableLikeDiv"
                       >
 
                         {

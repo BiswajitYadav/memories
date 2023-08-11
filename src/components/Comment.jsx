@@ -186,7 +186,7 @@ const Comment = (props) => {
                 </button>
             </form>
 
-            <div id='commentDiv' className='y-2 flex flex-col gap-1 h-[60vh] overflow-y-auto w-full'>
+            <div id='commentDiv' className='y-2 flex flex-col gap-1 h-[350px] overflow-y-auto w-full'>
 
                 {
                     commentData.length ?

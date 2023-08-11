@@ -359,7 +359,7 @@ const UserProfile = () => {
                                 aria-describedby="modal-modal-description"
                                 className="flex justify-center items-center"
                             >
-                                <div className='py-3 px-2 md:px-3 md:p-4 h-max md:w-[70%] lg:px-5 lg:py-2 bg-white w-[90%] dark:bg-[#231344] lg:w-[40%] rounded-lg'>
+                                <div className='py-3 px-2 md:px-3 md:p-4 h-max md:w-[70%] lg:px-5 lg:py-2 bg-white w-[90%] dark:bg-[#231344] lg:w-[40%] xl:w-[30%] rounded-lg'>
                                     <div className='bg-white dark:bg-[#231344]'>
 
                                         <div className='flex justify-between dark:text-white px-3'>
@@ -372,7 +372,7 @@ const UserProfile = () => {
                                             </button>
                                         </div>
 
-                                        <div id='scrollableDivFollower' className='flex flex-col overflow-y-auto h-[30vh] md:h-[35vh] scroll-smooth '>
+                                        <div id='scrollableDivFollower' className='flex flex-col overflow-y-auto h-[270px] scroll-smooth '>
 
                                             <InfiniteScroll
                                                 dataLength={followersData.length}
@@ -410,7 +410,7 @@ const UserProfile = () => {
                                 aria-describedby="modal-modal-description"
                                 className="flex justify-center items-center"
                             >
-                                <div className='py-3 px-2 md:px-3 md:p-4 h-max md:w-[70%] lg:px-5 lg:py-2 bg-white w-[90%] dark:bg-[#231344] lg:w-[40%] rounded-lg'>
+                                <div className='py-3 px-2 md:px-3 md:p-4 h-max md:w-[70%] lg:px-5 lg:py-2 bg-white w-[90%] dark:bg-[#231344] lg:w-[40%] xl:w-[30%] rounded-lg'>
                                     <div className='bg-white dark:bg-[#231344]'>
                                         <div className='flex justify-between dark:text-white px-3'>
                                             <div className='flex items-center gap-1 py-3 lg:py-5'>
@@ -422,7 +422,7 @@ const UserProfile = () => {
                                             </button>
                                         </div>
 
-                                        <div id='scrollableDivFollowing' className='flex flex-col overflow-y-auto h-[35vh] scroll-smooth'>
+                                        <div id='scrollableDivFollowing' className='flex flex-col overflow-y-auto h-[270px] scroll-smooth'>
 
                                             <InfiniteScroll
                                                 dataLength={followingData.length}
